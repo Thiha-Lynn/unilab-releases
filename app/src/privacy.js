@@ -89,7 +89,7 @@ export function renderPrivacy(app) {
         never stores your files.</li>
       </ul>
 
-      <h2>Open source</h2><p>Copyright © 2026 UniLab contributors. Distributed under <a href="./LICENSE.txt" target="_blank" rel="noopener">AGPL-3.0</a>, without warranty. You may modify and redistribute under its terms. <a href="https://github.com/Thiha-Lynn/unilab-releases" target="_blank" rel="noopener">Get the complete UniLab source and build instructions</a>. Third-party licenses are preserved in the distribution.</p>
+      <h2>Open source</h2><p>Copyright © 2026 UniLab contributors. Distributed under <a href="./LICENSE.txt">AGPL-3.0</a>, without warranty. You may modify and redistribute under its terms. <a href="https://github.com/Thiha-Lynn/unilab-releases" target="_blank" rel="noopener">Get the complete UniLab source and build instructions</a>. Third-party licenses are preserved in the distribution.</p>
       <h2>Questions</h2>
       <p>UniLab is an open-source project. For a privacy question, or anything on this
       page you think is wrong, open an issue on

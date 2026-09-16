@@ -4,6 +4,9 @@ on:
     tags: ['v*']
   pull_request:
   workflow_dispatch:
+concurrency:
+  group: unilab-release-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

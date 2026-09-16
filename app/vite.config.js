@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import writeLicenses from '../scripts/licenses.cjs';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -28,6 +29,7 @@ function precacheManifest() {
     closeBundle() {
       const worker = resolve(outDir, 'sw.js');
       writeFileSync(worker, readFileSync(worker, 'utf8').replace('unilab-v4', `unilab-${revision.slice(0,12)}`));
+      writeLicenses(outDir);
       const result = writeManifests(outDir, revision);
       console.log(`[precache] ${result.count} files, ${(result.bytes / 1e6).toFixed(2)} MB core (8 MB budget)`);
     },

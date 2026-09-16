@@ -33,7 +33,7 @@ async function main() {
     return {...item,path:name,bytes:bytes.length,sha256:crypto.createHash('sha256').update(bytes).digest('hex'),downloadSha256:item.sha256};
   });
   fs.writeFileSync('web/offline/assets.lock.json',JSON.stringify({...lock,files:bundledFiles},null,2)+'\n');
-  require('./licenses.cjs');
+  require('./licenses.cjs')('web');
   const {writeManifests}=await import('../app/scripts/build-manifest.js');
   const release=JSON.parse(fs.readFileSync('web/release.json'));
   writeManifests('web',release.revision);
