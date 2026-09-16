@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Rounded-square white background -->
+  <rect x="0" y="0" width="512" height="512" rx="112" ry="112" fill="#ffffff" />
+
+  <!-- Accent rounded square inset -->
+  <rect x="48" y="48" width="416" height="416" rx="88" ry="88" fill="#5b5bd6" />
+
+  <!-- Abstract "U" mark in white -->
+  <path
+    d="M 176 160
+       L 176 296
+       C 176 349.019 219.981 392 273 392
+       C 326.019 392 370 349.019 370 296
+       L 370 160
+       L 322 160
+       L 322 296
+       C 322 322.51 300.51 344 274 344
+       C 247.49 344 224 322.51 224 296
+       L 224 160
+       Z"
+    fill="#ffffff"
+  />
+
+  <!-- Small dot accent above the U (nods to a graduation-cap / backpack-buckle motif) -->
+  <circle cx="273" cy="122" r="20" fill="#ffffff" />
+</svg>

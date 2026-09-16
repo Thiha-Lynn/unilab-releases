@@ -1,0 +1,43 @@
+{
+  "name": "UniLab",
+  "short_name": "UniLab",
+  "description": "Every tool a student needs \u2014 free, private, offline-capable.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#5b5bd6",
+  "theme_color": "#5b5bd6",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "id": "./",
+  "lang": "en",
+  "categories": [
+    "education",
+    "utilities",
+    "productivity"
+  ],
+  "shortcuts": [
+    {
+      "name": "HTML to PDF",
+      "url": "./#/html-to-pdf",
+      "description": "Read lecture HTML as a PDF"
+    },
+    {
+      "name": "Compress PDF",
+      "url": "./#/compress-pdf",
+      "description": "Reduce a PDF for submission"
+    }
+  ]
+}

@@ -1,41 +1,39 @@
-# UniLab 0.2.0 installation
+# Install UniLab 0.3.0
 
-The quickest installation on every supported device is the web app:
-https://unilab.ztvmm.live/#/install
+Website: https://unilab.ztvmm.live/
+Release: https://github.com/Thiha-Lynn/unilab-releases/releases/tag/v0.3.0
 
-| Platform | Distribution | How to choose |
-| --- | --- | --- |
-| macOS | `mac-arm64.dmg` / `.zip`, `mac-x64.dmg` / `.zip` | Apple Silicon: arm64; Intel: x64 |
-| Windows | `win-x64.exe`, `win-arm64.exe` | Most PCs: x64; Windows on ARM: arm64 |
-| Linux | `linux-x86_64.AppImage` / `linux-amd64.deb`, `linux-arm64.AppImage` / `.deb` | Match your CPU; .deb is for Debian/Ubuntu |
-| Android | Installable web app | Chrome menu → Add to home screen / Install app |
-| iOS / iPadOS | Installable web app | Safari → Share → Add to Home Screen |
-| ChromeOS / other modern browsers | Web app | Open site; install from browser menu where supported |
-| Self-host / portable web source | `web.zip` | Unzip, run `node serve.cjs`, then open the displayed loopback address |
+| Device | Package | Notes |
+|---|---|---|
+| Android 10+ | `UniLab-0.3.0-android.apk` | Signed universal APK; current Android System WebView required. Your device may ask permission to install from the browser/file manager. |
+| Apple Silicon Mac | `mac-arm64.dmg` or `.zip` | Current supported macOS; unsigned and not notarized. |
+| Intel Mac | `mac-x64.dmg` or `.zip` | Current supported macOS; unsigned and not notarized. |
+| Windows Intel/AMD | `win-x64.exe` | Windows 10/11 x64; unsigned preview. |
+| Windows ARM | `win-arm64.exe` | Windows on ARM; unsigned preview. |
+| Linux Intel/AMD | `linux-amd64.deb` / `linux-x86_64.AppImage` | Current Debian/Ubuntu or compatible 64-bit desktop. |
+| Linux ARM | `linux-arm64.deb` / `.AppImage` | Current ARM64 Linux desktop. |
+| iPhone / iPad | Installable web app | Safari → Share → Add to Home Screen. No native IPA or App Store release. |
+| Chromebook / other current browser | Installable web app | Browser menu → Install / Add to home screen, where supported. |
+| Self-host / portable web | `UniLab-0.3.0-web.zip` | Extract and run `node serve.cjs`; open the printed localhost URL. Node 22+ required. Do not open index.html directly as a file. |
 
-Names above are suffixes after `UniLab-0.2.0-`. Choose one distribution, not all.
-Current supported OS releases and a 64-bit processor are recommended. No 32-bit,
-legacy Windows, Android APK, signed iOS IPA, or app-store distribution is included.
-The web ZIP is a ready-built website, not a native phone installer. Do not open
-index.html using file://; browser security prevents several tool APIs there.
+Desktop filenames begin with `UniLab-0.3.0-`. Check your processor before downloading. Linux DEB: install using the distribution's package manager; AppImage: mark executable, then open. Some distributions need FUSE compatibility libraries. Do not run as root or disable the Electron sandbox. If an unsigned desktop app is blocked, use the web version; we do not instruct users to disable system protections.
 
-Desktop builds are unsigned previews and macOS builds are not notarized. Your OS
-may warn or refuse installation. The hosted web app remains available without
-changing OS protections. There is no automatic desktop updater: download the
-next version explicitly. Uninstall using the normal operating-system mechanism;
-files you saved yourself remain until you delete them.
+## Offline operation
 
-Verify downloads with SHA256SUMS.txt (`shasum -a 256 FILE` on macOS,
-`sha256sum FILE` on Linux, `Get-FileHash FILE -Algorithm SHA256` in PowerShell).
-Match the filename and entire digest against the release checksum file.
+APK, desktop and portable-web distributions contain the app, OCR worker/WASM engines, all 19 offered OCR languages, and CPU background-removal model/runtime assets. They do not require a network connection to initialize those tools. Packages are substantially larger than the hosted app's core because these assets and desktop browser engines are included.
 
-Core tools are bundled in desktop downloads. On the web, choose “Make UniLab work
-offline” on the home page and wait for success. OCR and background removal require
-optional engine/model downloads. Device memory and browser codec support constrain
-large video/media jobs. Desktop screen recording excludes system audio when using
-the fallback screen picker. Camera/mic and screen permissions are requested only
-when a recording tool asks for them. Screen recording may not work on mobile.
+On the hosted web/PWA version, select **Make UniLab work offline** and wait for confirmation before disconnecting. Core cache is under 8 MB. OCR and background removal still need online engine/model/language downloads on first use. Browser storage eviction can remove cached assets. Installing a PWA does not give it the APK's bundled assets.
 
-Source files and results are held in renderer memory. Saving a download explicitly
-writes it to your chosen location. Close the app to release unsaved work. A browser
-engine is bundled, making desktop installers much larger than the <8 MB web core.
+Files are processed on your device. Android exports use the system **Save** dialog; choose a local device folder for offline saving. A cloud provider selected in that dialog may sync the file. PDF recipients need only a PDF viewer, not UniLab.
+
+## Platform limits and testing
+
+Android requires a current WebView, WebAssembly and modern JavaScript; old or vendor-disabled WebViews are not supported. Screen recording, codecs, camera and microphone depend on the OS/browser. Large media files can exceed a phone's memory. Prefer one file at a time. The APK does not request broad storage access.
+
+CI runs 28 app tests, two desktop policy tests, the production build and offline asset integrity checks; it compiles each desktop target and Android and runs Android lint. Responsive desktop browser checks supplement these tests. Native builds are previews and have not all been exercised on physical Windows/Linux/Android devices. Real-device recording, accessibility, battery, long-job performance and output quality across every tool remain validation work. No universal device or format compatibility is promised.
+
+There is no automatic updater. Download new versions from the release page. Keep Android's existing install to update using the same signing certificate. Source modifications can be built and signed with your own key under the included open-source licenses.
+
+## Verify downloads
+
+Compare SHA-256 with `SHA256SUMS.txt` (`shasum -a 256`, `sha256sum`, or PowerShell `Get-FileHash`). Android's public certificate fingerprint is in `ANDROID-SIGNING-CERTIFICATE.txt`. Only download releases from this project's repository. SHA-256 checks detect corruption; they do not replace operating-system code signing.

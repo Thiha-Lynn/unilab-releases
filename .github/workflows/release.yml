@@ -4,54 +4,46 @@ on:
     tags: ['v*']
   pull_request:
   workflow_dispatch:
+concurrency:
+  group: unilab-release-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
   web:
     name: Verify pinned web source
     runs-on: ubuntu-latest
-    outputs:
-      revision: ${{ steps.lock.outputs.revision }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - name: Read release lock
-        id: lock
-        run: |
-          node -e "const l=require('./source-lock.json');if(!/^[a-f0-9]{40}$/.test(l.revision))throw Error('Bad source revision');console.log('revision='+l.revision)" >> "$GITHUB_OUTPUT"
-          node -e "const p=require('./package.json');if(process.env.GITHUB_REF_TYPE==='tag'&&process.env.GITHUB_REF_NAME!=='v'+p.version)throw Error('Tag/version mismatch')"
       - name: Test desktop boundary policy
         run: npm test
-      - uses: actions/checkout@v4
-        with:
-          repository: Thiha-Lynn/unilab
-          ref: ${{ steps.lock.outputs.revision }}
-          path: source
-      - name: Test and build web application
-        working-directory: source
-        env:
-          SOURCE_REVISION: ${{ steps.lock.outputs.revision }}
+      - name: Test and build independent application source
+        working-directory: app
         run: |
           npm ci
           npm test
-          GITHUB_SHA="$SOURCE_REVISION" npm run build
+          npm run build
           npm sbom --sbom-format cyclonedx --omit=dev > dist/web-dependencies.cdx.json
-      - name: Verify and prepare desktop assets
-        run: npm run prepare:web
+      - name: Verify source and bundle offline engines, languages and licenses
+        run: |
+          npm run prepare:web
+          npm run bundle:offline
       - uses: actions/upload-artifact@v4
         with:
           name: verified-web
           path: web/
-      - name: Build universal web distribution
+      - name: Build universal web distribution and upstream source archive
         run: |
           mkdir -p distribution
+          VERSION=$(node -p "require('./package.json').version")
           cp INSTALL.md web/INSTALL.md
-          cp source-lock.json web/source-lock.json
           cp scripts/serve.cjs web/serve.cjs
-          cd web
-          zip -qr ../distribution/UniLab-0.2.0-web.zip .
+          (cd web && zip -qr "../distribution/UniLab-$VERSION-web.zip" .)
+          curl --fail --location --retry 3 'https://api.github.com/repos/imgly/background-removal-js/tarball/12f56cc4f2a90d624e165a715748d22efc7a1d93' -o "distribution/UniLab-$VERSION-background-removal-source.tar.gz"
+          tar -tzf "distribution/UniLab-$VERSION-background-removal-source.tar.gz" > /dev/null
       - uses: actions/upload-artifact@v4
         with:
           name: package-web
@@ -96,9 +88,76 @@ jobs:
             out/*.AppImage
             out/*.deb
           if-no-files-found: error
+  android:
+    name: android package
+    needs: web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: actions/download-artifact@v4
+        with:
+          name: verified-web
+          path: web
+      - name: Sync the bundled app into Android
+        working-directory: mobile
+        run: |
+          npm ci
+          npx cap sync android
+      - name: Compile and check Android release
+        working-directory: mobile/android
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-36' 'build-tools;36.0.0'
+          chmod +x gradlew
+          ./gradlew --no-daemon testReleaseUnitTest lintRelease assembleRelease
+      - name: Verify bundled offline content
+        run: |
+          python3 - <<'PY'
+          import json, zipfile
+          with zipfile.ZipFile('mobile/android/app/build/outputs/apk/release/app-release-unsigned.apk') as apk:
+            prefix='assets/public/'
+            assert b'__UNILAB_OFFLINE__ = true' in apk.read(prefix+'offline-config.js')
+            lock=json.loads(apk.read(prefix+'offline/assets.lock.json'))
+            import hashlib
+            for f in lock['files']:
+              b=apk.read(prefix+'offline/'+f['path'])
+              assert len(b)==f['bytes'] and hashlib.sha256(b).hexdigest()==f['sha256'],f['path']
+            assert 'assets/public/offline/ocr/core/tesseract-core-lstm.wasm.js' in apk.namelist()
+          print('APK contains all verified model and language assets.')
+          PY
+      - name: Sign distributable APK
+        if: github.event_name != 'pull_request'
+        env:
+          UNILAB_ANDROID_KEYSTORE: ${{ secrets.UNILAB_ANDROID_KEYSTORE }}
+          UNILAB_ANDROID_PASSWORD: ${{ secrets.UNILAB_ANDROID_PASSWORD }}
+        run: |
+          test -n "$UNILAB_ANDROID_KEYSTORE"
+          test -n "$UNILAB_ANDROID_PASSWORD"
+          umask 077
+          printf '%s' "$UNILAB_ANDROID_KEYSTORE" | base64 --decode > "$RUNNER_TEMP/unilab-release.p12"
+          trap 'rm -f "$RUNNER_TEMP/unilab-release.p12"' EXIT
+          VERSION=$(node -p "require('./package.json').version")
+          mkdir -p distribution
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/36.0.0"
+          "$BUILD_TOOLS/zipalign" -p -f 4 mobile/android/app/build/outputs/apk/release/app-release-unsigned.apk "$RUNNER_TEMP/aligned.apk"
+          "$BUILD_TOOLS/apksigner" sign --ks "$RUNNER_TEMP/unilab-release.p12" --ks-key-alias unilab --ks-pass env:UNILAB_ANDROID_PASSWORD --key-pass env:UNILAB_ANDROID_PASSWORD --out "distribution/UniLab-$VERSION-android.apk" "$RUNNER_TEMP/aligned.apk"
+          "$BUILD_TOOLS/apksigner" verify --verbose --print-certs "distribution/UniLab-$VERSION-android.apk" > distribution/ANDROID-SIGNING-CERTIFICATE.txt
+          rm -f distribution/*.idsig
+      - uses: actions/upload-artifact@v4
+        if: github.event_name != 'pull_request'
+        with:
+          name: package-android
+          path: distribution/*
+          if-no-files-found: error
   release:
     name: Verify package set and attach draft release
-    needs: [web, desktop]
+    needs: [web, desktop, android]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -116,5 +175,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" --verify-tag --draft --prerelease --title "UniLab $GITHUB_REF_NAME — desktop preview & mobile web app" --notes-file RELEASE_NOTES.md
-          gh release upload "$GITHUB_REF_NAME" distribution/* source-lock.json INSTALL.md
+          gh release create "$GITHUB_REF_NAME" --verify-tag --draft --prerelease --title "UniLab $GITHUB_REF_NAME — offline Android & desktop preview" --notes-file RELEASE_NOTES.md
+          gh release upload "$GITHUB_REF_NAME" distribution/* INSTALL.md THIRD_PARTY.md LICENSE

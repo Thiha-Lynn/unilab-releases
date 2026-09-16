@@ -3,3 +3,17 @@ web/
 out/
 source/
 .DS_Store
+
+app/node_modules/
+app/dist/
+mobile/node_modules/
+mobile/android/.gradle/
+mobile/android/local.properties
+mobile/android/app/build/
+mobile/android/build/
+mobile/android/capacitor-cordova-android-plugins/
+mobile/android/app/src/main/assets/public/
+mobile/android/app/src/main/assets/capacitor.config.json
+mobile/android/app/src/main/assets/capacitor.plugins.json
+*.jks
+*.p12

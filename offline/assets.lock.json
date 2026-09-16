@@ -1,0 +1,209 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "path": "background/064e16ef5bd663f4c8b2d2531c018973282906db2b80c9995731340b84d28a47",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/064e16ef5bd663f4c8b2d2531c018973282906db2b80c9995731340b84d28a47",
+      "sha256": "064e16ef5bd663f4c8b2d2531c018973282906db2b80c9995731340b84d28a47",
+      "bytes": 4194304
+    },
+    {
+      "path": "background/0a2415f50fe3072be594f7c4c66787f9465efed8dae6010b02f8575ea36bf81b",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/0a2415f50fe3072be594f7c4c66787f9465efed8dae6010b02f8575ea36bf81b",
+      "sha256": "0a2415f50fe3072be594f7c4c66787f9465efed8dae6010b02f8575ea36bf81b",
+      "bytes": 4194304
+    },
+    {
+      "path": "background/3dae4038fc722ce4ce041fbc9c63fd5c2d9864bc732a01994518f96e9ec2f357",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/3dae4038fc722ce4ce041fbc9c63fd5c2d9864bc732a01994518f96e9ec2f357",
+      "sha256": "3dae4038fc722ce4ce041fbc9c63fd5c2d9864bc732a01994518f96e9ec2f357",
+      "bytes": 4194304
+    },
+    {
+      "path": "background/829842727f98368990f103f052e112e521dd27123b9f6b8615efa6cb32bfaa4f",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/829842727f98368990f103f052e112e521dd27123b9f6b8615efa6cb32bfaa4f",
+      "sha256": "829842727f98368990f103f052e112e521dd27123b9f6b8615efa6cb32bfaa4f",
+      "bytes": 4194304
+    },
+    {
+      "path": "background/84addde9e759e397be2ee00d49a52dbf1b1a98863df325dc1c080252cbfe5fd9",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/84addde9e759e397be2ee00d49a52dbf1b1a98863df325dc1c080252cbfe5fd9",
+      "sha256": "84addde9e759e397be2ee00d49a52dbf1b1a98863df325dc1c080252cbfe5fd9",
+      "bytes": 3431207
+    },
+    {
+      "path": "background/9d4c548caff42434be7b42d2f46e35a0da25f4d679ff4218b72bc8cf8fd4d291",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/9d4c548caff42434be7b42d2f46e35a0da25f4d679ff4218b72bc8cf8fd4d291",
+      "sha256": "9d4c548caff42434be7b42d2f46e35a0da25f4d679ff4218b72bc8cf8fd4d291",
+      "bytes": 4194304
+    },
+    {
+      "path": "background/a2385cccf96fda2efcf32b61349bc9c3a8ccb9be2246e45db6bfca6e37b78117",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/a2385cccf96fda2efcf32b61349bc9c3a8ccb9be2246e45db6bfca6e37b78117",
+      "sha256": "a2385cccf96fda2efcf32b61349bc9c3a8ccb9be2246e45db6bfca6e37b78117",
+      "bytes": 4194304
+    },
+    {
+      "path": "background/aa485cf3fa61ca007b3e1ca7b65068328270f072b61cdda490b732211e1da5d9",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/aa485cf3fa61ca007b3e1ca7b65068328270f072b61cdda490b732211e1da5d9",
+      "sha256": "aa485cf3fa61ca007b3e1ca7b65068328270f072b61cdda490b732211e1da5d9",
+      "bytes": 25539
+    },
+    {
+      "path": "background/b275d60a2e1790daff7c9040fd99a3897bfdf7d1550da1ccf8bea60902e9c585",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/b275d60a2e1790daff7c9040fd99a3897bfdf7d1550da1ccf8bea60902e9c585",
+      "sha256": "b275d60a2e1790daff7c9040fd99a3897bfdf7d1550da1ccf8bea60902e9c585",
+      "bytes": 2405900
+    },
+    {
+      "path": "background/b7b88898b9ab9e43209322097282f88e9e02315273e291373366261cd0a77059",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/b7b88898b9ab9e43209322097282f88e9e02315273e291373366261cd0a77059",
+      "sha256": "b7b88898b9ab9e43209322097282f88e9e02315273e291373366261cd0a77059",
+      "bytes": 4194304
+    },
+    {
+      "path": "background/e57a35056b1480bc581977524cf0c19994542cb044626cfffca0b304a6cf227c",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/e57a35056b1480bc581977524cf0c19994542cb044626cfffca0b304a6cf227c",
+      "sha256": "e57a35056b1480bc581977524cf0c19994542cb044626cfffca0b304a6cf227c",
+      "bytes": 4194304
+    },
+    {
+      "path": "background/ef08462567a199c89e0701ad47876c8fdc1b5eb487bbd6c2b58dd65fdc8bdc47",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/ef08462567a199c89e0701ad47876c8fdc1b5eb487bbd6c2b58dd65fdc8bdc47",
+      "sha256": "ef08462567a199c89e0701ad47876c8fdc1b5eb487bbd6c2b58dd65fdc8bdc47",
+      "bytes": 4194304
+    },
+    {
+      "path": "background/f27ae13d9f59f61a6a1b5d9a91c203f2c613346083f02072c27c91672ccda8cf",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/f27ae13d9f59f61a6a1b5d9a91c203f2c613346083f02072c27c91672ccda8cf",
+      "sha256": "f27ae13d9f59f61a6a1b5d9a91c203f2c613346083f02072c27c91672ccda8cf",
+      "bytes": 4194304
+    },
+    {
+      "path": "background/f3ce5fa0c5dc650423b4cb885d9fce1dbf043ee002c4a161688f36c2d2a122e0",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/f3ce5fa0c5dc650423b4cb885d9fce1dbf043ee002c4a161688f36c2d2a122e0",
+      "sha256": "f3ce5fa0c5dc650423b4cb885d9fce1dbf043ee002c4a161688f36c2d2a122e0",
+      "bytes": 4194304
+    },
+    {
+      "path": "background/ff8e86f29887739d249494309ca84dff33bef456c0346c2bbfcd21e3b388d87a",
+      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/ff8e86f29887739d249494309ca84dff33bef456c0346c2bbfcd21e3b388d87a",
+      "sha256": "ff8e86f29887739d249494309ca84dff33bef456c0346c2bbfcd21e3b388d87a",
+      "bytes": 4194304
+    },
+    {
+      "path": "ocr/lang/ara.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/ara@1.0.0/4.0.0_best_int/ara.traineddata.gz",
+      "sha256": "f4746c44b02342dd5b3d4f0198000f47d7c49f1a229e63e0f436c0592dcd9639",
+      "bytes": 1661906
+    },
+    {
+      "path": "ocr/lang/chi_sim.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/chi_sim@1.0.0/4.0.0_best_int/chi_sim.traineddata.gz",
+      "sha256": "b8a23f10c7de500891eb458a8adc9cc58ab7f242f08b7d149f5e9aea4ad5db7c",
+      "bytes": 1718768
+    },
+    {
+      "path": "ocr/lang/chi_tra.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/chi_tra@1.0.0/4.0.0_best_int/chi_tra.traineddata.gz",
+      "sha256": "11fe2610dab05d8a880d02f193ce70203f4c4bbe061b987d5529a2c038a22743",
+      "bytes": 1656239
+    },
+    {
+      "path": "ocr/lang/deu.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/deu@1.0.0/4.0.0_best_int/deu.traineddata.gz",
+      "sha256": "306c4280d0cbed46fbff727486bd43b92730181bae80f56941a091f363bdf28b",
+      "bytes": 1333102
+    },
+    {
+      "path": "ocr/lang/eng.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/eng@1.0.0/4.0.0_best_int/eng.traineddata.gz",
+      "sha256": "45b4cb346724ac1774f1c36f42f182b887bcdb28ebe63e6fff90ac41f3fcff91",
+      "bytes": 2952873
+    },
+    {
+      "path": "ocr/lang/fra.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/fra@1.0.0/4.0.0_best_int/fra.traineddata.gz",
+      "sha256": "d611139672b3752c7097e671e4a1d9209dfd37f2aeb081ef6487fba3351e9255",
+      "bytes": 707406
+    },
+    {
+      "path": "ocr/lang/hin.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/hin@1.0.0/4.0.0_best_int/hin.traineddata.gz",
+      "sha256": "f3b6a0d320df38d886178cdd727b90dbf9df3db053adb32bd9cf73f0463cda07",
+      "bytes": 1389692
+    },
+    {
+      "path": "ocr/lang/ind.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/ind@1.0.0/4.0.0_best_int/ind.traineddata.gz",
+      "sha256": "a8896d2f584a5baae73d658b86b765acc7b15b7ba05e014f62b1a2a23b699a91",
+      "bytes": 1194182
+    },
+    {
+      "path": "ocr/lang/jpn.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/jpn@1.0.0/4.0.0_best_int/jpn.traineddata.gz",
+      "sha256": "2b63ebfbf1484de4a08ce53b29ef98a1c17658a93cbd38acb665d7d316d0be88",
+      "bytes": 2030256
+    },
+    {
+      "path": "ocr/lang/khm.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/khm@1.0.0/4.0.0_best_int/khm.traineddata.gz",
+      "sha256": "f3aab6301b2570ee7cd6cd051094e1c4f075a0a7eeeb4ff111e7e67a9bc012c9",
+      "bytes": 1064461
+    },
+    {
+      "path": "ocr/lang/kor.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/kor@1.0.0/4.0.0_best_int/kor.traineddata.gz",
+      "sha256": "78c21276ab14c9bb734d83be1055d9fe5469a4e7e977c51ad385be5737e61126",
+      "bytes": 1572336
+    },
+    {
+      "path": "ocr/lang/lao.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/lao@1.0.0/4.0.0_best_int/lao.traineddata.gz",
+      "sha256": "660306d4a42941426256c723a7d6d3b65f81e6c428e5f83d5f25180a486d0011",
+      "bytes": 3699720
+    },
+    {
+      "path": "ocr/lang/msa.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/msa@1.0.0/4.0.0_best_int/msa.traineddata.gz",
+      "sha256": "35ae490b99462d04cf4e2a7985d98f0ba5e10ca62adb13aeda070c6f1783f097",
+      "bytes": 1177136
+    },
+    {
+      "path": "ocr/lang/mya.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/mya@1.0.0/4.0.0_best_int/mya.traineddata.gz",
+      "sha256": "a6ac329fbc61a902c05bb10ec7a863e9983e3da65dc558fe1db909b61af67ce4",
+      "bytes": 2691297
+    },
+    {
+      "path": "ocr/lang/por.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/por@1.0.0/4.0.0_best_int/por.traineddata.gz",
+      "sha256": "dacebc1386ddaaf8389f81094236cca0d690897cde693d48cbdaa881c86e2b4c",
+      "bytes": 1392239
+    },
+    {
+      "path": "ocr/lang/rus.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/rus@1.0.0/4.0.0_best_int/rus.traineddata.gz",
+      "sha256": "f51f5edc992249ff9b70a227b22f242dfa47b2b1bbc7ae0ea74908640c101f6a",
+      "bytes": 2679598
+    },
+    {
+      "path": "ocr/lang/spa.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/spa@1.0.0/4.0.0_best_int/spa.traineddata.gz",
+      "sha256": "40be52f97b5d4eb7460073dc1f94cd546b27150333c0bf854ed7e7132db6bceb",
+      "bytes": 2100190
+    },
+    {
+      "path": "ocr/lang/tha.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/tha@1.0.0/4.0.0_best_int/tha.traineddata.gz",
+      "sha256": "4550a5505184d1b79cf10416d5b19e643001d95411d5e717954dd26feef3ae74",
+      "bytes": 896631
+    },
+    {
+      "path": "ocr/lang/vie.traineddata.gz",
+      "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/vie@1.0.0/4.0.0_best_int/vie.traineddata.gz",
+      "sha256": "2284f610f262a1b19ec8df9f196b9ff6ce38ddb4a66329e998941df4b8961c8d",
+      "bytes": 1423003
+    }
+  ]
+}
