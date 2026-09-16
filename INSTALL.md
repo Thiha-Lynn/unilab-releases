@@ -7,7 +7,7 @@ https://unilab.ztvmm.live/#/install
 | --- | --- | --- |
 | macOS | `mac-arm64.dmg` / `.zip`, `mac-x64.dmg` / `.zip` | Apple Silicon: arm64; Intel: x64 |
 | Windows | `win-x64.exe`, `win-arm64.exe` | Most PCs: x64; Windows on ARM: arm64 |
-| Linux | `linux-x64.AppImage` / `.deb`, `linux-arm64.AppImage` / `.deb` | Match your CPU; .deb is for Debian/Ubuntu |
+| Linux | `linux-x86_64.AppImage` / `linux-amd64.deb`, `linux-arm64.AppImage` / `.deb` | Match your CPU; .deb is for Debian/Ubuntu |
 | Android | Installable web app | Chrome menu → Add to home screen / Install app |
 | iOS / iPadOS | Installable web app | Safari → Share → Add to Home Screen |
 | ChromeOS / other modern browsers | Web app | Open site; install from browser menu where supported |
@@ -33,7 +33,7 @@ Core tools are bundled in desktop downloads. On the web, choose “Make UniLab w
 offline” on the home page and wait for success. OCR and background removal require
 optional engine/model downloads. Device memory and browser codec support constrain
 large video/media jobs. Desktop screen recording excludes system audio when using
-the fallback window picker. Camera/mic and screen permissions are requested only
+the fallback screen picker. Camera/mic and screen permissions are requested only
 when a recording tool asks for them. Screen recording may not work on mobile.
 
 Source files and results are held in renderer memory. Saving a download explicitly

@@ -6,7 +6,8 @@ const expected = [`UniLab-${version}-web.zip`];
 for (const arch of ['x64', 'arm64']) {
   for (const ext of ['dmg', 'zip']) expected.push(`UniLab-${version}-mac-${arch}.${ext}`);
   expected.push(`UniLab-${version}-win-${arch}.exe`);
-  for (const ext of ['AppImage', 'deb']) expected.push(`UniLab-${version}-linux-${arch}.${ext}`);
+  expected.push(`UniLab-${version}-linux-${arch === 'x64' ? 'x86_64' : arch}.AppImage`);
+  expected.push(`UniLab-${version}-linux-${arch === 'x64' ? 'amd64' : arch}.deb`);
 }
 for (const file of expected) if (!names.includes(file)) throw Error('Missing package: '+file);
 if (names.length !== expected.length) throw Error('Unexpected package set');

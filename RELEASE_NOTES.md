@@ -15,10 +15,17 @@ Desktop packages are **unsigned, unnotarized previews**. Use the hosted app if
 your OS refuses a package. Current 64-bit OS versions are recommended; no legacy
 OS compatibility or physical-device certification is claimed.
 
+Linux filenames use `x86_64` for Intel/AMD AppImage and `amd64` for Intel/AMD Debian packages; both refer to the x64 CPU family. The ARM files use `arm64`.
+
 ## Verification record
 
-- Source unit tests and the offline-size production-build gate run before packaging.
-- Desktop boundary policy tests run on each build runner.
+- 27 local source tests passed (25 portable tests plus two local lecture fixtures).
+  The 25 portable tests and production-build gate passed in CI. Core offline size:
+  7,402,384 bytes, below the 8,000,000-byte limit.
+- Two desktop boundary policy tests passed on each of the six build runners.
+- All six platform package jobs passed. The initial publication inventory check
+  rejected Linux CPU aliases; the corrected publication workflow verifies the
+  successful build run and reuses its immutable artifacts.
 - CI produces every named package, then checks the complete package inventory and
   generates SHA256SUMS.txt. Checksums verify bytes, not publisher code signing.
 - Browser UI: installation page checked at 320, 390, 768 and 1440 px. No horizontal
@@ -28,6 +35,9 @@ OS compatibility or physical-device certification is claimed.
   18-page PDF through the native Save dialog. Pages 2 and 18 rendered clearly
   in independent Poppler inspection. Phone handoff was corrected to the public
   HTTPS tool URL after this check.
+- Safari on macOS also converted and downloaded the 18-slide lecture: valid
+  18-page PDF, 5,962,837 bytes. Pages 2 and 18 rendered legibly in independent
+  inspection. Shadows differ slightly between engines; content and layout remain.
 - Live production: 99 asset hashes, correct MIME types, camera/mic policy, and
   source revision verified. Social PNG returns HTTP 200 with image/png, and
   crawler-style HTML requests include all Open Graph and Twitter tags.

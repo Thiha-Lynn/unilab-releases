@@ -1,0 +1,47 @@
+name: Publish verified existing package artifacts
+on:
+  workflow_dispatch:
+    inputs:
+      build_run:
+        description: Run ID whose six package jobs succeeded
+        required: true
+      version_tag:
+        description: Existing unpublished version tag
+        required: true
+        default: v0.2.0
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publish:
+    name: Validate build provenance and draft release
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BUILD_RUN: ${{ inputs.build_run }}
+      VERSION_TAG: ${{ inputs.version_tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Require all platform build jobs and exact tag provenance
+        run: |
+          node -e "if(!/^\d+$/.test(process.env.BUILD_RUN)||!/^v\d+\.\d+\.\d+$/.test(process.env.VERSION_TAG))throw Error('Invalid release inputs')"
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$BUILD_RUN" > build-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$BUILD_RUN/jobs?per_page=100" > build-jobs.json
+          node scripts/verify-build-run.cjs
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.build_run }}
+          pattern: package-*
+          path: distribution
+          merge-multiple: true
+      - run: node scripts/checksums.cjs
+      - name: Create draft from validated artifacts
+        run: |
+          gh release create "$VERSION_TAG" --verify-tag --draft --prerelease --title "UniLab $VERSION_TAG — desktop preview & mobile web app" --notes-file RELEASE_NOTES.md
+          gh release upload "$VERSION_TAG" distribution/* source-lock.json INSTALL.md
