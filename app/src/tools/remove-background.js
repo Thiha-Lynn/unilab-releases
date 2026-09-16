@@ -1,3 +1,4 @@
+import { debugError } from '../log.js';
 import { bundledOffline, offlineAsset } from '../offline-assets.js';
 import { canvasToBlob, el, formatBytes, loadImage, progressBar, stem, toast } from '../ui.js';
 import { toolShell } from '../tool-shell.js';
@@ -223,17 +224,6 @@ export default function render(container, tool) {
     };
   }
 
-  /**
-   * WebGPU turns a twenty-second wait into a three-second one *and* moves the
-   * work off the main thread, so the page keeps responding while it runs. It
-   * costs 11 MB more of runtime, which is worth it. Browsers without it fall
-   * back to WebAssembly on the CPU, where the tab does freeze for a while —
-   * the copy below says so rather than pretending otherwise.
-   *
-   * `gpuOk` is decided by actually asking for an adapter, which is the same
-   * test the library makes internally. Checking only for `navigator.gpu` would
-   * quote the student a download size for files that are never fetched.
-   */
   // CPU is the verified cross-platform engine. GPU→CPU retries can poison
   // ONNX's shared WASM initializer; do not probe or initialize a GPU session.
   function pickDevice() { return 'cpu'; }
@@ -288,7 +278,7 @@ export default function render(container, tool) {
         ui.gate.status('Download canceled. Nothing was kept.');
         toast('Canceled');
       } else {
-        console.error('Background removal initialization failed:', err);
+        debugError(err);
         ui.gate.status(friendlyError(err));
       }
       paintStatus(null);
@@ -331,8 +321,7 @@ export default function render(container, tool) {
       model: MODEL,
       ...(bundledOffline() ? {publicPath:offlineAsset('background/')} : {}),
       device,
-      // proxyToWorker only takes effect on the WebGPU path, but setting it is
-      // what keeps the tab alive there, so it is always on.
+      // The verified WASM CPU path does not support the GPU proxy.
       proxyToWorker: false,
       progress,
       fetchArgs: signal ? { signal } : {},

@@ -11,3 +11,5 @@ Desktop packages are unsigned/unnotarized previews; Android is signed with the p
 The combined distribution is AGPL-3.0-only because it includes IMG.LY background-removal. Original MIT and dependency notices are preserved. The corresponding UniLab source is in this tag's source archives; the unmodified background-removal source archive is provided as an additional asset. See THIRD_PARTY.md.
 
 HTML-to-PDF, social sharing metadata, local-file privacy protections and mobile layout improvements from 0.2.0 remain included. Converted HTML PDFs use rendered page images; use Print / Save as PDF for selectable text where supported. Interactive lecture scripts and external resources are intentionally excluded.
+
+Local bundled-browser smoke checks completed with external HTTPS blocked: English OCR recognized a synthetic scanned PDF correctly, and CPU background removal produced a preview. GPU acceleration is disabled in this release because failed GPU initialization prevented a reliable CPU retry. CPU inference can pause the interface on slower devices.
