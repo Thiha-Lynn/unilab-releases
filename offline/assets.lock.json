@@ -14,33 +14,9 @@
       "bytes": 4194304
     },
     {
-      "path": "background/0b5a74280e7b02e36dbb657b3e2a33480919507b6cf93750011d317d588d97d3",
-      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/0b5a74280e7b02e36dbb657b3e2a33480919507b6cf93750011d317d588d97d3",
-      "sha256": "0b5a74280e7b02e36dbb657b3e2a33480919507b6cf93750011d317d588d97d3",
-      "bytes": 4194304
-    },
-    {
-      "path": "background/2004e7fc76dd246901aaec08a7268cfb9832dcafa9e5a889b7f23f990ffe16ab",
-      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/2004e7fc76dd246901aaec08a7268cfb9832dcafa9e5a889b7f23f990ffe16ab",
-      "sha256": "2004e7fc76dd246901aaec08a7268cfb9832dcafa9e5a889b7f23f990ffe16ab",
-      "bytes": 49241
-    },
-    {
-      "path": "background/3d1ff5fb0d1bc301e7b3b33b49636afd74f8dc837a9580fb084de1c9b7d3a81c",
-      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/3d1ff5fb0d1bc301e7b3b33b49636afd74f8dc837a9580fb084de1c9b7d3a81c",
-      "sha256": "3d1ff5fb0d1bc301e7b3b33b49636afd74f8dc837a9580fb084de1c9b7d3a81c",
-      "bytes": 2041589
-    },
-    {
       "path": "background/3dae4038fc722ce4ce041fbc9c63fd5c2d9864bc732a01994518f96e9ec2f357",
       "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/3dae4038fc722ce4ce041fbc9c63fd5c2d9864bc732a01994518f96e9ec2f357",
       "sha256": "3dae4038fc722ce4ce041fbc9c63fd5c2d9864bc732a01994518f96e9ec2f357",
-      "bytes": 4194304
-    },
-    {
-      "path": "background/50c6f203a499b1f5d6af3649f3d85159333dc720b1384d322b4070ae9a46dc19",
-      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/50c6f203a499b1f5d6af3649f3d85159333dc720b1384d322b4070ae9a46dc19",
-      "sha256": "50c6f203a499b1f5d6af3649f3d85159333dc720b1384d322b4070ae9a46dc19",
       "bytes": 4194304
     },
     {
@@ -54,18 +30,6 @@
       "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/84addde9e759e397be2ee00d49a52dbf1b1a98863df325dc1c080252cbfe5fd9",
       "sha256": "84addde9e759e397be2ee00d49a52dbf1b1a98863df325dc1c080252cbfe5fd9",
       "bytes": 3431207
-    },
-    {
-      "path": "background/9232f8a6aabac61aee2a62e5a2556c83682dce65234d92455eb29fa0e7e98740",
-      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/9232f8a6aabac61aee2a62e5a2556c83682dce65234d92455eb29fa0e7e98740",
-      "sha256": "9232f8a6aabac61aee2a62e5a2556c83682dce65234d92455eb29fa0e7e98740",
-      "bytes": 4194304
-    },
-    {
-      "path": "background/9bd2256393c4c4fc105643b7d71d4d39e83c3577ffd91aa6d53ce8971f2ac995",
-      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/9bd2256393c4c4fc105643b7d71d4d39e83c3577ffd91aa6d53ce8971f2ac995",
-      "sha256": "9bd2256393c4c4fc105643b7d71d4d39e83c3577ffd91aa6d53ce8971f2ac995",
-      "bytes": 4194304
     },
     {
       "path": "background/9d4c548caff42434be7b42d2f46e35a0da25f4d679ff4218b72bc8cf8fd4d291",
@@ -84,12 +48,6 @@
       "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/aa485cf3fa61ca007b3e1ca7b65068328270f072b61cdda490b732211e1da5d9",
       "sha256": "aa485cf3fa61ca007b3e1ca7b65068328270f072b61cdda490b732211e1da5d9",
       "bytes": 25539
-    },
-    {
-      "path": "background/afd167a9b8713d055cca15b3595e0f296d1c68a285075c87c32ff52884120809",
-      "url": "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/afd167a9b8713d055cca15b3595e0f296d1c68a285075c87c32ff52884120809",
-      "sha256": "afd167a9b8713d055cca15b3595e0f296d1c68a285075c87c32ff52884120809",
-      "bytes": 4194304
     },
     {
       "path": "background/b275d60a2e1790daff7c9040fd99a3897bfdf7d1550da1ccf8bea60902e9c585",

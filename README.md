@@ -16,7 +16,7 @@ Read [INSTALL.md](INSTALL.md) for processor selection, limitations and installat
 
 ## Development and reproducible builds
 
-Use Node 24 and npm. In `app/`, run `npm ci`, `npm test`, then `npm run dev` or `npm run build`. At repository root, run `npm test`, `npm run prepare:web`, and `npm run bundle:offline`. Bundling checks every downloaded model against `offline/assets.lock.json`. This downloads about 113 MB of model/runtime/language data, plus local OCR engines.
+Use Node 24 and npm. In `app/`, run `npm ci`, `npm test`, then `npm run dev` or `npm run build`. At repository root, run `npm test`, `npm run prepare:web`, and `npm run bundle:offline`. Bundling checks every downloaded model against `offline/assets.lock.json`. This downloads about 90 MB of model/runtime/language data, plus local OCR engines.
 
 Desktop: run `npm ci` at the root, then `npm run package -- --mac --arm64` (or `--win/--linux` and `--x64/--arm64`). Use the matching operating system for release builds.
 

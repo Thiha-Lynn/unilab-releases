@@ -177,7 +177,7 @@ export default function render(container, tool) {
       let worker;
       try {
         worker = await createWorker(langs.join('+'), 1, {
-          ...(bundledOffline() ? {workerPath:offlineAsset('ocr/worker.min.js'),corePath:offlineAsset('ocr/core'),langPath:offlineAsset('ocr/lang'),workerBlobURL:false} : {}),
+          ...(bundledOffline() ? {workerPath:offlineAsset('ocr/worker.min.js'),corePath:offlineAsset('ocr/core'),langPath:offlineAsset('ocr/lang'),workerBlobURL:false, gzip:false} : {}),
           logger: (m) => {
             if (ctx.signal?.aborted) return;
             if (phase === 'setup') { ctx.setBusy(m.progress ?? 0, friendlyStatus(m.status)); return; }

@@ -1,58 +1,4 @@
 {
-  "/onnxruntime-web/ort-wasm-simd-threaded.jsep.wasm": {
-    "chunks": [
-      {
-        "hash": "9bd2256393c4c4fc105643b7d71d4d39e83c3577ffd91aa6d53ce8971f2ac995",
-        "name": "9bd2256393c4c4fc105643b7d71d4d39e83c3577ffd91aa6d53ce8971f2ac995",
-        "offsets": [
-          0,
-          4194304
-        ]
-      },
-      {
-        "hash": "9232f8a6aabac61aee2a62e5a2556c83682dce65234d92455eb29fa0e7e98740",
-        "name": "9232f8a6aabac61aee2a62e5a2556c83682dce65234d92455eb29fa0e7e98740",
-        "offsets": [
-          4194304,
-          8388608
-        ]
-      },
-      {
-        "hash": "0b5a74280e7b02e36dbb657b3e2a33480919507b6cf93750011d317d588d97d3",
-        "name": "0b5a74280e7b02e36dbb657b3e2a33480919507b6cf93750011d317d588d97d3",
-        "offsets": [
-          8388608,
-          12582912
-        ]
-      },
-      {
-        "hash": "50c6f203a499b1f5d6af3649f3d85159333dc720b1384d322b4070ae9a46dc19",
-        "name": "50c6f203a499b1f5d6af3649f3d85159333dc720b1384d322b4070ae9a46dc19",
-        "offsets": [
-          12582912,
-          16777216
-        ]
-      },
-      {
-        "hash": "afd167a9b8713d055cca15b3595e0f296d1c68a285075c87c32ff52884120809",
-        "name": "afd167a9b8713d055cca15b3595e0f296d1c68a285075c87c32ff52884120809",
-        "offsets": [
-          16777216,
-          20971520
-        ]
-      },
-      {
-        "hash": "3d1ff5fb0d1bc301e7b3b33b49636afd74f8dc837a9580fb084de1c9b7d3a81c",
-        "name": "3d1ff5fb0d1bc301e7b3b33b49636afd74f8dc837a9580fb084de1c9b7d3a81c",
-        "offsets": [
-          20971520,
-          23013109
-        ]
-      }
-    ],
-    "size": 23013109,
-    "mime": "application/wasm"
-  },
   "/onnxruntime-web/ort-wasm-simd-threaded.wasm": {
     "chunks": [
       {
@@ -82,20 +28,6 @@
     ],
     "size": 11819815,
     "mime": "application/wasm"
-  },
-  "/onnxruntime-web/ort-wasm-simd-threaded.jsep.mjs": {
-    "chunks": [
-      {
-        "hash": "2004e7fc76dd246901aaec08a7268cfb9832dcafa9e5a889b7f23f990ffe16ab",
-        "name": "2004e7fc76dd246901aaec08a7268cfb9832dcafa9e5a889b7f23f990ffe16ab",
-        "offsets": [
-          0,
-          49241
-        ]
-      }
-    ],
-    "size": 49241,
-    "mime": "text/javascript"
   },
   "/onnxruntime-web/ort-wasm-simd-threaded.mjs": {
     "chunks": [

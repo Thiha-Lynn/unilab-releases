@@ -5,7 +5,7 @@ const base='https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/';
 const response=await fetch(base+'resources.json');
 if(!response.ok)throw Error('Cannot read versioned background metadata');
 const metadata=await response.json();
-const selected=Object.fromEntries(Object.entries(metadata).filter(([key])=>key.startsWith('/onnxruntime-web/')||key==='/models/isnet_quint8'));
+const selected=Object.fromEntries(Object.entries(metadata).filter(([key])=>(key.startsWith('/onnxruntime-web/')&&!key.includes('.jsep.'))||key==='/models/isnet_quint8'));
 writeFileSync('offline/background-resources.json',JSON.stringify(selected,null,2)+'\n');
 const files=Object.values(selected).flatMap(entry=>entry.chunks.map(c=>({path:'background/'+c.name,url:base+c.name,sha256:c.hash,bytes:c.offsets[1]-c.offsets[0]})));
 const langs=['tha','eng','mya','chi_sim','chi_tra','jpn','kor','lao','khm','vie','msa','ind','hin','ara','rus','fra','deu','spa','por'];

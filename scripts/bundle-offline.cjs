@@ -23,7 +23,16 @@ async function main() {
   for(const file of fs.readdirSync('app/node_modules/tesseract.js-core').filter(f=>f.endsWith('.wasm.js')))
     fs.copyFileSync('app/node_modules/tesseract.js-core/'+file,path.join(root,'ocr/core',file));
   fs.writeFileSync('web/offline-config.js','globalThis.__UNILAB_OFFLINE__ = true;\n');
-  fs.copyFileSync('offline/assets.lock.json','web/offline/assets.lock.json');
+  // AAPT rewrites .gz assets. Ship raw traineddata consistently on every platform.
+  const bundledFiles=lock.files.map(item=>{
+    if(!item.path.endsWith('.traineddata.gz'))return item;
+    const source=path.join(root,item.path);
+    const bytes=require('node:zlib').gunzipSync(fs.readFileSync(source));
+    const name=item.path.slice(0,-3);
+    fs.writeFileSync(path.join(root,name),bytes);fs.unlinkSync(source);
+    return {...item,path:name,bytes:bytes.length,sha256:crypto.createHash('sha256').update(bytes).digest('hex'),downloadSha256:item.sha256};
+  });
+  fs.writeFileSync('web/offline/assets.lock.json',JSON.stringify({...lock,files:bundledFiles},null,2)+'\n');
   require('./licenses.cjs');
   const {writeManifests}=await import('../app/scripts/build-manifest.js');
   const release=JSON.parse(fs.readFileSync('web/release.json'));

@@ -64,8 +64,6 @@ export default function render(container, tool) {
   const ui = {};        // sidebar controls, filled in by options()
   let dom = null;       // workarea nodes, built once
   let downloadAbort = null;
-  let gpuOk = null;       // null = not probed yet; set by the adapter probe below
-  let gpuProbe = null;    // the probe itself, so a click can wait for it
 
   toolShell(container, tool, {
     accept: 'image/*',
@@ -128,7 +126,7 @@ export default function render(container, tool) {
         throw new Error(
           state.ready
             ? 'The edges have not been found yet. Press "Find the edges" in the panel on the right.'
-            : `The cut-out model has not been downloaded yet. Press "Download the cut-out model" in the panel on the right — it is ${formatBytes(downloadSize())}, and it only happens once.`,
+            : (bundledOffline() ? 'Press "Load the bundled cut-out model" first.' : `The cut-out model has not been downloaded yet. Press "Download the cut-out model" — ${formatBytes(downloadSize())}, once.`),
         );
       }
 
@@ -152,14 +150,6 @@ export default function render(container, tool) {
       };
     },
   });
-
-  // Probing for a graphics adapter is async, so for the first few milliseconds
-  // the button quotes the larger of the two downloads. A number that only ever
-  // goes down is fair; one that goes up after you have read it is not.
-  gpuProbe = (async () => {
-    try { gpuOk = !!(navigator.gpu && await navigator.gpu.requestAdapter()); } catch { gpuOk = false; }
-    ui.gate?.setLabel();
-  })();
 
   // Leaving the tool drops the photo and the mask. The ONNX session itself is
   // held inside the library's own memoised cache and is released with the page.
@@ -187,7 +177,7 @@ export default function render(container, tool) {
 
     const setLabel = () => {
       ui.info?.set(state.ready
-        ? 'The model is downloaded and cached by your browser, so every photo after the first one is instant. Nothing about your photo ever leaves this device.'
+        ? 'The model is ready to reuse. Each photo is processed on this device.'
         : infoText());
       if (state.busy) return;
       btn.textContent = !state.ready
@@ -244,9 +234,9 @@ export default function render(container, tool) {
    * test the library makes internally. Checking only for `navigator.gpu` would
    * quote the student a download size for files that are never fetched.
    */
-  function pickDevice() {
-    return gpuOk === false ? 'cpu' : 'gpu';
-  }
+  // CPU is the verified cross-platform engine. GPU→CPU retries can poison
+  // ONNX's shared WASM initializer; do not probe or initialize a GPU session.
+  function pickDevice() { return 'cpu'; }
 
   /** What the first press of the button will actually cost, in bytes. */
   function downloadSize() {
@@ -259,7 +249,7 @@ export default function render(container, tool) {
    * on mobile data is owed the number they will actually be charged for.
    */
   function infoText() {
-    if (bundledOffline()) return 'The cut-out model and its CPU/GPU engines are bundled in this app. Load them from this device to remove backgrounds offline. Large images still need available memory.';
+    if (bundledOffline()) return 'The cut-out model and its CPU engine are bundled in this app. Load them from this device to remove backgrounds offline. Large images still need available memory.';
     return `Cutting a subject out needs a model file and the code that runs it — ${formatBytes(downloadSize())} in total (${formatBytes(MODEL_BYTES)} of it is the model). They come down once, from a public file host, and your browser keeps them after that. Nothing about your photo goes with the request: it is opened, measured and rewritten by this page, on this device.`;
   }
 
@@ -280,7 +270,7 @@ export default function render(container, tool) {
       ui.gate.busy(true, 'Working…');
       ui.gate.show(null, state.device === 'gpu'
         ? 'Finding the edges on the graphics chip…'
-        : 'Finding the edges — this browser has no WebGPU, so the page may stop responding for a few seconds.');
+        : 'Finding the edges — CPU processing may pause the page for a few seconds.');
       paintStatus('Finding the edges…');
 
       // Yield first, so the status text above actually paints before a CPU run
@@ -291,13 +281,14 @@ export default function render(container, tool) {
       if (gen !== state.loadGen) return;
       state.mask = mask;
       state.bbox = bbox;
-      ui.gate.status('Ready. The model stays cached, so the next photo is instant.');
+      ui.gate.status('Ready. The model can be reused for the next photo.');
       update();
     } catch (err) {
       if (err?.name === 'AbortError' || /cancel/i.test(err?.message ?? '')) {
         ui.gate.status('Download canceled. Nothing was kept.');
         toast('Canceled');
       } else {
+        console.error('Background removal initialization failed:', err);
         ui.gate.status(friendlyError(err));
       }
       paintStatus(null);
@@ -313,8 +304,7 @@ export default function render(container, tool) {
     // Imported here and nowhere else: opening this tool page must not pull a
     // megabyte of ONNX glue, and must certainly not touch the network.
     const bg = await import('@imgly/background-removal');
-    await gpuProbe;               // so the size on the button is the size we fetch
-    state.device = pickDevice();
+    state.device = 'cpu';
 
     const got = new Map();      // resource key → bytes so far
     // Read at progress time, not captured: a WebGPU session that fails to build
@@ -328,24 +318,11 @@ export default function render(container, tool) {
       // The denominator is the measured estimate until the real totals exceed
       // it, so the bar never sits at 100% with a file still coming down.
       const cap = Math.max(expected(), known);
-      ui.gate.show(Math.min(0.99, done / cap), `Downloading the model — ${formatBytes(done)} of ${formatBytes(cap)}`);
+      ui.gate.show(Math.min(0.99, done / cap), `${bundledOffline() ? "Loading" : "Downloading"} the model — ${formatBytes(done)} of ${formatBytes(cap)}`);
     };
 
     ui.gate.show(0, bundledOffline() ? 'Loading the bundled model…' : 'Starting the download…');
-    try {
-      await bg.preload(config(state.device, onProgress, signal));
-    } catch (err) {
-      if (signal.aborted) throw err;
-      if (state.device === 'gpu') {
-        // Some machines advertise WebGPU and then fail to build a session on it.
-        // Falling back costs a second, smaller download rather than an error.
-        state.device = 'cpu';
-        ui.gate.show(0, 'The graphics chip would not take it — falling back to the slower CPU version…');
-        await bg.preload(config('cpu', onProgress, signal));
-      } else {
-        throw err;
-      }
-    }
+    await bg.preload(config('cpu', onProgress, signal));
     ui.gate.show(1, 'Model ready.');
   }
 
@@ -356,7 +333,7 @@ export default function render(container, tool) {
       device,
       // proxyToWorker only takes effect on the WebGPU path, but setting it is
       // what keeps the tab alive there, so it is always on.
-      proxyToWorker: true,
+      proxyToWorker: false,
       progress,
       fetchArgs: signal ? { signal } : {},
       output: { format: 'image/png' },
@@ -725,7 +702,7 @@ export default function render(container, tool) {
 
     ui.explain.set(
       !state.mask
-        ? `Nothing has been cut out yet. ${state.ready ? 'Press "Find the edges" above.' : `Press the download button above — ${formatBytes(downloadSize())}, once, and your photo stays here.`}`
+        ? `Nothing has been cut out yet. ${state.ready ? 'Press "Find the edges" above.' : (bundledOffline() ? 'Press "Load the bundled cut-out model" above.' : `Press the download button above — ${formatBytes(downloadSize())}, once, and your photo stays here.`)}`
         : `The background will be ${where}${cropping ? ', cropped tight to the subject' : ''}${feather ? `, with a ${feather} px soft edge` : ''}.`,
     );
     paintPreview();

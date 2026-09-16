@@ -23,7 +23,8 @@
     "copyright": "Copyright \u00a9 2026 UniLab contributors",
     "artifactName": "UniLab-${version}-${os}-${arch}.${ext}",
     "directories": {
-      "output": "out"
+      "output": "out",
+      "app": "."
     },
     "files": [
       "desktop/**",

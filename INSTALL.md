@@ -20,7 +20,7 @@ Desktop filenames begin with `UniLab-0.3.0-`. Check your processor before downlo
 
 ## Offline operation
 
-APK, desktop and portable-web distributions contain the app, OCR worker/WASM engines, all 19 offered OCR languages, and CPU/GPU background-removal model/runtime assets. They do not require a network connection to initialize those tools. Packages are substantially larger than the hosted app's core because these assets and desktop browser engines are included.
+APK, desktop and portable-web distributions contain the app, OCR worker/WASM engines, all 19 offered OCR languages, and CPU background-removal model/runtime assets. They do not require a network connection to initialize those tools. Packages are substantially larger than the hosted app's core because these assets and desktop browser engines are included.
 
 On the hosted web/PWA version, select **Make UniLab work offline** and wait for confirmation before disconnecting. Core cache is under 8 MB. OCR and background removal still need online engine/model/language downloads on first use. Browser storage eviction can remove cached assets. Installing a PWA does not give it the APK's bundled assets.
 
