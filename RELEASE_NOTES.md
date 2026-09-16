@@ -21,8 +21,16 @@ OS compatibility or physical-device certification is claimed.
 - Desktop boundary policy tests run on each build runner.
 - CI produces every named package, then checks the complete package inventory and
   generates SHA256SUMS.txt. Checksums verify bytes, not publisher code signing.
-- Browser UI: installation page checked at 320 and 390 px, without horizontal
-  overflow or text/button overlap. Full desktop and tablet checks follow below.
+- Browser UI: installation page checked at 320, 390, 768 and 1440 px. No horizontal
+  overflow in the measured layouts; overlapping button spacing was fixed.
+- macOS Apple Silicon interactive smoke check: packaged app launched, opened a
+  local lecture HTML, rendered 18 slides, converted and saved a 4,696,676-byte
+  18-page PDF through the native Save dialog. Pages 2 and 18 rendered clearly
+  in independent Poppler inspection. Phone handoff was corrected to the public
+  HTTPS tool URL after this check.
+- Live production: 99 asset hashes, correct MIME types, camera/mic policy, and
+  source revision verified. Social PNG returns HTTP 200 with image/png, and
+  crawler-style HTML requests include all Open Graph and Twitter tags.
 - Earlier same-day source checks: all 59 routes loaded, lecture PDF exports and
   PDF compression completed, raster redaction output was inspected, core offline
   conversion succeeded. These checks are not an all-tools processing matrix.

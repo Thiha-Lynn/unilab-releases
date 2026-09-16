@@ -32,11 +32,11 @@ jobs:
       - name: Test and build web application
         working-directory: source
         env:
-          GITHUB_SHA: ${{ steps.lock.outputs.revision }}
+          SOURCE_REVISION: ${{ steps.lock.outputs.revision }}
         run: |
           npm ci
           npm test
-          npm run build
+          GITHUB_SHA="$SOURCE_REVISION" npm run build
           npm sbom --sbom-format cyclonedx --omit=dev > dist/web-dependencies.cdx.json
       - name: Verify and prepare desktop assets
         run: npm run prepare:web
