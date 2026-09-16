@@ -35,7 +35,10 @@ app.whenReady().then(() => {
     return contents === window?.webContents && isAppURL(origin) && permission === 'media' && mediaApprovals.has(details.mediaType);
   });
   ses.setPermissionRequestHandler(async (contents, permission, callback, details) => {
-    if (contents !== window?.webContents || !isAppURL(details.requestingUrl) || !details.isMainFrame || permission !== 'media') return callback(false);
+    if (contents !== window?.webContents || !isAppURL(details.requestingUrl) || !details.isMainFrame) return callback(false);
+    // This permits reaching the picker, never capture without a chosen source.
+    if (permission === 'display-capture') return callback(true);
+    if (permission !== 'media') return callback(false);
     const types = details.mediaTypes || [];
     if (!types.length || types.some(type => !['audio', 'video'].includes(type))) return callback(false);
     try {
@@ -49,13 +52,13 @@ app.whenReady().then(() => {
     } catch { callback(false); }
   });
   ses.setDisplayMediaRequestHandler(async (request, callback) => {
-    if (!window || request.frame !== window.webContents.mainFrame || !isAppURL(request.securityOrigin)) return callback({});
+    if (!window || !request.userGesture || request.frame !== window.webContents.mainFrame || !isAppURL(request.securityOrigin)) return callback({});
     try {
-      const sources = await desktopCapturer.getSources({ types: ['screen', 'window'], thumbnailSize: { width: 0, height: 0 } });
-      const choices = sources.slice(0, 12);
+      const sources = await desktopCapturer.getSources({ types: ['screen'], thumbnailSize: { width: 0, height: 0 } });
+      const choices = sources.slice(0, 6);
       if (!choices.length) return callback({});
-      const { response } = await dialog.showMessageBox(window, { title: 'Choose what to record',
-        message: 'Select one screen or window. System audio is not included in this desktop preview.',
+      const { response } = await dialog.showMessageBox(window, { title: 'Choose a screen to record',
+        message: 'Select one entire screen. System audio is not included in this desktop preview.',
         buttons: ['Cancel', ...choices.map(s => s.name)], defaultId: 0, cancelId: 0,
       });
       callback(response > 0 ? { video: choices[response - 1] } : {});
