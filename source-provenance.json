@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/Thiha-Lynn/unilab-releases",
+  "sourceDirectory": "app",
+  "importedFrom": {
+    "repository": "https://github.com/Thiha-Lynn/unilab",
+    "revision": "21358de15b5ef6d0d8e53a38edc9fce0298b62b1",
+    "version": "0.2.0"
+  },
+  "note": "Independent product source. Coursework, interviews and lecture attachments are not imported."
+}

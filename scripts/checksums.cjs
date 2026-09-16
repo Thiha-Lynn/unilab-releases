@@ -2,7 +2,7 @@ const { readdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { createHash } = require('node:crypto');
 const { version } = require('../package.json');
 const names = readdirSync('distribution').filter(n => !n.endsWith('.txt')).sort();
-const expected = [`UniLab-${version}-web.zip`];
+const expected = [`UniLab-${version}-web.zip`, `UniLab-${version}-android.apk`, `UniLab-${version}-background-removal-source.tar.gz`];
 for (const arch of ['x64', 'arm64']) {
   for (const ext of ['dmg', 'zip']) expected.push(`UniLab-${version}-mac-${arch}.${ext}`);
   expected.push(`UniLab-${version}-win-${arch}.exe`);

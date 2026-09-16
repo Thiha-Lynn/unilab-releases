@@ -1,16 +1,17 @@
 {
   "name": "unilab-desktop",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "UniLab \u2014 private student tools, desktop preview",
+  "description": "UniLab \u2014 private, offline tools for web, Android and desktop",
   "author": "UniLab contributors",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "main": "desktop/main.cjs",
   "scripts": {
     "start": "electron .",
     "test": "node --test test/*.test.cjs",
     "prepare:web": "node scripts/prepare-web.cjs",
-    "package": "electron-builder --publish never"
+    "package": "electron-builder --publish never",
+    "bundle:offline": "node scripts/bundle-offline.cjs"
   },
   "devDependencies": {
     "electron": "44.4.1",
@@ -27,7 +28,6 @@
     "files": [
       "desktop/**",
       "web/**",
-      "source-lock.json",
       "LICENSE",
       "package.json"
     ],

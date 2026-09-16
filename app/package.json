@@ -1,0 +1,40 @@
+{
+  "name": "unilab",
+  "private": true,
+  "version": "0.3.0",
+  "type": "module",
+  "description": "UniLab \u2014 every tool a student needs, free and private. All processing happens in your browser.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test \"test/**/*.test.mjs\""
+  },
+  "dependencies": {
+    "@capacitor/core": "8.5.2",
+    "@imgly/background-removal": "^1.7.0",
+    "@jitsi/rnnoise-wasm": "^0.2.1",
+    "@mediabunny/mp3-encoder": "^1.55.2",
+    "@pdf-lib/fontkit": "^1.1.1",
+    "browser-image-compression": "^2.0.2",
+    "cropperjs": "^1.6.2",
+    "css-tree": "^3.2.1",
+    "dompurify": "^3.4.15",
+    "gifenc": "^1.0.3",
+    "heic2any": "^0.0.4",
+    "html-to-image": "^1.11.13",
+    "jszip": "^3.10.1",
+    "mammoth": "^1.12.1",
+    "mediabunny": "^1.55.2",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.2.108",
+    "qrcode": "^1.5.4",
+    "tesseract.js": "^7.0.0"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "^1.0.9",
+    "jsdom": "^29.1.1",
+    "vite": "^8.2.1"
+  },
+  "license": "AGPL-3.0-only"
+}

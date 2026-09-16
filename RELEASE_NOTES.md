@@ -1,51 +1,13 @@
-# UniLab 0.2.0 preview
+UniLab 0.3.0 adds a signed Android APK and first-launch offline OCR/background removal in all native packages. Android exports use the system Save dialog with bounded memory transfer and no temporary output copy. The UI accounts for Android system bars and keyboards.
 
-HTML lecture-to-PDF, 59 local-processing tools, social-sharing image previews,
-install instructions and the first desktop distributions. Application source and
-build provenance are recorded in source-lock.json. The hosted release is
-https://unilab.ztvmm.live/ and mobile installation is explained at
-https://unilab.ztvmm.live/#/install.
+The open-source application now lives in this release repository. Builds use its own pinned revision; coursework and assignment evidence remain in the separate `Thiha-Lynn/unilab` repository.
 
-## Packages
+Downloads: Android APK; macOS DMG/ZIP, Windows EXE and Linux DEB/AppImage for x64 and ARM64; portable web ZIP. All native/portable bundles include 19 OCR languages and the background-removal model. The hosted PWA retains its under-8-MB core cache. iPhone/iPad use the PWA, with optional assets downloaded online on first use; no native IPA is included.
 
-macOS (Intel / Apple Silicon) DMG and ZIP; Windows (x64 / ARM64) installers;
-Linux (x64 / ARM64) AppImage and Debian packages; portable web ZIP. Android,
-iPhone and iPad use the installable web app. **No APK or IPA is included.**
-Desktop packages are **unsigned, unnotarized previews**. Use the hosted app if
-your OS refuses a package. Current 64-bit OS versions are recommended; no legacy
-OS compatibility or physical-device certification is claimed.
+Validation gates: 28 application tests, two desktop policy tests, production build and core-size budget, integrity verification of every offline data file, seven native build targets, Android lint and APK asset inspection. These checks do not certify every tool on every physical device. Android/Windows/Linux physical-device testing, long-job performance, and real-device recording/accessibility remain open.
 
-Linux filenames use `x86_64` for Intel/AMD AppImage and `amd64` for Intel/AMD Debian packages; both refer to the x64 CPU family. The ARM files use `arm64`.
+Desktop packages are unsigned/unnotarized previews; Android is signed with the project's release certificate. No automatic updater. Modern OS/browser engines are required. See INSTALL.md for platform-specific instructions and limits.
 
-## Verification record
+The combined distribution is AGPL-3.0-only because it includes IMG.LY background-removal. Original MIT and dependency notices are preserved. The corresponding UniLab source is in this tag's source archives; the unmodified background-removal source archive is provided as an additional asset. See THIRD_PARTY.md.
 
-- 27 local source tests passed (25 portable tests plus two local lecture fixtures).
-  The 25 portable tests and production-build gate passed in CI. Core offline size:
-  7,402,384 bytes, below the 8,000,000-byte limit.
-- Two desktop boundary policy tests passed on each of the six build runners.
-- All six platform package jobs passed. The initial publication inventory check
-  rejected Linux CPU aliases; the corrected publication workflow verifies the
-  successful build run and reuses its immutable artifacts.
-- CI produces every named package, then checks the complete package inventory and
-  generates SHA256SUMS.txt. Checksums verify bytes, not publisher code signing.
-- Browser UI: installation page checked at 320, 390, 768 and 1440 px. No horizontal
-  overflow in the measured layouts; overlapping button spacing was fixed.
-- macOS Apple Silicon interactive smoke check: packaged app launched, opened a
-  local lecture HTML, rendered 18 slides, converted and saved a 4,696,676-byte
-  18-page PDF through the native Save dialog. Pages 2 and 18 rendered clearly
-  in independent Poppler inspection. Phone handoff was corrected to the public
-  HTTPS tool URL after this check.
-- Safari on macOS also converted and downloaded the 18-slide lecture: valid
-  18-page PDF, 5,962,837 bytes. Pages 2 and 18 rendered legibly in independent
-  inspection. Shadows differ slightly between engines; content and layout remain.
-- Live production: 99 asset hashes, correct MIME types, camera/mic policy, and
-  source revision verified. Social PNG returns HTTP 200 with image/png, and
-  crawler-style HTML requests include all Open Graph and Twitter tags.
-- Earlier same-day source checks: all 59 routes loaded, lecture PDF exports and
-  PDF compression completed, raster redaction output was inspected, core offline
-  conversion succeeded. These checks are not an all-tools processing matrix.
-
-Physical iOS/Android phones, Windows/Linux interactive runs, all codecs, all tool
-workflows and all accessibility combinations have not been tested. Recording and
-optional AI/OCR downloads depend on device support and permission. The course's
-instructor approval and team scope decisions remain pending separately.
+HTML-to-PDF, social sharing metadata, local-file privacy protections and mobile layout improvements from 0.2.0 remain included. Converted HTML PDFs use rendered page images; use Print / Save as PDF for selectable text where supported. Interactive lecture scripts and external resources are intentionally excluded.

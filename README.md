@@ -1,34 +1,31 @@
-# UniLab releases
+# UniLab
 
-Versioned desktop packaging for [UniLab](https://unilab.ztvmm.live), the private
-student toolbox. Application source stays in [Thiha-Lynn/unilab](https://github.com/Thiha-Lynn/unilab).
+Private PDF, image, audio, video and text tools. Use [UniLab online](https://unilab.ztvmm.live/) or get the [platform packages](https://github.com/Thiha-Lynn/unilab-releases/releases).
 
-[Download releases](https://github.com/Thiha-Lynn/unilab-releases/releases) ·
-[Installation guide](INSTALL.md) · [Testing and limitations](RELEASE_NOTES.md)
+This is the independent **open-source product and release repository**. Application source lives in `app/`, the desktop shell in `desktop/`, and the Android app in `mobile/`. Builds do not check out or depend on the assignment repository. Academic requirements, interviews, lecturer material and submission evidence stay in the separate [assignment repository](https://github.com/Thiha-Lynn/unilab). `source-provenance.json` records the original import.
 
-This repository contains the Electron shell, reproducible build configuration,
-source revision lock and release notes. No student lecture files, credentials,
-signing identities, processed user files or generated installers are committed.
+## Version 0.3.0
 
-## Reproduce
+- Android 10+ APK with a native system Save dialog, bundled offline assets and system-bar/keyboard spacing.
+- macOS DMG/ZIP, Windows EXE, Linux DEB/AppImage, each for Intel/AMD x64 and ARM64.
+- iPhone/iPad and other current browsers: installable web app. There is no native IPA in this release.
+- Native packages include all 19 OCR language packs and the background-removal model for first-launch offline use. The hosted web app keeps its core offline cache below 8 MB; optional engines need an online first use.
+- HTML lectures to readable PDF, original-layout preview, local-only conversion, Open Graph/social preview metadata.
 
-Use Node 24. Clone the source repository into `source/` and check out the exact
-revision in `source-lock.json`. Run `npm ci`, `npm test`, `npm run build` there
-(with GITHUB_SHA unset or equal to that source revision). At this repository root,
-run `npm ci`, `npm test`, `npm run prepare:web`, and `npm run package -- --mac --arm64`
-(or `--win --x64`, `--linux --x64`, etc.). macOS packaging needs macOS; build each
-OS with the provided GitHub Actions matrix. `npm start` launches the local shell.
+Read [INSTALL.md](INSTALL.md) for processor selection, limitations and installation. Native packages are previews: desktop packages are unsigned/unnotarized; Android APKs are signed with the project's release key. Build success is not physical-device certification.
 
-The pipeline verifies the source SHA, all web-asset hashes, versions and expected
-package inventory. Version tags produce a **draft prerelease** with SHA-256 sums;
-publish only after inspecting results and updating the test record. Installation
-packages are not a claim of physical-device testing or an App Store approval.
+## Development and reproducible builds
 
-## Desktop boundary
+Use Node 24 and npm. In `app/`, run `npm ci`, `npm test`, then `npm run dev` or `npm run build`. At repository root, run `npm test`, `npm run prepare:web`, and `npm run bundle:offline`. Bundling checks every downloaded model against `offline/assets.lock.json`. This downloads about 113 MB of model/runtime/language data, plus local OCR engines.
 
-Packaged app://unilab assets only. Sandboxed, isolated renderer without Node or a
-privileged preload bridge. Permissions default-deny; recording devices require a
-user prompt. New windows never inherit app privileges, and external navigation is
-limited to the canonical website and GitHub in the system browser. Uploaded HTML
-uses the source application's script-free sandbox and sanitization. No local web
-server, file upload API, telemetry, account, or updater service is added.
+Desktop: run `npm ci` at the root, then `npm run package -- --mac --arm64` (or `--win/--linux` and `--x64/--arm64`). Use the matching operating system for release builds.
+
+Android: Java 21, Android SDK 36/build-tools 36.0.0. Run `npm ci` and `npx cap sync android` in `mobile/`, then `./gradlew testReleaseUnitTest lintRelease assembleRelease` in `mobile/android/`. Sign the unsigned APK with your own key using Android `apksigner`. Private production keys are outside this repository and are provided to tag workflows as GitHub secrets.
+
+The protected pull-request workflow tests the app, verifies the offline bundle, and compiles all seven native targets. A matching `vX.Y.Z` tag builds packages, verifies their complete inventory and hashes, signs the APK, and creates a draft GitHub release. Publish only after reviewing the checks. Download `SHA256SUMS.txt` and `ANDROID-SIGNING-CERTIFICATE.txt` with packages.
+
+Production deploy: `cd app && ./deploy.sh` uses a clean checked-out revision, tests, verifies file hashes and atomically promotes the release on the configured UniLab host. Assignment Pages remains a separate coursework preview.
+
+## License and source
+
+The combined distribution is AGPL-3.0-only, including the unmodified IMG.LY background-removal dependency. Original MIT notices are retained in `LICENSE-MIT`. See [THIRD_PARTY.md](THIRD_PARTY.md), bundled dependency notices and the upstream source archive attached to releases. Your documents remain yours. No warranty is provided.
