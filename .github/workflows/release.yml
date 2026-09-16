@@ -1,0 +1,120 @@
+name: Versioned platform packages
+on:
+  push:
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  web:
+    name: Verify pinned web source
+    runs-on: ubuntu-latest
+    outputs:
+      revision: ${{ steps.lock.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Read release lock
+        id: lock
+        run: |
+          node -e "const l=require('./source-lock.json');if(!/^[a-f0-9]{40}$/.test(l.revision))throw Error('Bad source revision');console.log('revision='+l.revision)" >> "$GITHUB_OUTPUT"
+          node -e "const p=require('./package.json');if(process.env.GITHUB_REF_TYPE==='tag'&&process.env.GITHUB_REF_NAME!=='v'+p.version)throw Error('Tag/version mismatch')"
+      - name: Test desktop boundary policy
+        run: npm test
+      - uses: actions/checkout@v4
+        with:
+          repository: Thiha-Lynn/unilab
+          ref: ${{ steps.lock.outputs.revision }}
+          path: source
+      - name: Test and build web application
+        working-directory: source
+        env:
+          GITHUB_SHA: ${{ steps.lock.outputs.revision }}
+        run: |
+          npm ci
+          npm test
+          npm run build
+          npm sbom --sbom-format cyclonedx --omit=dev > dist/web-dependencies.cdx.json
+      - name: Verify and prepare desktop assets
+        run: npm run prepare:web
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verified-web
+          path: web/
+      - name: Build universal web distribution
+        run: |
+          mkdir -p distribution
+          cp INSTALL.md web/INSTALL.md
+          cp source-lock.json web/source-lock.json
+          cp scripts/serve.cjs web/serve.cjs
+          cd web
+          zip -qr ../distribution/UniLab-0.2.0-web.zip .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: package-web
+          path: distribution/*
+  desktop:
+    name: ${{ matrix.platform }} ${{ matrix.arch }} package
+    needs: web
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {runner: macos-latest, platform: mac, arch: arm64}
+          - {runner: macos-latest, platform: mac, arch: x64}
+          - {runner: windows-latest, platform: win, arch: x64}
+          - {runner: windows-latest, platform: win, arch: arm64}
+          - {runner: ubuntu-latest, platform: linux, arch: x64}
+          - {runner: ubuntu-latest, platform: linux, arch: arm64}
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/download-artifact@v4
+        with:
+          name: verified-web
+          path: web
+      - run: npm ci
+      - run: npm test
+      - name: Package desktop preview
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: npm run package -- --${{ matrix.platform }} --${{ matrix.arch }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: package-${{ matrix.platform }}-${{ matrix.arch }}
+          path: |
+            out/*.dmg
+            out/*.zip
+            out/*.exe
+            out/*.AppImage
+            out/*.deb
+          if-no-files-found: error
+  release:
+    name: Verify package set and attach draft release
+    needs: [web, desktop]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: package-*
+          path: distribution
+          merge-multiple: true
+      - name: Verify complete release set and checksum
+        run: node scripts/checksums.cjs
+      - name: Upload draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" --verify-tag --draft --prerelease --title "UniLab $GITHUB_REF_NAME — desktop preview & mobile web app" --notes-file RELEASE_NOTES.md
+          gh release upload "$GITHUB_REF_NAME" distribution/* source-lock.json INSTALL.md

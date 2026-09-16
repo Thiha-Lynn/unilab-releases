@@ -1,0 +1,69 @@
+{
+  "name": "unilab-desktop",
+  "version": "0.2.0",
+  "private": true,
+  "description": "UniLab \u2014 private student tools, desktop preview",
+  "author": "UniLab contributors",
+  "license": "MIT",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.cjs",
+    "prepare:web": "node scripts/prepare-web.cjs",
+    "package": "electron-builder --publish never"
+  },
+  "devDependencies": {
+    "electron": "44.4.1",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "live.ztvmm.unilab",
+    "productName": "UniLab",
+    "copyright": "Copyright \u00a9 2026 UniLab contributors",
+    "artifactName": "UniLab-${version}-${os}-${arch}.${ext}",
+    "directories": {
+      "output": "out"
+    },
+    "files": [
+      "desktop/**",
+      "web/**",
+      "source-lock.json",
+      "LICENSE",
+      "package.json"
+    ],
+    "asar": true,
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.education",
+      "icon": "web/icon-512.png",
+      "identity": null,
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "Record audio only when you choose a recording tool.",
+        "NSCameraUsageDescription": "Capture images only when you choose a camera tool."
+      }
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "web/icon-512.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Education",
+      "icon": "web/icon-512.png",
+      "maintainer": "UniLab contributors"
+    }
+  }
+}
