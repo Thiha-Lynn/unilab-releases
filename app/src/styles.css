@@ -838,3 +838,11 @@ body { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area
 @media (prefers-color-scheme: dark) { :root { --c-image: #a9b9cc; --c-pdf: #a9b9cc; --c-text: #a9b9cc; --c-study: #a9b9cc; --c-utility: #a9b9cc; --c-video: #a9b9cc; --c-audio: #a9b9cc; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
 @media (max-width: 480px) { .hero { padding-top: 24px; } .tool-card { min-height: 160px; } }
+/* Action colors are separate from the lighter link/category colors in dark mode. */
+.ts__pick, .ts__go, .ts__download, .ts__fab:not(.ts__fab--sm) {
+  background: #285b9b; color: #fff; box-shadow: none;
+}
+@media (prefers-color-scheme: dark) {
+  .btn:not(.secondary) { color: #102033; }
+  .logo .mark { background: #285b9b; }
+}
