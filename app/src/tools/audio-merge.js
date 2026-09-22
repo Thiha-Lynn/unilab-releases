@@ -1,3 +1,4 @@
+import { icon } from '../icons.js';
 // Join Audio — stitch voice memos and takes into one file, with equal-power
 // crossfades hiding the joins.
 //
@@ -179,7 +180,7 @@ export default function render(container, tool) {
       const row = el(`
         <div class="file-row">
           <span class="size" style="min-width:20px;text-align:right">${i + 1}.</span>
-          <span style="width:34px;min-width:34px;display:grid;place-items:center;font-size:19px">🎵</span>
+          <span style="width:34px;min-width:34px;display:grid;place-items:center;font-size:19px">${icon("audio")}</span>
           <span class="name"></span>
           <span class="size"></span>
           <button class="icon-btn" data-up type="button" title="Move up">↑</button>

@@ -29,7 +29,7 @@ function renderHome() {
 
   wrap.appendChild(el(`
     <header class="topbar">
-      <div class="logo"><span class="mark">${icon("brand")}</span> Uni<b>Lab</b></div>
+      <div class="logo"><span class="mark">${icon("brand")}</span><span>Uni<b>Lab</b></span></div>
       <a class="btn secondary small" href="#/install">Get UniLab</a>
     </header>
   `));

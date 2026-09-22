@@ -1,3 +1,4 @@
+import { icon } from '../icons.js';
 import { el, dropzone, errorBox, formatBytes, stem, toast } from '../ui.js';
 import {
   VIDEO_ACCEPT, CONTAINERS, CONTAINER_AUDIO_CODEC, CONTAINER_VIDEO_CODEC,
@@ -194,7 +195,7 @@ export default function render(container) {
     items.forEach((item, i) => {
       const row = el(`
         <div class="file-row">
-          <span>🎬</span>
+          <span>${icon("video")}</span>
           <span class="name"></span>
           <span class="size"></span>
         </div>

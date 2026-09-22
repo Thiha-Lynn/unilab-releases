@@ -1,3 +1,4 @@
+import { icon } from '../icons.js';
 import { el, dropzone, formatBytes, errorBox, stem, toast } from '../ui.js';
 import {
   VIDEO_ACCEPT, CONTAINERS, convertMedia, ensureMp3Encoder, formatDuration,
@@ -133,7 +134,7 @@ export default function render(container) {
   function renderList() {
     listRoot.innerHTML = '';
     items.forEach((item, i) => {
-      const row = el(`<div class="file-row"><span>🎬</span><span class="name"></span><span class="size"></span></div>`);
+      const row = el(`<div class="file-row"><span>${icon("video")}</span><span class="name"></span><span class="size"></span></div>`);
       row.querySelector('.name').textContent = item.file.name;
       row.querySelector('.size').textContent = `${formatDuration(item.probe.duration)} · ${formatBytes(item.file.size)}`;
       const rm = el(`<button class="icon-btn danger" title="Remove">✕</button>`);
