@@ -175,7 +175,7 @@ export default function render(container, tool) {
   // would really mean "find the photos you already took".
   const uploader = container.querySelector('.ts__uploader');
   if (uploader && cameraSupported()) {
-    const btn = el(`<button class="btn secondary" type="button" style="margin-top:18px;color:var(--cc);border-color:var(--cc);">📷 Use the camera instead</button>`);
+    const btn = el(`<button class="btn secondary" type="button" style="margin-top:18px;color:var(--cc);border-color:var(--cc);">Use the camera instead</button>`);
     btn.addEventListener('click', () => {
       shell.stage('work');
       ui.tabs.select(0);
@@ -416,7 +416,7 @@ export default function render(container, tool) {
       <div style="text-align:center;">
         <div class="rec-stage"><video playsinline muted></video></div>
         <div class="actions" style="justify-content:center;">
-          <button class="btn" data-shot type="button">📸 Take photo</button>
+          <button class="btn" data-shot type="button">Take photo</button>
           <button class="btn secondary small" data-stop type="button">Turn the camera off</button>
         </div>
         <p class="ts__hint">Lay the page flat and fill the frame. Each shot is added as a page below.</p>

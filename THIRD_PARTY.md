@@ -1,6 +1,6 @@
 # Licensing and corresponding source
 
-UniLab 0.3.0 is distributed under AGPL-3.0-only because it includes
+UniLab 0.3.1 is distributed under AGPL-3.0-only because it includes
 IMG.LY background-removal. Original UniLab MIT notices are retained in
 LICENSE-MIT; third-party components retain their own licenses. This does
 not change the license of a user's input files or output documents.

@@ -94,8 +94,8 @@ export default function render(container) {
       progress.hide();
       const box = el(`
         <div class="result">
-          <h3>✅ PDF ready — ${files.length} page${files.length > 1 ? 's' : ''}, ${formatBytes(blob.size)}</h3>
-          <div class="actions"><button class="btn" data-dl>⬇ Download PDF</button></div>
+          <h3>PDF ready — ${files.length} page${files.length > 1 ? 's' : ''}, ${formatBytes(blob.size)}</h3>
+          <div class="actions"><button class="btn" data-dl>Download PDF</button></div>
         </div>
       `);
       box.querySelector('[data-dl]').addEventListener('click', () => downloadBlob(blob, 'unilab-images.pdf'));

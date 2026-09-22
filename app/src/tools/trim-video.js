@@ -313,7 +313,7 @@ export default function render(container) {
     outPreview = mediaPreview(new File([blob], name, { type: mime }), { kind: 'video' });
 
     resultsHost.appendChild(resultCard({
-      heading: `✅ Done — your clip is ${formatDuration(length)}`,
+      heading: `Done — your clip is ${formatDuration(length)}`,
       message: reencodes
         ? 'The clip starts exactly where you put the Start handle. Everything from there had to be rebuilt, so the picture went through the encoder once, at the bitrate the original was already using.'
         : 'Only the end was cut, so the video was copied straight across — the picture is byte-for-byte what it was.',

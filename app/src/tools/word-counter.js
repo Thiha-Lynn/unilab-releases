@@ -54,7 +54,7 @@ export default function render(container) {
         <div class="big-stat"><div class="v" data-speaking>0 min</div><div class="k">Speaking time</div></div>
       </div>
       <div data-combos hidden style="margin-top:16px">
-        <h3 style="margin:0 0 8px;font-size:15px">🔎 Stacked character combos</h3>
+        <h3 style="margin:0 0 8px;font-size:15px">Stacked character combos</h3>
         <p class="note" style="margin-top:0">These render as one character but are built from several code points — portals that count code points will "see" more characters than you do.</p>
         <div data-combolist style="display:flex;flex-wrap:wrap;gap:8px"></div>
       </div>

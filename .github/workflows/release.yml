@@ -36,6 +36,7 @@ jobs:
           name: verified-web
           path: web/
       - name: Build universal web distribution and upstream source archive
+        if: github.event_name != 'pull_request'
         run: |
           mkdir -p distribution
           VERSION=$(node -p "require('./package.json').version")
@@ -45,6 +46,7 @@ jobs:
           curl --fail --location --retry 3 'https://api.github.com/repos/imgly/background-removal-js/tarball/12f56cc4f2a90d624e165a715748d22efc7a1d93' -o "distribution/UniLab-$VERSION-background-removal-source.tar.gz"
           tar -tzf "distribution/UniLab-$VERSION-background-removal-source.tar.gz" > /dev/null
       - uses: actions/upload-artifact@v4
+        if: github.event_name != 'pull_request'
         with:
           name: package-web
           path: distribution/*

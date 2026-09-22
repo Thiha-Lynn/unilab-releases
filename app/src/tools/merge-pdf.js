@@ -1,3 +1,4 @@
+import { icon } from '../icons.js';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { el, formatBytes, canvasToBlob } from '../ui.js';
 import { openPdf, renderPage, parsePageRanges } from '../pdf-utils.js';
@@ -181,7 +182,7 @@ export default function render(container, tool) {
       const wrap = el(`
         <div>
           <div class="file-row">
-            <span class="mg-thumb" style="width:40px;min-width:40px;display:grid;place-items:center">📄</span>
+            <span class="mg-thumb" style="width:40px;min-width:40px;display:grid;place-items:center">${icon("pdf")}</span>
             <span class="name"></span>
             <span class="size"></span>
             <input type="text" class="opt__text" spellcheck="false" autocomplete="off"

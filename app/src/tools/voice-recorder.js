@@ -591,7 +591,7 @@ export default function render(container) {
    */
   function offerRawDownload() {
     const btn = el(`<button class="btn"></button>`);
-    btn.textContent = `⬇ Download the recording as it is (${formatBytes(recorded.size)})`;
+    btn.textContent = `Download the recording as it is (${formatBytes(recorded.size)})`;
     btn.addEventListener('click', () => downloadBlob(recorded, recorded.name));
     const row = el(`<div class="actions"></div>`);
     row.appendChild(btn);
@@ -679,7 +679,7 @@ export default function render(container) {
     const trimmed = length < duration - 0.2;
 
     resultsHost.appendChild(resultCard({
-      heading: '✅ Saved',
+      heading: 'Saved',
       message: trimmed
         ? `Kept ${formatDuration(length)} of the ${formatDuration(duration)} you recorded — the rest is gone from the file.`
         : 'The whole recording, ready to hand in or send.',

@@ -141,7 +141,7 @@ export default function render(container) {
       <div class="citation-out">
         <div class="hanging">${html}</div>
         <div class="actions" style="margin-top:12px">
-          <button class="btn small" data-copy>📋 Copy</button>
+          <button class="btn small" data-copy>Copy</button>
           <button class="btn secondary small" data-save>＋ Add to list</button>
         </div>
       </div>
@@ -166,7 +166,7 @@ export default function render(container) {
       <div style="margin-top:22px">
         <h3 style="margin:0 0 8px;font-size:16px">Reference list (${saved.length})</h3>
         <div class="citation-out" data-items></div>
-        <div class="actions"><button class="btn small" data-copyall>📋 Copy all</button></div>
+        <div class="actions"><button class="btn small" data-copyall>Copy all</button></div>
       </div>
     `);
     const items = wrap.querySelector('[data-items]');

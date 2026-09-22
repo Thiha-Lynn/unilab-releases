@@ -1,4 +1,4 @@
-UniLab 0.3.0 adds a signed Android APK and first-launch offline OCR/background removal in all native packages. Android exports use the system Save dialog with bounded memory transfer and no temporary output copy. The UI accounts for Android system bars and keyboards.
+UniLab 0.3.1 refreshes the app with local line icons, a restrained light/dark palette, clearer status labels, accessible category selection, keyboard focus outlines and matching web, Android and social artwork. Signed Android and offline desktop packages remain supported. Android exports use the system Save dialog with bounded memory transfer and no temporary output copy. The UI accounts for Android system bars and keyboards.
 
 The open-source application now lives in this release repository. Builds use its own pinned revision; coursework and assignment evidence remain in the separate `Thiha-Lynn/unilab` repository.
 
@@ -12,4 +12,6 @@ The combined distribution is AGPL-3.0-only because it includes IMG.LY background
 
 HTML-to-PDF, social sharing metadata, local-file privacy protections and mobile layout improvements from 0.2.0 remain included. Converted HTML PDFs use rendered page images; use Print / Save as PDF for selectable text where supported. Interactive lecture scripts and external resources are intentionally excluded.
 
-Local bundled-browser smoke checks completed with external HTTPS blocked: English OCR recognized a synthetic scanned PDF correctly, and CPU background removal produced a preview. GPU acceleration is disabled in this release because failed GPU initialization prevented a reliable CPU retry. CPU inference can pause the interface on slower devices.
+Prior 0.3.0 bundled-browser smoke checks completed with external HTTPS blocked: English OCR recognized a synthetic scanned PDF correctly, and CPU background removal produced a preview. GPU acceleration is disabled in this release because failed GPU initialization prevented a reliable CPU retry. CPU inference can pause the interface on slower devices.
+
+For 0.3.1, 28 application tests and two desktop tests pass. Browser checks cover search, category selection, lecture-tool navigation, installation instructions, keyboard focus, light/dark themes and 320/390/768/1440 px layouts. These are browser checks, not new physical-device certification.

@@ -98,8 +98,8 @@ export default function render(container) {
       progress.hide();
       const box = el(`
         <div class="result">
-          <h3>✅ Numbered ${pages.length} pages (${formatBytes(blob.size)})</h3>
-          <div class="actions"><button class="btn" data-dl>⬇ Download PDF</button></div>
+          <h3>Numbered ${pages.length} pages (${formatBytes(blob.size)})</h3>
+          <div class="actions"><button class="btn" data-dl>Download PDF</button></div>
         </div>
       `);
       box.querySelector('[data-dl]').addEventListener('click', () => downloadBlob(blob, `${stem(file.name)}-numbered.pdf`));

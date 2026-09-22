@@ -434,7 +434,7 @@ export default function render(container) {
     outPreview = mediaPreview(new File([blob], name, { type: mime }), { kind: 'video' });
 
     resultsHost.appendChild(resultCard({
-      heading: `✅ Done — ${box.width}×${box.height}`,
+      heading: `Done — ${box.width}×${box.height}`,
       message: preset.ratio ? `${preset.label} · ${fitLine}` : fitLine,
       stats: [
         [`${probe.video.width}×${probe.video.height}`, 'Before'],

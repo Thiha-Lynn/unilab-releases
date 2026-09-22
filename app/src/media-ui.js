@@ -330,12 +330,12 @@ export function resultCard({ heading, message, stats = [], outputs = [], warning
   const actions = box.querySelector('.actions');
   for (const out of outputs) {
     const b = el(`<button class="btn secondary small"></button>`);
-    b.textContent = `⬇ ${out.name} (${formatBytes(out.blob.size)})`;
+    b.textContent = `${out.name} (${formatBytes(out.blob.size)})`;
     b.addEventListener('click', () => downloadBlob(out.blob, out.name));
     actions.appendChild(b);
   }
   if (outputs.length > 1) {
-    const zipBtn = el(`<button class="btn small">⬇ Download all (.zip)</button>`);
+    const zipBtn = el(`<button class="btn small">Download all (.zip)</button>`);
     zipBtn.addEventListener('click', async () => {
       zipBtn.disabled = true;
       zipBtn.textContent = 'Zipping…';
@@ -346,7 +346,7 @@ export function resultCard({ heading, message, stats = [], outputs = [], warning
         toast('ZIP downloaded');
       } finally {
         zipBtn.disabled = false;
-        zipBtn.textContent = '⬇ Download all (.zip)';
+        zipBtn.textContent = 'Download all (.zip)';
       }
     });
     actions.appendChild(zipBtn);
@@ -354,7 +354,7 @@ export function resultCard({ heading, message, stats = [], outputs = [], warning
 
   for (const w of warnings) {
     const note = el(`<p class="note warn-note"></p>`);
-    note.textContent = `⚠ ${w}`;
+    note.textContent = `Note: ${w}`;
     box.appendChild(note);
   }
   return box;

@@ -396,7 +396,7 @@ export default function render(container) {
     }
 
     resultsHost.appendChild(resultCard({
-      heading: `✅ ${outputs.length} photo${outputs.length > 1 ? 's' : ''} ready`,
+      heading: `${outputs.length} photo${outputs.length > 1 ? 's' : ''} ready`,
       message,
       stats: [
         [String(outputs.length), outputs.length === 1 ? 'Photo' : 'Photos'],

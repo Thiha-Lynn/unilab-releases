@@ -79,17 +79,17 @@ export default function render(container) {
 
       const box = el(`
         <div class="result">
-          <h3>✅ ${outputs.length} image${outputs.length > 1 ? 's' : ''} ready</h3>
+          <h3>${outputs.length} image${outputs.length > 1 ? 's' : ''} ready</h3>
           <div class="actions"></div>
         </div>
       `);
       const acts = box.querySelector('.actions');
       if (outputs.length === 1) {
-        const b = el(`<button class="btn" >⬇ Download image</button>`);
+        const b = el(`<button class="btn" >Download image</button>`);
         b.addEventListener('click', () => downloadBlob(outputs[0].blob, outputs[0].name));
         acts.appendChild(b);
       } else {
-        const zipBtn = el(`<button class="btn">⬇ Download all (.zip)</button>`);
+        const zipBtn = el(`<button class="btn">Download all (.zip)</button>`);
         zipBtn.addEventListener('click', async () => {
           const zip = new JSZip();
           outputs.forEach((o) => zip.file(o.name, o.blob));
@@ -98,7 +98,7 @@ export default function render(container) {
         acts.appendChild(zipBtn);
         for (const o of outputs.slice(0, 8)) {
           const b = el(`<button class="btn secondary small"></button>`);
-          b.textContent = `⬇ ${o.name}`;
+          b.textContent = `${o.name}`;
           b.addEventListener('click', () => downloadBlob(o.blob, o.name));
           acts.appendChild(b);
         }

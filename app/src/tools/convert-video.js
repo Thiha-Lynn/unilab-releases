@@ -1,3 +1,4 @@
+import { icon } from '../icons.js';
 import { el, dropzone, errorBox, formatBytes, stem, toast } from '../ui.js';
 import {
   VIDEO_ACCEPT, CONTAINERS, CONTAINER_AUDIO_CODEC, CONTAINER_VIDEO_CODEC,
@@ -194,7 +195,7 @@ export default function render(container) {
     items.forEach((item, i) => {
       const row = el(`
         <div class="file-row">
-          <span>🎬</span>
+          <span>${icon("video")}</span>
           <span class="name"></span>
           <span class="size"></span>
         </div>
@@ -450,7 +451,7 @@ export default function render(container) {
     }
 
     resultsHost.appendChild(resultCard({
-      heading: stopped ? `✅ Stopped — ${outputs.length} finished` : `✅ Done — ${one ? `your ${spec.label} is ready` : `${outputs.length} ${spec.label} files`}`,
+      heading: stopped ? `Stopped — ${outputs.length} finished` : `Done — ${one ? `your ${spec.label} is ready` : `${outputs.length} ${spec.label} files`}`,
       message: one
         ? 'Play it here before you hand it in — if it opens in this player, it opens on your classmate\'s phone.'
         : 'Grab the ZIP and open one of them to check — if it plays, they all will.',

@@ -1,3 +1,4 @@
+import { icon } from '../icons.js';
 import { el, dropzone, formatBytes, errorBox, stem, toast } from '../ui.js';
 import {
   VIDEO_ACCEPT, CONTAINERS, convertMedia, ensureMp3Encoder, formatDuration,
@@ -120,7 +121,7 @@ export default function render(container) {
         // probeMedia's own errors already name the file; ours are written to
         // read as "<name> has no sound track."
         const line = el(`<p class="note warn-note"></p>`);
-        line.textContent = err.message.startsWith(file.name) ? `⚠ ${err.message}` : `⚠ ${file.name} ${err.message}`;
+        line.textContent = err.message.startsWith(file.name) ? `Note: ${err.message}` : `Note: ${file.name} ${err.message}`;
         rejects.appendChild(line);
       }
     }
@@ -133,7 +134,7 @@ export default function render(container) {
   function renderList() {
     listRoot.innerHTML = '';
     items.forEach((item, i) => {
-      const row = el(`<div class="file-row"><span>🎬</span><span class="name"></span><span class="size"></span></div>`);
+      const row = el(`<div class="file-row"><span>${icon("video")}</span><span class="name"></span><span class="size"></span></div>`);
       row.querySelector('.name').textContent = item.file.name;
       row.querySelector('.size').textContent = `${formatDuration(item.probe.duration)} · ${formatBytes(item.file.size)}`;
       const rm = el(`<button class="icon-btn danger" title="Remove">✕</button>`);
@@ -315,8 +316,8 @@ export default function render(container) {
 
     resultsHost.appendChild(resultCard({
       heading: canceled
-        ? `✅ Stopped early — ${outputs.length} of ${total} done`
-        : grew ? `✅ Done — ${formatLabel} sound only` : `✅ Done — ${saved}% smaller`,
+        ? `Stopped early — ${outputs.length} of ${total} done`
+        : grew ? `Done — ${formatLabel} sound only` : `Done — ${saved}% smaller`,
       message: canceled
         ? 'These finished before you canceled. The rest of the videos are still in the list if you want to run them again.'
         : grew
