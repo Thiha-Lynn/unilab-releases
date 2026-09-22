@@ -204,7 +204,7 @@ export default function render(container) {
       const bytes = TARGETS[Number(targetSel.value)].bytes;
       parts.push(`about ${Math.round(chosenBitrate() / 1000)} kbps of video`);
       if (bytes >= probe.size) {
-        parts.push(`⚠ this video is already under ${formatBytes(bytes)}, so it will be re-encoded at its current quality rather than made bigger`);
+        parts.push(`Note: this video is already under ${formatBytes(bytes)}, so it will be re-encoded at its current quality rather than made bigger`);
       }
     }
     estimate.textContent = `${parts.join(' · ')}.`;
@@ -272,7 +272,7 @@ export default function render(container) {
 
     const grew = blob.size >= probe.size;
     resultsHost.appendChild(resultCard({
-      heading: grew ? '✅ Done — but keep your original' : `✅ Done — ${saved}% smaller`,
+      heading: grew ? 'Done — but keep your original' : `Done — ${saved}% smaller`,
       message: grew
         ? 'This video was already compressed about as far as it goes, so the new file is no smaller. Keep the original unless you needed the resolution or format change.'
         : targetBytes

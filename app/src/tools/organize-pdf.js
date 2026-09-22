@@ -101,8 +101,8 @@ export default function render(container) {
       const removed = pages.length - keep.length;
       const box = el(`
         <div class="result">
-          <h3>✅ Done — ${keep.length} pages${removed ? `, ${removed} removed` : ''} (${formatBytes(blob.size)})</h3>
-          <div class="actions"><button class="btn" data-dl>⬇ Download PDF</button></div>
+          <h3>Done — ${keep.length} pages${removed ? `, ${removed} removed` : ''} (${formatBytes(blob.size)})</h3>
+          <div class="actions"><button class="btn" data-dl>Download PDF</button></div>
         </div>
       `);
       box.querySelector('[data-dl]').addEventListener('click', () => downloadBlob(blob, `${stem(file.name)}-organized.pdf`));

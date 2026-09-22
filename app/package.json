@@ -1,7 +1,7 @@
 {
   "name": "unilab",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
   "description": "UniLab \u2014 every tool a student needs, free and private. All processing happens in your browser.",
   "scripts": {

@@ -450,7 +450,7 @@ export default function render(container) {
     }
 
     resultsHost.appendChild(resultCard({
-      heading: stopped ? `✅ Stopped — ${outputs.length} finished` : `✅ Done — ${one ? `your ${spec.label} is ready` : `${outputs.length} ${spec.label} files`}`,
+      heading: stopped ? `Stopped — ${outputs.length} finished` : `Done — ${one ? `your ${spec.label} is ready` : `${outputs.length} ${spec.label} files`}`,
       message: one
         ? 'Play it here before you hand it in — if it opens in this player, it opens on your classmate\'s phone.'
         : 'Grab the ZIP and open one of them to check — if it plays, they all will.',

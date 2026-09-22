@@ -380,7 +380,7 @@ export default function render(container) {
     outPreview = mediaPreview(new File([blob], name, { type: mime }), { kind: 'audio' });
 
     resultsHost.appendChild(resultCard({
-      heading: `✅ Done — your clip is ${formatDuration(length)}`,
+      heading: `Done — your clip is ${formatDuration(length)}`,
       message: copying
         ? 'Copied without re-encoding, so it sounds exactly like the original did.'
         : `Re-encoded as ${containerLabel}${mono ? ' in mono' : ''}. Tick Mono, or drop the quality to 96 kbps, if a voice recording still needs to be smaller.`,

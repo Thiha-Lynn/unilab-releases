@@ -75,7 +75,7 @@ export default function render(container) {
 
     const box = el(`
       <div class="result">
-        <h3>✅ Converted ${outputs.length} photo${outputs.length > 1 ? 's' : ''} to ${ext.toUpperCase()}</h3>
+        <h3>Converted ${outputs.length} photo${outputs.length > 1 ? 's' : ''} to ${ext.toUpperCase()}</h3>
         <div class="actions"></div>
       </div>
     `);
@@ -86,11 +86,11 @@ export default function render(container) {
     if (outputs.length === 1) {
       const o = outputs[0];
       const b = el(`<button class="btn" data-dl></button>`);
-      b.textContent = `⬇ Download ${o.name} (${formatBytes(o.blob.size)})`;
+      b.textContent = `Download ${o.name} (${formatBytes(o.blob.size)})`;
       b.addEventListener('click', () => downloadBlob(o.blob, o.name));
       acts.appendChild(b);
     } else {
-      const zipBtn = el(`<button class="btn">⬇ Download all (.zip)</button>`);
+      const zipBtn = el(`<button class="btn">Download all (.zip)</button>`);
       zipBtn.addEventListener('click', async () => {
         const zip = new JSZip();
         outputs.forEach((o) => zip.file(o.name, o.blob));
@@ -99,7 +99,7 @@ export default function render(container) {
       acts.appendChild(zipBtn);
       for (const o of outputs) {
         const b = el(`<button class="btn secondary small"></button>`);
-        b.textContent = `⬇ ${o.name} (${formatBytes(o.blob.size)})`;
+        b.textContent = `${o.name} (${formatBytes(o.blob.size)})`;
         b.addEventListener('click', () => downloadBlob(o.blob, o.name));
         acts.appendChild(b);
       }

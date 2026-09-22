@@ -363,7 +363,7 @@ export default function render(container) {
     previews.push(preview);
 
     const card = resultCard({
-      heading: '✅ Recording finished',
+      heading: 'Recording finished',
       message: isMp4
         ? 'MP4 — this opens in PowerPoint, on phones and in Google Drive as it is.'
         : 'This is a WebM file. It plays in any browser, but PowerPoint and most phones will not open it — convert it to MP4 below before you hand it in.',
@@ -433,7 +433,7 @@ export default function render(container) {
         job.stop();
         const mp4Name = `${base}.${result.ext}`;
         resultsHost.appendChild(resultCard({
-          heading: '✅ MP4 ready',
+          heading: 'MP4 ready',
           message: 'Safe to drop into a slide deck, LINE or your LMS.',
           stats: [
             [formatBytes(blob.size), 'WebM'],

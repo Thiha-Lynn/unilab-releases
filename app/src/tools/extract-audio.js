@@ -120,7 +120,7 @@ export default function render(container) {
         // probeMedia's own errors already name the file; ours are written to
         // read as "<name> has no sound track."
         const line = el(`<p class="note warn-note"></p>`);
-        line.textContent = err.message.startsWith(file.name) ? `⚠ ${err.message}` : `⚠ ${file.name} ${err.message}`;
+        line.textContent = err.message.startsWith(file.name) ? `Note: ${err.message}` : `Note: ${file.name} ${err.message}`;
         rejects.appendChild(line);
       }
     }
@@ -315,8 +315,8 @@ export default function render(container) {
 
     resultsHost.appendChild(resultCard({
       heading: canceled
-        ? `✅ Stopped early — ${outputs.length} of ${total} done`
-        : grew ? `✅ Done — ${formatLabel} sound only` : `✅ Done — ${saved}% smaller`,
+        ? `Stopped early — ${outputs.length} of ${total} done`
+        : grew ? `Done — ${formatLabel} sound only` : `Done — ${saved}% smaller`,
       message: canceled
         ? 'These finished before you canceled. The rest of the videos are still in the list if you want to run them again.'
         : grew

@@ -5,8 +5,8 @@ export default function render(container) {
   const panel = el(`
     <div class="panel">
       <div class="pills" style="margin-top:0;justify-content:flex-start">
-        <button class="pill active" data-tab="text">🔗 Link / text</button>
-        <button class="pill" data-tab="wifi">📶 Wi-Fi</button>
+        <button class="pill active" data-tab="text">Link / text</button>
+        <button class="pill" data-tab="wifi">Wi-Fi</button>
       </div>
       <div data-pane="text">
         <div class="field">
@@ -31,7 +31,7 @@ export default function render(container) {
       <div style="text-align:center;margin-top:18px">
         <canvas data-canvas style="max-width:min(320px,100%);border:1px solid var(--line);border-radius:12px;background:#fff"></canvas>
         <div class="actions" style="justify-content:center">
-          <button class="btn" data-dl disabled>⬇ Download PNG</button>
+          <button class="btn" data-dl disabled>Download PNG</button>
         </div>
       </div>
     </div>

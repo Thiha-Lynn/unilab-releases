@@ -1,3 +1,4 @@
+import { icon } from './icons.js';
 import { screenFiles, rejectionMessage, describeLimit, MAX_FILE_BYTES } from './intake.js';
 import { isAndroidApp, saveAndroidBlob } from './native-save.js';
 // Shared UI + file helpers used by every tool.
@@ -47,7 +48,7 @@ export function stem(filename) {
 export function dropzone({ accept = '*', multiple = true, label = 'Choose files', hint = 'or drag & drop here', maxBytes = MAX_FILE_BYTES, onFiles }) {
   const zone = el(`
     <div class="dropzone" role="button" tabindex="0" aria-label="${label}">
-      <div class="big">📂</div>
+      <div class="big">${icon("upload")}</div>
       <div class="label">${label}</div>
       <div class="hint">${hint} · stays on your device · up to ${describeLimit(maxBytes)} per file</div>
     </div>
@@ -94,7 +95,7 @@ export function fileListView(files, { onChange, thumbs = false, removable = true
     files.forEach((f, i) => {
       const row = el(`
         <div class="file-row">
-          ${thumbs ? `<img class="thumb" alt="">` : `<span>📄</span>`}
+          ${thumbs ? `<img class="thumb" alt="">` : `<span>${icon("pdf")}</span>`}
           <span class="name"></span>
           <span class="size">${formatBytes(f.size)}</span>
         </div>

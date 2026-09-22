@@ -69,7 +69,7 @@ export function toolShell(container, tool, spec) {
     <div class="ts__uploader">
       <button class="ts__pick" type="button"></button>
       <p class="ts__drop"></p>
-      <p class="ts__privacy">🔒 Nothing is uploaded — the file is opened by this page, on this device.</p>
+      <p class="ts__privacy">Nothing is uploaded — the file is opened by this page, on this device.</p>
       <p class="ts__retention"></p>
     </div>
   `);

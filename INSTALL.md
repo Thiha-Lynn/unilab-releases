@@ -1,11 +1,11 @@
-# Install UniLab 0.3.0
+# Install UniLab 0.3.1
 
 Website: https://unilab.ztvmm.live/
-Release: https://github.com/Thiha-Lynn/unilab-releases/releases/tag/v0.3.0
+Release: https://github.com/Thiha-Lynn/unilab-releases/releases/tag/v0.3.1
 
 | Device | Package | Notes |
 |---|---|---|
-| Android 10+ | `UniLab-0.3.0-android.apk` | Signed universal APK; current Android System WebView required. Your device may ask permission to install from the browser/file manager. |
+| Android 10+ | `UniLab-0.3.1-android.apk` | Signed universal APK; current Android System WebView required. Your device may ask permission to install from the browser/file manager. |
 | Apple Silicon Mac | `mac-arm64.dmg` or `.zip` | Current supported macOS; unsigned and not notarized. |
 | Intel Mac | `mac-x64.dmg` or `.zip` | Current supported macOS; unsigned and not notarized. |
 | Windows Intel/AMD | `win-x64.exe` | Windows 10/11 x64; unsigned preview. |
@@ -14,9 +14,9 @@ Release: https://github.com/Thiha-Lynn/unilab-releases/releases/tag/v0.3.0
 | Linux ARM | `linux-arm64.deb` / `.AppImage` | Current ARM64 Linux desktop. |
 | iPhone / iPad | Installable web app | Safari → Share → Add to Home Screen. No native IPA or App Store release. |
 | Chromebook / other current browser | Installable web app | Browser menu → Install / Add to home screen, where supported. |
-| Self-host / portable web | `UniLab-0.3.0-web.zip` | Extract and run `node serve.cjs`; open the printed localhost URL. Node 22+ required. Do not open index.html directly as a file. |
+| Self-host / portable web | `UniLab-0.3.1-web.zip` | Extract and run `node serve.cjs`; open the printed localhost URL. Node 22+ required. Do not open index.html directly as a file. |
 
-Desktop filenames begin with `UniLab-0.3.0-`. Check your processor before downloading. Linux DEB: install using the distribution's package manager; AppImage: mark executable, then open. Some distributions need FUSE compatibility libraries. Do not run as root or disable the Electron sandbox. If an unsigned desktop app is blocked, use the web version; we do not instruct users to disable system protections.
+Desktop filenames begin with `UniLab-0.3.1-`. Check your processor before downloading. Linux DEB: install using the distribution's package manager; AppImage: mark executable, then open. Some distributions need FUSE compatibility libraries. Do not run as root or disable the Electron sandbox. If an unsigned desktop app is blocked, use the web version; we do not instruct users to disable system protections.
 
 ## Offline operation
 

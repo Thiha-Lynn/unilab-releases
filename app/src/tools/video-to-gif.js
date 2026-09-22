@@ -221,7 +221,7 @@ export default function render(container) {
     estimate.textContent = `${parts.join(' · ')}.`;
 
     warnNote.hidden = seconds <= LONG_CLIP_SECONDS;
-    warnNote.textContent = `⚠ ${formatDuration(seconds, { decimals: 1 })} is a long GIF. They get very large very fast — every second adds ${fps} full images. Pick a shorter piece, or drop to 5–8 frames per second.`;
+    warnNote.textContent = `Note: ${formatDuration(seconds, { decimals: 1 })} is a long GIF. They get very large very fast — every second adds ${fps} full images. Pick a shorter piece, or drop to 5–8 frames per second.`;
   }
 
   /**
@@ -339,7 +339,7 @@ export default function render(container) {
     img.style.maxWidth = `${width}px`;
 
     resultsHost.appendChild(resultCard({
-      heading: '✅ Your GIF is ready',
+      heading: 'Your GIF is ready',
       message: blob.size > HEAVY_GIF_BYTES
         ? 'That is heavy for a GIF — a smaller width, fewer frames per second or a shorter selection will cut it down a lot.'
         : undefined,

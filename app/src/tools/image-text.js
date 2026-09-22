@@ -429,7 +429,7 @@ export default function render(container) {
       downloadBlob(blob, name);
       toast('Saved to your downloads');
       resultsHost.appendChild(resultCard({
-        heading: '✅ Text added',
+        heading: 'Text added',
         message: 'Saved to your downloads at the image\'s full size. If your phone blocked the download, the button below saves it again. Keep editing above and press Save for another version.',
         stats: [
           [`${canvas.width}×${canvas.height}`, 'Pixels'],

@@ -1,28 +1,28 @@
 :root {
-  --bg: #f6f7fb;
+  --bg: #f5f7fa;
   --card: #ffffff;
   --ink: #171c26;
   --ink-2: #47506030;
   --muted: #5b6472;
   --faint: #8a93a2;
   --line: #e4e7ee;
-  --accent: #5b5bd6;
-  --accent-strong: #4747c2;
-  --accent-soft: #eeeefc;
-  --good: #1d9e77;
+  --accent: #285b9b;
+  --accent-strong: #204a80;
+  --accent-soft: #eaf0f8;
+  --good: #18765b;
   --good-soft: #e4f6ef;
   --warn: #d97706;
   --danger: #d64545;
-  --shadow: 0 1px 2px rgba(23, 28, 38, 0.05), 0 10px 30px rgba(23, 28, 38, 0.07);
-  --radius: 14px;
+  --shadow: 0 1px 2px rgba(23, 28, 38, 0.05), 0 4px 12px rgba(23, 28, 38, 0.03);
+  --radius: 10px;
   /* category colors */
-  --c-image: #d64593;
-  --c-pdf: #d65045;
-  --c-text: #3d8bd6;
-  --c-study: #1d9e77;
-  --c-utility: #9147d6;
-  --c-video: #d3891a;
-  --c-audio: #0e9bb5;
+  --c-image: #526b83;
+  --c-pdf: #526b83;
+  --c-text: #526b83;
+  --c-study: #18765b;
+  --c-utility: #526b83;
+  --c-video: #526b83;
+  --c-audio: #526b83;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -32,9 +32,9 @@
     --muted: #a3adbf;
     --faint: #6d7789;
     --line: #273043;
-    --accent: #8484e8;
-    --accent-strong: #a0a0f0;
-    --accent-soft: #23264a;
+    --accent: #9ac4fa;
+    --accent-strong: #bfdbfe;
+    --accent-soft: #1c304b;
     --good: #3cc496;
     --good-soft: #14322a;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.35);
@@ -823,3 +823,18 @@ audio.media-el { max-height: none; background: transparent; border: none; }
 
 /* Native system-bar insets; a normal browser resolves these to zero. */
 body { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+/* Shared visual language for navigation, cards and tool headers. */
+.ui-icon { width: 24px; height: 24px; display: inline-block; vertical-align: middle; flex-shrink: 0; }
+.logo .mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 9px; background: var(--accent); color: white; }
+.tool-card .icon, .tool-head .icon, .ts__next__icon { color: var(--accent); }
+.tool-head .ui-icon { width: 30px; height: 30px; }
+.tool-card { min-height: 174px; box-shadow: none; }
+.tool-card:hover { transform: translateY(-1px); }
+.hero { padding-top: 46px; padding-bottom: 28px; }
+.hero h1 { font-weight: 700; }
+.pill { border-radius: 8px; }
+:where(a, button, input, select, textarea, [tabindex]):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (prefers-color-scheme: dark) { :root { --c-image: #a9b9cc; --c-pdf: #a9b9cc; --c-text: #a9b9cc; --c-study: #a9b9cc; --c-utility: #a9b9cc; --c-video: #a9b9cc; --c-audio: #a9b9cc; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
+@media (max-width: 480px) { .hero { padding-top: 24px; } .tool-card { min-height: 160px; } }

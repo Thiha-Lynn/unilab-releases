@@ -27,9 +27,9 @@ export default function render(container) {
   const panel = el(`
     <div class="panel" style="text-align:center">
       <div class="pills" style="margin-top:0">
-        <button class="pill active" data-mode="focus">🍅 Focus</button>
-        <button class="pill" data-mode="short">☕ Short break</button>
-        <button class="pill" data-mode="long">🌿 Long break</button>
+        <button class="pill active" data-mode="focus">Focus</button>
+        <button class="pill" data-mode="short">Short break</button>
+        <button class="pill" data-mode="long">Long break</button>
       </div>
       <div class="timer-mode" data-modelabel>Focus</div>
       <div class="timer-display" data-display>25:00</div>

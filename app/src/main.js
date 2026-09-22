@@ -1,3 +1,4 @@
+import { icon } from './icons.js';
 import './styles.css';
 import { el, formatBytes } from './ui.js';
 import { CATEGORIES, TOOLS } from './registry.js';
@@ -28,19 +29,18 @@ function renderHome() {
 
   wrap.appendChild(el(`
     <header class="topbar">
-      <div class="logo"><span class="mark">🎒</span> Uni<b>Lab</b></div>
+      <div class="logo"><span class="mark">${icon("brand")}</span> Uni<b>Lab</b></div>
       <a class="btn secondary small" href="#/install">Get UniLab</a>
     </header>
   `));
 
   const hero = el(`
     <section class="hero">
-      <h1>Every tool a student needs,<br>in one place.</h1>
-      <p>Photos, PDFs, video and audio — edited right here, with no sign-up, no ads
-         and no paid quotas. Device and file-size limits apply. Everything runs inside your browser, so your files
-         stay on your device.</p>
+      <h1>Your files. Your tools.<br>On your device.</h1>
+      <p>Work with PDFs, images, video and audio in one private workspace.
+         No account or file uploads. Choose a tool to get started.</p>
       <div class="search">
-        <span class="icon">🔍</span>
+        <span class="icon">${icon("search")}</span>
         <input type="search" placeholder="Search tools… (e.g. compress video, PDF, GPA)" aria-label="Search tools" />
       </div>
     </section>
@@ -50,14 +50,15 @@ function renderHome() {
   searchInput.addEventListener('input', () => { searchQuery = searchInput.value; renderGrid(); });
   wrap.appendChild(hero);
 
-  const pills = el(`<div class="pills"></div>`);
+  const pills = el(`<nav class="pills" aria-label="Tool categories"></nav>`);
   const cats = [['all', 'All tools'], ...Object.entries(CATEGORIES).map(([k, v]) => [k, v.name])];
   for (const [key, label] of cats) {
-    const b = el(`<button class="pill${key === activeCategory ? ' active' : ''}"></button>`);
+    const b = el(`<button aria-pressed="${key === activeCategory}" class="pill${key === activeCategory ? ' active' : ''}"></button>`);
     b.textContent = label;
     b.addEventListener('click', () => {
       activeCategory = key;
-      pills.querySelectorAll('.pill').forEach((p) => p.classList.remove('active'));
+      pills.querySelectorAll('.pill').forEach((p) => { p.classList.remove('active'); p.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
       b.classList.add('active');
       renderGrid();
     });
@@ -101,10 +102,10 @@ function renderHome() {
 
   wrap.appendChild(el(`
     <footer class="footer">
-      <p><b>🔒 Private by design:</b> every tool runs 100% in your browser.
+      <p><b>Private by design:</b> every tool runs 100% in your browser.
       Your files are processed on your device. No file uploads, accounts or ads.</p>
       <p>UniLab · free, open-source tools for everyday file tasks</p>
-      <p>Free &amp; open source — <a href="https://github.com/Thiha-Lynn/unilab-releases" target="_blank" rel="noopener">⭐ star or contribute on GitHub</a>
+      <p>Free &amp; open source — <a href="https://github.com/Thiha-Lynn/unilab-releases" target="_blank" rel="noopener">Contribute on GitHub</a>
       &nbsp;·&nbsp; <a href="#/privacy">Privacy</a>
       &nbsp;·&nbsp; <a href="#/install">Install · v${__APP_VERSION__}</a></p>
     </footer>
@@ -130,7 +131,7 @@ const OFFLINE_FLAG = `unilab.offline.${SW_CACHE_NAME}`;
 function buildOfflineBlock() {
   const block = el(`
     <div style="margin-top:18px">
-      <button class="btn secondary small">⬇ Make UniLab work offline</button>
+      <button class="btn secondary small">Make UniLab work offline</button>
       <p class="note" style="margin-bottom:0"></p>
       <p class="note" style="margin-top:6px">Download the core tools in under 8 MB. OCR and background removal need extra engines or model data on first use; prepare those while online. Large files are limited by your device.</p>
     </div>
@@ -142,7 +143,7 @@ function buildOfflineBlock() {
   // versioned cache still exists (the browser may have evicted it).
   if (localStorage.getItem(OFFLINE_FLAG)) {
     caches.has(SW_CACHE_NAME).then((exists) => {
-      if (exists) status.textContent = '✅ Available offline';
+      if (exists) status.textContent = 'Available offline';
       else localStorage.removeItem(OFFLINE_FLAG);
     }).catch(() => {});
   }
@@ -179,15 +180,15 @@ function buildOfflineBlock() {
           navigator.serviceWorker.removeEventListener('message', onMessage);
           btn.disabled = false;
           if (msg.failed) {
-            status.textContent = `⚠️ ${msg.total - msg.failed} of ${msg.total} files saved (${formatBytes(msg.bytes)}) — ${msg.failed} failed. Try again for full offline support.`;
+            status.textContent = `Note: ${msg.total - msg.failed} of ${msg.total} files saved (${formatBytes(msg.bytes)}) — ${msg.failed} failed. Try again for full offline support.`;
           } else {
             localStorage.setItem(OFFLINE_FLAG, String(Date.now()));
-            status.textContent = `✅ Core tools saved for offline use (${formatBytes(msg.bytes)}). OCR and background removal require their optional downloads first.`;
+            status.textContent = `Core tools saved for offline use (${formatBytes(msg.bytes)}). OCR and background removal require their optional downloads first.`;
           }
         } else if (msg.type === 'PRECACHE_ERROR') {
           navigator.serviceWorker.removeEventListener('message', onMessage);
           btn.disabled = false;
-          status.textContent = '⚠️ Download stopped — your device storage may have run out. Free some space and try again.';
+          status.textContent = 'Note: Download stopped — your device storage may have run out. Free some space and try again.';
           debug('[offline] precache failed at:', msg.url, msg.error);
         }
       };

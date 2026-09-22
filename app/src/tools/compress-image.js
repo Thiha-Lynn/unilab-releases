@@ -117,7 +117,7 @@ export default function render(container) {
     const saved = before ? Math.max(0, Math.round((1 - after / before) * 100)) : 0;
     const box = el(`
       <div class="result">
-        <h3>✅ Done — ${saved}% smaller</h3>
+        <h3>Done — ${saved}% smaller</h3>
         <div class="stat-row">
           <div class="stat"><span class="v">${formatBytes(before)}</span><span class="k">Before</span></div>
           <div class="stat"><span class="v">${formatBytes(after)}</span><span class="k">After</span></div>
@@ -129,12 +129,12 @@ export default function render(container) {
     const acts = box.querySelector('.actions');
     for (const o of outputs) {
       const b = el(`<button class="btn secondary small"></button>`);
-      b.textContent = `⬇ ${o.name} (${formatBytes(o.after)})`;
+      b.textContent = `${o.name} (${formatBytes(o.after)})`;
       b.addEventListener('click', () => downloadBlob(o.blob, o.name));
       acts.appendChild(b);
     }
     if (outputs.length > 1) {
-      const zipBtn = el(`<button class="btn small">⬇ Download all (.zip)</button>`);
+      const zipBtn = el(`<button class="btn small">Download all (.zip)</button>`);
       zipBtn.addEventListener('click', async () => {
         const zip = new JSZip();
         outputs.forEach((o) => zip.file(o.name, o.blob));
