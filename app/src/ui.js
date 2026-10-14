@@ -1,3 +1,4 @@
+import { track } from './usage.js';
 import { icon } from './icons.js';
 import { screenFiles, rejectionMessage, describeLimit, MAX_FILE_BYTES } from './intake.js';
 import { isAndroidApp, saveAndroidBlob } from './native-save.js';
@@ -18,15 +19,17 @@ export function formatBytes(n) {
 
 export function toast(msg) {
   document.querySelectorAll('.toast').forEach((t) => t.remove());
-  const t = el(`<div class="toast"></div>`);
+  const t = el(`<div class="toast" role="status" aria-live="polite"></div>`);
   t.textContent = msg;
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 2600);
 }
 
 export function downloadBlob(blob, filename) {
+  if (!blob || !blob.size) { toast('This result is empty or expired. Run the tool again.'); return; }
+  track('download_requested');
   if (isAndroidApp()) {
-    return saveAndroidBlob(blob, filename).then(() => toast('Saved to your chosen location.')).catch(error => {
+    return saveAndroidBlob(blob, filename).then(() => { track('download_saved'); toast('Saved to your chosen location.'); }).catch(error => {
       if (error.code !== 'USER_CANCELLED') toast(error.message || 'Could not save this file. Try again.');
     });
   }
@@ -147,7 +150,7 @@ export function progressBar() {
 
 export function errorBox(container, message) {
   container.querySelectorAll('.error-box').forEach((e) => e.remove());
-  if (message) container.appendChild(el(`<div class="error-box"></div>`)).textContent = message;
+  if (message) container.appendChild(el(`<div class="error-box" role="alert"></div>`)).textContent = message;
 }
 
 // ---- image helpers ----

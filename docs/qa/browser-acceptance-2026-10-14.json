@@ -1,0 +1,358 @@
+{
+  "at": "2026-10-14T04:43:21.370Z",
+  "revision": "e8ef0dbec92a",
+  "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "results": [
+    {
+      "id": "markdown-book",
+      "status": "pass",
+      "detail": "EPUB, standalone web book and PDF exported"
+    },
+    {
+      "id": "compress-image",
+      "status": "pass",
+      "detail": "13586 bytes; image decoded 640×480",
+      "ms": 1053
+    },
+    {
+      "id": "resize-image",
+      "status": "pass",
+      "detail": "12224 bytes; image decoded 320×240",
+      "ms": 948
+    },
+    {
+      "id": "crop-image",
+      "status": "pass",
+      "detail": "23045 bytes; image decoded 576×432",
+      "ms": 961
+    },
+    {
+      "id": "convert-image",
+      "status": "pass",
+      "detail": "22537 bytes; image decoded 640×480",
+      "ms": 1021
+    },
+    {
+      "id": "image-to-pdf",
+      "status": "pass",
+      "detail": "15156 bytes; PDF decoded: 1 pages",
+      "ms": 951
+    },
+    {
+      "id": "heic-to-jpg",
+      "status": "pass",
+      "detail": "20559 bytes; image decoded 640×480",
+      "ms": 1049
+    },
+    {
+      "id": "image-text",
+      "status": "pass",
+      "detail": "34956 bytes; image decoded 640×480",
+      "ms": 976
+    },
+    {
+      "id": "rotate-image",
+      "status": "pass",
+      "detail": "21289 bytes; image decoded 640×480",
+      "ms": 1004
+    },
+    {
+      "id": "watermark-image",
+      "status": "pass",
+      "detail": "64200 bytes; image decoded 640×480",
+      "ms": 992
+    },
+    {
+      "id": "remove-background",
+      "status": "pass",
+      "detail": "126624 bytes; image decoded 640×480",
+      "ms": 10739
+    },
+    {
+      "id": "blur-face",
+      "status": "pass",
+      "detail": "22101 bytes; image decoded 640×480",
+      "ms": 1001
+    },
+    {
+      "id": "upscale-image",
+      "status": "pass",
+      "detail": "169141 bytes; image decoded 1280×960",
+      "ms": 1085
+    },
+    {
+      "id": "photo-editor",
+      "status": "pass",
+      "detail": "27676 bytes; image decoded 640×480",
+      "ms": 967
+    },
+    {
+      "id": "compress-video",
+      "status": "pass",
+      "detail": "52162 bytes; media decoded 3.07 seconds",
+      "ms": 1157
+    },
+    {
+      "id": "trim-video",
+      "status": "pass",
+      "detail": "97226 bytes; media decoded 3.07 seconds",
+      "ms": 944
+    },
+    {
+      "id": "convert-video",
+      "status": "pass",
+      "detail": "97370 bytes; media decoded 3.07 seconds",
+      "ms": 950
+    },
+    {
+      "id": "resize-video",
+      "status": "pass",
+      "detail": "104662 bytes; media decoded 3.07 seconds",
+      "ms": 1302
+    },
+    {
+      "id": "video-to-gif",
+      "status": "pass",
+      "detail": "289198 bytes; exported image/gif",
+      "ms": 2211
+    },
+    {
+      "id": "video-to-frames",
+      "status": "pass",
+      "detail": "9741 bytes; image decoded 320×240",
+      "ms": 972
+    },
+    {
+      "id": "screen-recorder",
+      "status": "pass",
+      "detail": "Synthetic stream only; physical permission/device check still required. 35461 bytes; media decoded 2.33 seconds"
+    },
+    {
+      "id": "extract-audio",
+      "status": "pass",
+      "detail": "48936 bytes; media decoded 3.07 seconds",
+      "ms": 954
+    },
+    {
+      "id": "trim-audio",
+      "status": "pass",
+      "detail": "288078 bytes; media decoded 3.00 seconds",
+      "ms": 942
+    },
+    {
+      "id": "convert-audio",
+      "status": "pass",
+      "detail": "72744 bytes; media decoded 3.05 seconds",
+      "ms": 949
+    },
+    {
+      "id": "voice-recorder",
+      "status": "pass",
+      "detail": "Synthetic stream only; physical permission/device check still required. 218636 bytes; media decoded 2.28 seconds"
+    },
+    {
+      "id": "enhance-voice",
+      "status": "pass",
+      "detail": "48552 bytes; media decoded 3.05 seconds",
+      "ms": 1107
+    },
+    {
+      "id": "noise-removal",
+      "status": "pass",
+      "detail": "48552 bytes; media decoded 3.05 seconds",
+      "ms": 1042
+    },
+    {
+      "id": "normalize-audio",
+      "status": "pass",
+      "detail": "48552 bytes; media decoded 3.05 seconds",
+      "ms": 995
+    },
+    {
+      "id": "audio-speed",
+      "status": "pass",
+      "detail": "32808 bytes; media decoded 2.06 seconds",
+      "ms": 1045
+    },
+    {
+      "id": "silence-cut",
+      "status": "pass",
+      "detail": "37800 bytes; media decoded 2.38 seconds",
+      "ms": 985
+    },
+    {
+      "id": "equalizer",
+      "status": "pass",
+      "detail": "48552 bytes; media decoded 3.05 seconds",
+      "ms": 952
+    },
+    {
+      "id": "audio-merge",
+      "status": "pass",
+      "detail": "88872 bytes; media decoded 5.57 seconds",
+      "ms": 1089
+    },
+    {
+      "id": "html-to-pdf",
+      "status": "pass",
+      "detail": "90280 bytes; PDF decoded: 2 pages",
+      "ms": 1051
+    },
+    {
+      "id": "merge-pdf",
+      "status": "pass",
+      "detail": "1990 bytes; PDF decoded: 4 pages",
+      "ms": 965
+    },
+    {
+      "id": "split-pdf",
+      "status": "pass",
+      "detail": "1341 bytes; PDF decoded: 2 pages",
+      "ms": 962
+    },
+    {
+      "id": "compress-pdf",
+      "status": "pass",
+      "detail": "41111 bytes; PDF decoded: 2 pages",
+      "ms": 1272
+    },
+    {
+      "id": "pdf-to-images",
+      "status": "pass",
+      "detail": "52630 bytes; exported application/zip",
+      "ms": 1207
+    },
+    {
+      "id": "organize-pdf",
+      "status": "pass",
+      "detail": "1341 bytes; PDF decoded: 2 pages",
+      "ms": 990
+    },
+    {
+      "id": "watermark-pdf",
+      "status": "pass",
+      "detail": "2062 bytes; PDF decoded: 2 pages",
+      "ms": 970
+    },
+    {
+      "id": "page-numbers-pdf",
+      "status": "pass",
+      "detail": "1889 bytes; PDF decoded: 2 pages",
+      "ms": 953
+    },
+    {
+      "id": "rotate-pdf",
+      "status": "pass",
+      "detail": "1351 bytes; PDF decoded: 2 pages",
+      "ms": 948
+    },
+    {
+      "id": "sign-pdf",
+      "status": "pass",
+      "detail": "36270 bytes; PDF decoded: 2 pages",
+      "ms": 1275
+    },
+    {
+      "id": "crop-pdf",
+      "status": "pass",
+      "detail": "1391 bytes; PDF decoded: 2 pages",
+      "ms": 956
+    },
+    {
+      "id": "edit-pdf",
+      "status": "pass",
+      "detail": "1779 bytes; PDF decoded: 2 pages",
+      "ms": 970
+    },
+    {
+      "id": "ocr-pdf",
+      "status": "pass",
+      "detail": "92239 bytes; PDF decoded: 2 pages",
+      "ms": 1677
+    },
+    {
+      "id": "pdf-forms",
+      "status": "pass",
+      "detail": "2458 bytes; PDF decoded: 2 pages",
+      "ms": 958
+    },
+    {
+      "id": "unlock-pdf",
+      "status": "pass",
+      "detail": "75511 bytes; PDF decoded: 2 pages",
+      "ms": 1649
+    },
+    {
+      "id": "redact-pdf",
+      "status": "pass",
+      "detail": "41417 bytes; PDF decoded: 2 pages",
+      "ms": 1055
+    },
+    {
+      "id": "compare-pdf",
+      "status": "pass",
+      "detail": "2767 bytes; exported application/zip",
+      "ms": 1046
+    },
+    {
+      "id": "pdf-to-markdown",
+      "status": "pass",
+      "detail": "191 bytes; exported text/markdown;charset=utf-8",
+      "ms": 950
+    },
+    {
+      "id": "scan-to-pdf",
+      "status": "pass",
+      "detail": "14523 bytes; PDF decoded: 1 pages",
+      "ms": 947
+    },
+    {
+      "id": "word-to-pdf",
+      "status": "pass",
+      "detail": "1019 bytes; PDF decoded: 1 pages",
+      "ms": 945
+    },
+    {
+      "id": "excel-to-pdf",
+      "status": "pass",
+      "detail": "1536 bytes; PDF decoded: 1 pages",
+      "ms": 958
+    },
+    {
+      "id": "word-counter",
+      "status": "pass",
+      "detail": "4 words, 2 sentences computed"
+    },
+    {
+      "id": "citation-generator",
+      "status": "pass",
+      "detail": "APA website reference generated; separate injection regression"
+    },
+    {
+      "id": "gpa-calculator",
+      "status": "pass",
+      "detail": "Term GPA 3.50; cumulative 3.25"
+    },
+    {
+      "id": "pomodoro",
+      "status": "pass",
+      "detail": "Timer advances and resets"
+    },
+    {
+      "id": "workflows",
+      "status": "pass",
+      "detail": "15289 bytes; PDF decoded: 1 pages",
+      "ms": 1199
+    },
+    {
+      "id": "qr-generator",
+      "status": "pass",
+      "detail": "8874 bytes; image decoded 512×512"
+    },
+    {
+      "id": "unit-converter",
+      "status": "pass",
+      "detail": "100 °C = 212 °F"
+    }
+  ]
+}

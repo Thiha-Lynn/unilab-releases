@@ -51,7 +51,10 @@ const FIELDS = {
   ],
 };
 
-function buildCitation(type, style, v) {
+export function buildCitation(type, style, raw) {
+  // Only the formatting tags below are markup; every user field is text.
+  const escape = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[c]));
+  const v = Object.fromEntries(Object.entries(raw).map(([key, value]) => [key, escape(value)]));
   const authors = parseAuthors(v.authors || '');
   const A = style === 'apa' ? apaAuthors(authors) : mlaAuthors(authors);
   const yr = v.year?.trim();

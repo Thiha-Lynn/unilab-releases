@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {payload} from '../src/usage.js';
+const env={tool:'compress-pdf',platform:'web',version:'0.4.0',session:'a'.repeat(32)};
+test('usage payload cannot include filenames, raw errors, document content or URLs',()=>{const p=payload('files_selected',{count:2,filename:'private.pdf',text:'secret',url:'https://private',error:'private'},env);assert.deepEqual(p,{event:'files_selected',...env,count:2});assert.equal(payload('unknown',{},env),null)});
+test('pilot feedback requires explicit pilot enrollment and bounded choices',()=>{assert.equal(payload('pilot_feedback',{rating:5,solved:'yes'},env),null);const enrolled={...env,pilot:'b'.repeat(48)};assert.equal(payload('pilot_feedback',{rating:99,solved:'yes'},enrolled),null);assert.equal(payload('pilot_feedback',{rating:4,solved:'partly',tool:'resize-image'},enrolled).tool,'resize-image')});

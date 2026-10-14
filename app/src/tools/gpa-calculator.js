@@ -7,6 +7,7 @@ const STORE_KEY = 'unilab-gpa-rows';
 export default function render(container) {
   let rows;
   try { rows = JSON.parse(localStorage.getItem(STORE_KEY)) || null; } catch { rows = null; }
+  if (Array.isArray(rows)) rows = rows.filter(r => r && typeof r === 'object' && Object.hasOwn(GRADES, r.grade) && Number.isFinite(r.credits) && r.credits >= 0 && r.credits <= 12).slice(0,100).map(r => ({name:String(r.name || '').slice(0,200),credits:r.credits,grade:r.grade}));
   if (!Array.isArray(rows) || !rows.length) {
     rows = [{ name: '', credits: 3, grade: 'A' }, { name: '', credits: 3, grade: 'B+' }, { name: '', credits: 3, grade: 'B' }];
   }
@@ -42,7 +43,7 @@ export default function render(container) {
     </div>
   `);
 
-  function save() { localStorage.setItem(STORE_KEY, JSON.stringify(rows)); }
+  function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(rows)); } catch { /* Calculation still works without storage. */ } }
 
   function renderRows() {
     tbody.innerHTML = '';

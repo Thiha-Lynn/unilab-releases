@@ -1,0 +1,16 @@
+[Unit]
+Description=UniLab first-party aggregate usage
+After=network.target
+[Service]
+DynamicUser=yes
+StateDirectory=unilab-usage
+Environment=UNILAB_USAGE_DIR=/var/lib/unilab-usage
+ExecStart=/usr/bin/python3 /opt/unilab-usage/server.py serve
+Restart=on-failure
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+[Install]
+WantedBy=multi-user.target

@@ -18,6 +18,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+      - name: Test private usage collector
+        run: python3 -m unittest discover -s analytics -v
       - name: Test desktop boundary policy
         run: npm test
       - name: Test and build independent application source

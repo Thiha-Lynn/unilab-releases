@@ -1,3 +1,5 @@
+import { initUsage } from './usage.js';
+import { renderPilot } from './pilot.js';
 import { icon } from './icons.js';
 import './styles.css';
 import { el, formatBytes } from './ui.js';
@@ -106,7 +108,7 @@ function renderHome() {
       Your files are processed on your device. No file uploads, accounts or ads.</p>
       <p>UniLab · free, open-source tools for everyday file tasks</p>
       <p>Free &amp; open source — <a href="https://github.com/Thiha-Lynn/unilab-releases" target="_blank" rel="noopener">Contribute on GitHub</a>
-      &nbsp;·&nbsp; <a href="#/privacy">Privacy</a>
+      &nbsp;·&nbsp; <a href="#/privacy">Privacy</a> &nbsp;·&nbsp; <a href="#/pilot">Usage &amp; pilot feedback</a>
       &nbsp;·&nbsp; <a href="#/install">Install · v${__APP_VERSION__}</a></p>
     </footer>
   `));
@@ -229,7 +231,9 @@ async function renderTool(tool) {
     mod.default(container, tool);
   } catch (err) {
     debugError(err);
-    container.appendChild(el(`<div class="error-box">This tool failed to load: ${err.message}</div>`));
+    const error = el('<div class="error-box" role="alert"></div>');
+    error.textContent = `This tool failed to load: ${err.message}`;
+    container.appendChild(error);
   }
 }
 
@@ -237,14 +241,16 @@ async function renderTool(tool) {
 // Router
 // ---------------------------------------------------------------------------
 function route() {
-  const id = location.hash.replace(/^#\/?/, '');
+  const id = location.hash.replace(/^#\/?/, '').split('?')[0];
   const tool = TOOLS.find((t) => t.id === id);
   if (tool) renderTool(tool);
   // Not a tool, but a page rule.md PDPA 25 requires us to ship.
   else if (id === 'install') { app.innerHTML = ''; renderInstall(app); }
+  else if (id === 'pilot') { app.innerHTML = ''; renderPilot(app); }
   else if (id === 'privacy') { app.innerHTML = ''; renderPrivacy(app); }
   else renderHome();
   window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', route);
 route();
+initUsage();

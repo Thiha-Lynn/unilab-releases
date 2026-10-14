@@ -1,0 +1,13 @@
+[Unit]
+Description=Expire UniLab usage records after 30 days
+[Service]
+Type=oneshot
+User=unilab-usage
+DynamicUser=yes
+StateDirectory=unilab-usage
+Environment=UNILAB_USAGE_DIR=/var/lib/unilab-usage
+ExecStart=/usr/bin/python3 /opt/unilab-usage/server.py cleanup
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/unilab-usage
+ProtectHome=true
