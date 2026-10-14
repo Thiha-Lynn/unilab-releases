@@ -1,3 +1,4 @@
+import { track } from './usage.js';
 // File intake policy — the rules that apply to every file this app opens.
 //
 // This module exists because rule.md places three duties on the moment a file
@@ -81,6 +82,7 @@ export function screenFiles(files, { accept = '*', maxBytes = MAX_FILE_BYTES } =
     accepted.push(file);
   }
 
+  if (accepted.length && typeof location !== 'undefined') track('files_selected', { count: accepted.length });
   return { accepted, rejected };
 }
 

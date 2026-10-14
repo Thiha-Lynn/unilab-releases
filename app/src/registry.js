@@ -17,6 +17,9 @@ export const CATEGORIES = {
 };
 
 export const TOOLS = [
+  { id: 'markdown-book', name: 'Markdown → Book', icon: icon('edit'), category: 'text',
+    desc: 'Turn Markdown into a Burmese-friendly PDF, EPUB or paper-style web book.',
+    load: () => import('./tools/markdown-book.js') },
   // ---- image ----
   { id: 'compress-image', name: 'Compress Image', icon: icon('compress'), category: 'image',
     desc: 'Shrink photos to fit LMS upload limits while keeping quality.',

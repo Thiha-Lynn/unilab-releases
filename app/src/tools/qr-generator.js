@@ -39,6 +39,8 @@ export default function render(container) {
 
   const canvas = panel.querySelector('[data-canvas]');
   const dlBtn = panel.querySelector('[data-dl]');
+  const message = el('<p role="status" aria-live="polite"></p>'); panel.append(message);
+  let generation = 0;
   let activeTab = 'text';
 
   panel.querySelectorAll('[data-tab]').forEach((b) =>
@@ -63,15 +65,22 @@ export default function render(container) {
   }
 
   async function update() {
+    const gen = ++generation;
     const data = payload();
+    dlBtn.disabled = true; message.textContent = "";
     if (!data) {
       canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
       dlBtn.disabled = true;
       return;
     }
     const size = Number(panel.querySelector('[data-size]').value);
-    await QRCode.toCanvas(canvas, data, { width: size, margin: 2, errorCorrectionLevel: 'M' });
-    dlBtn.disabled = false;
+    try {
+      const next = document.createElement('canvas');
+      await QRCode.toCanvas(next, data, { width: size, margin: 2, errorCorrectionLevel: 'M' });
+      if(gen !== generation) return;
+      canvas.width=next.width; canvas.height=next.height;canvas.getContext('2d').drawImage(next,0,0);
+      dlBtn.disabled = false;
+    } catch { if(gen === generation) { canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);message.textContent='This text is too long for a QR code. Shorten it or use a link.'; } }
   }
 
   panel.querySelectorAll('input, select').forEach((i) => i.addEventListener('input', update));

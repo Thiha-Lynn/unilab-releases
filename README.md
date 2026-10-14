@@ -4,9 +4,11 @@ Private PDF, image, audio, video and text tools. Use [UniLab online](https://uni
 
 This is the independent **open-source product and release repository**. Application source lives in `app/`, the desktop shell in `desktop/`, and the Android app in `mobile/`. Builds do not check out or depend on the assignment repository. Academic requirements, interviews, lecturer material and submission evidence stay in the separate [assignment repository](https://github.com/Thiha-Lynn/unilab). `source-provenance.json` records the original import.
 
-## Version 0.3.1
+## Version 0.4.0
 
-Consistent local SVG icons, restrained light/dark colors, accessible category selection and keyboard focus, clearer tool status labels, and matching install/share artwork.
+60 on-device tools, including Markdown → Book with PDF, EPUB and a paper-style standalone web reader. Burmese and Thai fonts are embedded. Syntax highlighting, terminal blocks, contents, text sizing and search support technical notes.
+
+First-party aggregate usage counts and a separate opt-in 30-person pilot measure activity without accounts or document uploads. See [analytics/README.md](analytics/README.md) for operation, privacy and honest participant evidence. The document processor remains local; the optional counter collector runs on the existing host.
 
 - Android 10+ APK with a native system Save dialog, bundled offline assets and system-bar/keyboard spacing.
 - macOS DMG/ZIP, Windows EXE, Linux DEB/AppImage, each for Intel/AMD x64 and ARM64.

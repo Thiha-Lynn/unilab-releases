@@ -6,7 +6,7 @@ import { isPackagedApp } from './native-save.js';
 import { debug } from './log.js';
 
 export function registerServiceWorker() {
-  if (isPackagedApp() || !('serviceWorker' in navigator)) {
+  if (import.meta.env.DEV || isPackagedApp() || !('serviceWorker' in navigator)) {
     return;
   }
 

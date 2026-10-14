@@ -17,3 +17,10 @@ mobile/android/app/src/main/assets/capacitor.config.json
 mobile/android/app/src/main/assets/capacitor.plugins.json
 *.jks
 *.p12
+
+# Local study data and generated QA evidence are never public source.
+usage-data/
+analytics/__pycache__/
+app/qa/fixtures/
+app/qa/results/
+output/
