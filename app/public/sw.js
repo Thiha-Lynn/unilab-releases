@@ -67,7 +67,7 @@ self.addEventListener('activate', (event) => {
 async function stashInCache(request, response) {
   try {
     const isSameOrigin = new URL(request.url).origin === self.location.origin;
-    if (isSameOrigin && response && response.ok) {
+    if (isSameOrigin && response && response.ok && !/no-store/i.test(response.headers.get('Cache-Control') || '')) {
       const cache = await caches.open(CACHE_NAME);
       await cache.put(request, response.clone());
     }
@@ -80,6 +80,9 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
 
   // Only handle GET requests; let everything else (POST, etc.) pass through.
+  // Online reports must never be served from the offline application cache.
+  if (new URL(request.url).pathname.startsWith('/usage/') || request.cache === 'no-store') return;
+
   if (request.method !== 'GET') {
     return;
   }

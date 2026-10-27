@@ -1,0 +1,16 @@
+[Unit]
+Description=Publish UniLab anonymous aggregate dashboard
+After=unilab-usage.service
+[Service]
+Type=oneshot
+Environment=UNILAB_USAGE_DIR=/var/lib/unilab-usage
+Environment=UNILAB_PUBLIC_USAGE_DIR=/var/lib/unilab-public-usage
+ExecStart=/usr/bin/python3 /opt/unilab-usage/publish_dashboard.py
+StateDirectory=unilab-public-usage
+StateDirectoryMode=0755
+UMask=0022
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/unilab-usage
