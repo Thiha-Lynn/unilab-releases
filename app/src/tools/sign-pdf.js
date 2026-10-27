@@ -1,10 +1,11 @@
 import { PDFDocument, degrees } from 'pdf-lib';
+import { protectPdf, validatePassword } from '../pdf-protection.js';
 import { el, formatBytes, loadImage, stem, toast } from '../ui.js';
 import { openPdf, renderPage } from '../pdf-utils.js';
 import { toolShell } from '../tool-shell.js';
 import {
   TAB_ICONS, colorField, fileFacts, infoBox, liveExplain, optionPanel, segmented,
-  sliderField, tabCards,
+  sliderField, tabCards, checkRow,
 } from '../option-ui.js';
 
 // Three honest ways to get a signature into a browser. Nobody has a scanner in
@@ -205,6 +206,19 @@ export default function render(container, tool) {
       ui.placed = el(`<div class="opt__tokens__chips"></div>`);
       ui.placedRow = wrapField('Placed on the document', ui.placed);
 
+      ui.protect = checkRow('Require a password to open the signed PDF', { onChange: value => { ui.passwords.root.hidden = !value; } });
+      const passwordField = (label, attribute) => {
+        const wrap = el(`<label class="opt__field"><span class="opt__label"></span><input class="opt__select" type="password" autocomplete="new-password" minlength="12" maxlength="64" style="font-size:16px"></label>`);
+        wrap.querySelector('span').textContent = label;
+        const input = wrap.querySelector('input'); input.setAttribute(attribute, '');
+        return { wrap, input };
+      };
+      const pw = passwordField('Opening password', 'data-protect-password');
+      const confirm = passwordField('Repeat password', 'data-protect-confirm');
+      ui.password = pw.input; ui.confirm = confirm.input;
+      ui.passwords = wrapField('', pw.wrap, confirm.wrap, el('<p class="opt__hint">Use 12–64 English-keyboard characters. Keep the password separately: UniLab cannot recover it. AES-256 protection runs on this device.</p>'));
+      ui.passwords.root.hidden = true;
+      panel.add(ui.protect, ui.passwords);
       panel.add(
         ui.tabs, ui.facts, ui.what, ui.draw, ui.type, ui.upload, ui.inkRow,
         ui.previewRow, ui.extras, ui.placedRow, ui.explain,
@@ -216,6 +230,8 @@ export default function render(container, tool) {
     },
 
     async run(ctx) {
+      const password = ui.protect.value ? ui.password.value : '';
+      if (ui.protect.value) validatePassword(password, ui.confirm.value);
       if (!state.stamps.length) {
         throw new Error('Nothing has been placed on the form yet. Make your signature, press "Add signature to this page", then drag it onto the line.');
       }
@@ -249,10 +265,16 @@ export default function render(container, tool) {
         await new Promise((res) => setTimeout(res, 0));
       }
 
-      const blob = new Blob([await doc.save()], { type: 'application/pdf' });
+      let bytes = await doc.save();
+      if (password) {
+        ctx.setBusy(0.95, 'Protecting the signed PDF…');
+        bytes = await protectPdf(bytes, password, ctx.signal);
+        ui.password.value = ''; ui.confirm.value = '';
+      }
+      const blob = new Blob([bytes], { type: 'application/pdf' });
       return {
-        outputs: [{ name: `${stem(state.file.name)}-signed.pdf`, blob }],
-        doneTitle: 'Your PDF is signed!',
+        outputs: [{ name: `${stem(state.file.name)}-signed${password ? '-protected' : ''}.pdf`, blob }],
+        doneTitle: password ? 'Your signed PDF is password-protected!' : 'Your PDF is signed!',
       };
     },
 

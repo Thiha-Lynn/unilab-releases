@@ -2,7 +2,7 @@ import { readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 export const OFFLINE_BUDGET = 8_000_000;
-export const optionalAsset = (name) => /^(?:offline\/|licenses\/|assets\/(?:ort[.-]|remove-background-))/.test(name);
+export const optionalAsset = (name) => /^(?:offline\/|licenses\/|social\/|assets\/(?:ort[.-]|remove-background-))/.test(name);
 export function writeManifests(dir, revision) {
   const walk = (base, prefix='') => readdirSync(base,{withFileTypes:true}).flatMap(d => d.isDirectory() ? walk(join(base,d.name),`${prefix}${d.name}/`) : [`${prefix}${d.name}`]);
   const files = walk(dir).filter(f => !['precache.json','release.json','offline-info.json'].includes(f) && !f.endsWith('.DS_Store')).sort();

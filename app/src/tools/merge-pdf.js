@@ -1,3 +1,4 @@
+import { readMergeInput } from '../merge-input.js';
 import { icon } from '../icons.js';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { el, formatBytes, canvasToBlob } from '../ui.js';
@@ -39,11 +40,12 @@ export default function render(container, tool) {
   let shellCtx = null;
 
   shellCtx = toolShell(container, tool, {
-    accept: 'application/pdf,.pdf',
+    accept: 'application/pdf,.pdf,image/jpeg,.jpg,.jpeg,image/png,.png',
+    maxBytes: 50 * 1024 * 1024,
     multiple: true,
     minFiles: 2,
     sortable: true,
-    pickLabel: 'Select PDF files',
+    pickLabel: 'Select PDFs or images',
     dropLabel: 'or drop them here — they merge top to bottom',
     actionLabel: 'Merge PDFs',
     doneTitle: 'Your PDFs have been merged!',
@@ -88,7 +90,7 @@ export default function render(container, tool) {
       for (const file of runCtx.files) {
         const m = meta.get(file);
         if (!m || m.loading) throw new Error(`Still reading ${file.name} — give it a second and try again.`);
-        if (m.loadError) throw new Error(`${file.name} could not be read as a PDF (${m.loadError}). Remove it to merge the rest.`);
+        if (m.loadError) throw new Error(`${file.name} could not be read as a PDF or JPG/PNG image (${m.loadError}). Remove it to merge the rest.`);
         const sel = selection(file);
         if (sel.error) throw new Error(`The “pages” box for ${file.name} isn't valid: ${sel.error}`);
       }
@@ -119,7 +121,7 @@ export default function render(container, tool) {
       const name = `${safeName(ui.name.value) || 'merged'}.pdf`;
       return {
         outputs: [{ name, blob }],
-        doneTitle: `${runCtx.files.length} PDFs are now one ${out.getPageCount()}-page file!`,
+        doneTitle: `${runCtx.files.length} files are now one ${out.getPageCount()}-page file!`,
       };
     },
   });
@@ -133,13 +135,17 @@ export default function render(container, tool) {
     const m = meta.get(file);
     if (!m) return;   // removed while we were queued
     try {
-      m.doc = await PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: true });
+      const loaded = await readMergeInput(file);
+      m.doc = loaded.doc;
+      m.thumb = loaded.thumb;
       m.pageCount = m.doc.getPageCount();
       m.loading = false;
       paintRow(file);
       update();
-      const pdf = await openPdf(file);
-      m.thumb = await renderPage(pdf, 1, 0.3);
+      if (!m.thumb) {
+        const pdf = await openPdf(file);
+        try { m.thumb = await renderPage(pdf, 1, 0.3); } finally { await pdf.destroy(); }
+      }
       paintRow(file);
     } catch (err) {
       m.loading = false;
@@ -252,7 +258,7 @@ export default function render(container, tool) {
     if (m.loading) { size.textContent = 'reading…'; return; }
     if (m.loadError) {
       size.textContent = formatBytes(file.size);
-      hint.textContent = `Not a readable PDF — remove this file to merge the rest.`;
+      hint.textContent = `Not a readable PDF or JPG/PNG image — remove this file to merge the rest.`;
       hint.hidden = false;
       input.disabled = true;
       return;
@@ -303,8 +309,8 @@ export default function render(container, tool) {
     ui.explain.set(
       bad ? `Fix the red “pages” box${bad === 1 ? '' : 'es'} before merging.`
         : loading ? 'Reading the files…'
-          : files.length < 2 ? 'Add at least one more PDF to merge.'
-            : `${files.length} PDFs → one ${pages + tocPages}-page file${tocPages ? ' (contents page included)' : ''}: ${safeName(ui.name.value) || 'merged'}.pdf`,
+          : files.length < 2 ? 'Add at least one more PDF or image to merge.'
+            : `${files.length} files → one ${pages + tocPages}-page file${tocPages ? ' (contents page included)' : ''}: ${safeName(ui.name.value) || 'merged'}.pdf`,
     );
   }
 

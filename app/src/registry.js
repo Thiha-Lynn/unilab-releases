@@ -121,7 +121,7 @@ export const TOOLS = [
     desc: 'Turn HTML lectures into PDFs — every slide, ready for any PDF reader.',
     load: () => import('./tools/html-to-pdf.js') },
   { id: 'merge-pdf', name: 'Merge PDF', icon: icon('merge'), category: 'pdf',
-    desc: 'Combine reports, cover pages and appendices into one file.',
+    desc: 'Combine PDFs, JPGs and PNGs into one ordered PDF.',
     load: () => import('./tools/merge-pdf.js') },
   { id: 'split-pdf', name: 'Split PDF', icon: icon('split'), category: 'pdf',
     desc: 'Extract the pages you need, or split every page apart.',
