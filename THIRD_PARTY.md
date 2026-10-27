@@ -28,3 +28,10 @@ Capacitor (MIT) and AndroidX (Apache-2.0); their sources are
 https://github.com/ionic-team/capacitor/tree/8.5.2 and
 https://android.googlesource.com/platform/frameworks/support/ respectively.
 No signing key is required to build a modified app: use a key you own.
+
+
+## PDF password protection
+
+Uses @neslinesli93/qpdf-wasm 0.3.0 (ISC package metadata), a WebAssembly build of QPDF 12.2.0. The upstream build pins QPDF 856d32c610334855d30e96d25eb5f9636fb62f08, zlib 21767c654d31d2dccdde4330529775c6c5fd5389 and jpeg-turbo 7aa2a898c564041a24b09d0a6e780aaa632d08d3. Their notices are redistributed in third_party/qpdf and the built licenses/qpdf-runtime folder. Build source: https://github.com/neslinesli93/qpdf-wasm. The gzip asset is reproducibly generated from the locked npm package by app/scripts/prepare-qpdf.js; no remote runtime CDN is used. The disposable worker runs AES-256 encryption on-device.
+
+Social-preview images remain deployed and hashed but are excluded from the offline tool cache; they are not needed to operate the tools.

@@ -8,7 +8,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
 
 export async function openPdf(file) {
   const data = await file.arrayBuffer();
-  return pdfjsLib.getDocument({ data }).promise;
+  const task = pdfjsLib.getDocument({ data });
+  const pdf = await task.promise;
+  // pdf.js 6 exposes disposal on the loading task, not the document proxy.
+  if (!pdf.destroy) pdf.destroy = () => task.destroy();
+  return pdf;
 }
 
 // Render one page to a canvas at the given scale.

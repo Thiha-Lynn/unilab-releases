@@ -7,7 +7,7 @@ fs.mkdirSync(path.join(output,'licenses'),{recursive:true});
 for(const [location,item] of Object.entries(lock.packages)) {
  if(!location||item.dev)continue;
  const dir=path.join(root,'app',location);
- if(!fs.existsSync(dir))throw Error('Missing production dependency '+location);
+ if(!fs.existsSync(dir)) { if(item.optional) continue; throw Error('Missing production dependency '+location); }
  const pkg=JSON.parse(fs.readFileSync(path.join(dir,'package.json')));
  const target=path.join(output,'licenses',pkg.name.replaceAll('/','__'));
  fs.mkdirSync(target,{recursive:true});
@@ -16,6 +16,7 @@ for(const [location,item] of Object.entries(lock.packages)) {
  rows.push({name:pkg.name,version:pkg.version,license:pkg.license,repository:pkg.repository,notices:files});
 }
 fs.writeFileSync(path.join(output,'licenses/dependencies.json'),JSON.stringify(rows,null,2)+'\n');
+fs.cpSync(path.join(root,'third_party/qpdf'),path.join(output,'licenses/qpdf-runtime'),{recursive:true});
 fs.copyFileSync(path.join(root,'THIRD_PARTY.md'),path.join(output,'licenses/README.md'));
 };
 if(require.main===module)module.exports('web');

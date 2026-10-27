@@ -13,10 +13,10 @@
 import { PDFDocument } from 'pdf-lib';
 import JSZip from 'jszip';
 import { canvasToBlob, downloadBlob, el, formatBytes, stem } from '../ui.js';
-import { openPdf, renderPage } from '../pdf-utils.js';
+import { openPdf, renderPage, parsePageRanges } from '../pdf-utils.js';
 import { toolShell } from '../tool-shell.js';
 import {
-  TAB_ICONS, fileFacts, infoBox, liveExplain, measureField, optionPanel, tabCards,
+  TAB_ICONS, checkRow, textField, fileFacts, infoBox, liveExplain, measureField, optionPanel, tabCards,
 } from '../option-ui.js';
 
 const ICON_CHECK = `<svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M6.2 12.1L2.4 8.3l1.2-1.2 2.6 2.6 6.2-6.2 1.2 1.2z"/></svg>`;
@@ -53,6 +53,7 @@ export default function render(container, tool) {
 
   toolShell(container, tool, {
     accept: 'application/pdf,.pdf',
+    maxBytes: 50 * 1024 * 1024,
     multiple: true,
     sortable: true,
     pickLabel: 'Select PDF files',
@@ -95,6 +96,9 @@ export default function render(container, tool) {
         onChange: update,
       });
 
+      ui.grayscale = checkRow('Convert pages to grayscale');
+      ui.rotate = textField('Upside-down pages to turn 180°', { value: '', placeholder: 'e.g. 3 or 3, 5-7', onChange: update });
+      panel.add(ui.grayscale, ui.rotate);
       panel.add(ui.tabs, ui.facts, ui.levels, ui.maxSize, ui.honesty, ui.explain);
       host.appendChild(panel.root);
       syncVisibility();
@@ -148,7 +152,7 @@ export default function render(container, tool) {
   // Target mode: Recommended first, then down the ladder until it fits.
 
   async function runTarget(ctx, files, naming) {
-    const cap = ui.maxSize.value * (ui.maxSize.unit === 'MB' ? 1024 ** 2 : 1024);
+    const cap = ui.maxSize.value * (ui.maxSize.unit === 'MB' ? 1_000_000 : 1000);
     const capText = `${ui.maxSize.value} ${ui.maxSize.unit}`;
     const outputs = [];
     const misses = [];   // { name, over }
@@ -174,7 +178,7 @@ export default function render(container, tool) {
 
       if (fitted) {
         outputs.push({ name: naming(`${stem(file.name)}-compressed.pdf`), blob: fitted });
-      } else if (file.size <= cap) {
+      } else if (file.size <= cap && !ui.grayscale.value && !ui.rotate.value.trim()) {
         // Every rasterized attempt came out over the cap, but the original was
         // already under it. Handing over a bigger, worse file would be absurd —
         // the untouched original wins, and keeps its selectable text.
@@ -213,10 +217,24 @@ export default function render(container, tool) {
     }
     try {
       const out = await PDFDocument.create();
+      const rotatePages = ui.rotate.value.trim() ? new Set(parsePageRanges(ui.rotate.value, pdf.numPages)) : new Set();
       for (let p = 1; p <= pdf.numPages; p++) {
         if (signal?.aborted) throw new Error('canceled');
         onPage(p, pdf.numPages);
-        const canvas = await renderPage(pdf, p, scale);
+        let canvas = await renderPage(pdf, p, scale);
+        if (rotatePages.has(p)) {
+          const rotated = document.createElement('canvas'); rotated.width = canvas.width; rotated.height = canvas.height;
+          const g = rotated.getContext('2d'); g.translate(canvas.width, canvas.height); g.rotate(Math.PI); g.drawImage(canvas, 0, 0);
+          canvas.width = 0; canvas.height = 0; canvas = rotated;
+        }
+        if (ui.grayscale.value) {
+          const g = canvas.getContext('2d'); const pixels = g.getImageData(0, 0, canvas.width, canvas.height);
+          for (let i = 0; i < pixels.data.length; i += 4) {
+            const gray = Math.round(0.2126 * pixels.data[i] + 0.7152 * pixels.data[i + 1] + 0.0722 * pixels.data[i + 2]);
+            pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = gray;
+          }
+          g.putImageData(pixels, 0, 0);
+        }
         const jpeg = await canvasToBlob(canvas, 'image/jpeg', quality);
         canvas.width = 0; canvas.height = 0;   // release the bitmap right away
         const img = await out.embedJpg(new Uint8Array(await jpeg.arrayBuffer()));

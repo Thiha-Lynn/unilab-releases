@@ -8,7 +8,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test \"test/**/*.test.mjs\""
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "prebuild": "node scripts/prepare-qpdf.js",
+    "predev": "node scripts/prepare-qpdf.js"
   },
   "dependencies": {
     "@capacitor/core": "8.5.2",
@@ -31,7 +33,8 @@
     "pdfjs-dist": "^6.2.108",
     "prismjs": "^1.30.0",
     "qrcode": "^1.5.4",
-    "tesseract.js": "^7.0.0"
+    "tesseract.js": "^7.0.0",
+    "@neslinesli93/qpdf-wasm": "0.3.0"
   },
   "devDependencies": {
     "@napi-rs/canvas": "^1.0.9",

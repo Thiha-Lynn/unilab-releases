@@ -29,3 +29,10 @@ Keep invitation links and reports outside Git. Each link is a bearer invitation;
 Metrics: daily sessions are tab/app sessions renewed after 30 minutes idle, not unique humans; file-selection events are local input, not uploads; completed jobs are observed result states; download requests do not prove a saved file; Android saved events confirm native saving completed. Offline activity, opt-out and blocked traffic are missing. Text tools may produce useful results without a file or completed-job event. Pilot feedback covers those tasks.
 
 Anonymous browser counts cannot prove 30 real people. A separate opt-in study plus organiser verification supplies that evidence without account registration.
+
+
+## Daily operations and public evidence
+
+Run `bash analytics/snapshot.sh` to pull a timestamped private report, operator dashboard and daily CSV. It also generates `public-aggregate.html` and `public-aggregate.daily.csv`, which exclude pilot codes and feedback. Inspect the files before sharing. The script does not publish anything or schedule itself. The collector records online events automatically while the server is running; reports are snapshots.
+
+Daily grouping is UTC (07:00 Bangkok boundary). Keep dated aggregate exports for semester evidence before the rolling 30-day collector window expires; restrict and delete private pilot records according to study consent. Public metrics distinguish sessions, file selections, completed jobs and download requests. They do not measure exact people, input/output byte totals, TikTok referrers or campaign attribution. Social video views are not app users. Pair public activity with consented task observations; never infer a completed upload from local file selection.
