@@ -1,8 +1,8 @@
 {
   "name": "unilab-desktop",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": true,
-  "description": "UniLab \u2014 private, offline tools for web, Android and desktop",
+  "description": "UniLab — private, offline tools for web, Android and desktop",
   "author": "UniLab contributors",
   "license": "AGPL-3.0-only",
   "main": "desktop/main.cjs",
@@ -20,7 +20,7 @@
   "build": {
     "appId": "live.ztvmm.unilab",
     "productName": "UniLab",
-    "copyright": "Copyright \u00a9 2026 UniLab contributors",
+    "copyright": "Copyright © 2026 UniLab contributors",
     "artifactName": "UniLab-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "out",

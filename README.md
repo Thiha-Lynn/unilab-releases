@@ -4,7 +4,7 @@ Private PDF, image, audio, video and text tools. Use [UniLab online](https://uni
 
 This is the independent **open-source product and release repository**. Application source lives in `app/`, the desktop shell in `desktop/`, and the Android app in `mobile/`. Builds do not check out or depend on the assignment repository. Academic requirements, interviews, lecturer material and submission evidence stay in the separate [assignment repository](https://github.com/Thiha-Lynn/unilab). `source-provenance.json` records the original import.
 
-## Version 0.4.0
+## Version 0.4.1
 
 60 on-device tools, including Markdown → Book with PDF, EPUB and a paper-style standalone web reader. Burmese and Thai fonts are embedded. Syntax highlighting, terminal blocks, contents, text sizing and search support technical notes.
 
