@@ -8,11 +8,11 @@
 <p id="status" class="status" role="status">Loading the latest aggregate snapshot…</p>
 <button id="refresh" type="button">Refresh now</button> <a class="download" href="daily.csv" download>Download daily CSV</a>
 <section class="cards" aria-label="30-day totals">
-<div class="card"><strong id="visitors">—</strong>Today’s unique visitors<small>Browser/app instances, not people</small></div>
-<div class="card"><strong id="processed">—</strong>Files successfully processed<small>Input occurrences since tracking began</small></div>
+<div class="card"><strong id="visitors">—</strong>Today’s unique visitors (UTC)<small>Browser/app instances, not people</small></div>
+<div class="card"><strong id="processed">—</strong>Files successfully processed<small>Input occurrences in the displayed 30 days</small></div>
 <div class="card"><strong id="sessions">—</strong>Sessions<small>Not distinct people</small></div>
 <div class="card"><strong id="files">—</strong>Files selected<small>Local inputs, not uploads</small></div>
-<div class="card"><strong id="jobs">—</strong>Completed jobs<small>Successful processing results</small></div>
+<div class="card"><strong id="jobs">—</strong>Completed jobs<small>Observed result states; see limits</small></div>
 <div class="card"><strong id="downloads">—</strong>Download requests<small>Saving initiated</small></div>
 </section>
 <p><b>Verified people require separate pilot evidence.</b> Anonymous activity cannot establish that 15–30 distinct people completed useful tasks.</p>
@@ -22,6 +22,7 @@
 <section class="limits"><h2>What these numbers mean</h2><ul>
 <li>Unique visitors counts daily browser/app instances using a random ID stored locally for one UTC day. It is not a people census: multiple devices, private mode or clearing storage can increase it; shared devices can reduce it. No fingerprinting. Daily unique counts must not be summed as monthly unique people.</li>
 <li>Files processed counts primary input-file occurrences only after a usable result is produced. A three-file merge counts three; extracting many pages from one PDF counts one. Failed inputs are excluded; rerunning a file counts again, downloading the same result again does not. These are reported processing operations, not unique documents or independently verified outcomes. Typed text and live recordings have no input file.</li>
+<li>Completed jobs are inferred from displayed result states and can differ from processing operations. Use the explicit files-processed metric for successful primary input counts.</li>
 <li>Download requests can be cancelled. *Confirmed saves are reported by supported native Android saving; browsers do not confirm that a file was saved.</li>
 <li>Offline activity, opted-out activity and blocked events are absent. Automated QA is excluded.</li>
 <li>No documents, filenames, passwords, participant codes, individual feedback or session identifiers are published here.</li>

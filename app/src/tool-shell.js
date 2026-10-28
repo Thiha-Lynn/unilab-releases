@@ -219,6 +219,7 @@ export function toolShell(container, tool, spec) {
 
   // ---- files -------------------------------------------------------------
   async function addFiles(next) {
+    if (controller || disposed) return; // Keep this run's inputs stable, including root-level drops.
     errorBox(container, null);
 
     // `input.accept` only filters the operating system's picker, and a dragged
@@ -243,6 +244,7 @@ export function toolShell(container, tool, spec) {
   }
 
   function removeFile(i) {
+    if (controller || disposed) return;
     files.splice(i, 1);
     renderCards();
     if (!files.length) setStage('upload');
@@ -334,6 +336,7 @@ export function toolShell(container, tool, spec) {
   });
 
   goBtn.addEventListener('click', async () => {
+    if (controller || disposed) return;
     errorBox(container, null);
     controller = new AbortController();
     ctx.signal = controller.signal;

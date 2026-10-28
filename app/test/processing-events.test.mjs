@@ -8,9 +8,9 @@ test('processing counts successful input occurrences once, excludes failures and
  const descriptors=new Map(Object.keys(globals).map(k=>[k,Object.getOwnPropertyDescriptor(globalThis,k)]));
  for(const [k,v] of Object.entries(globals))Object.defineProperty(globalThis,k,{value:v,configurable:true,writable:true});
  win.scrollTo=()=>{};
- let fail=false;
+ let fail=false,release;
  try {
-  const ctx=toolShell(document.querySelector('#app'),{id:'merge-pdf',name:'Merge PDF'},{multiple:true,run:async()=>{if(fail)throw Error('fixture failure');return {outputs:[{name:'result.pdf',blob:new Blob(['fixture'])}]}}});
+  const ctx=toolShell(document.querySelector('#app'),{id:'merge-pdf',name:'Merge PDF'},{multiple:true,run:async()=>{if(release)await new Promise(resolve=>{release=resolve});if(fail)throw Error('fixture failure');return {outputs:[{name:'result.pdf',blob:new Blob(['fixture'])}]}}});
   ctx.files.push(new win.File(['1'],'one.pdf'),new win.File(['2'],'two.pdf'),new win.File(['3'],'three.pdf'));ctx.refresh();
   document.querySelector('.ts__go').click();await pause();
   assert.deepEqual(events.filter(e=>e.event==='files_processed').map(e=>e.count),[3]);
@@ -19,6 +19,17 @@ test('processing counts successful input occurrences once, excludes failures and
   ctx.stage('work');fail=true;document.querySelector('.ts__go').click();await pause();assert.equal(events.filter(e=>e.event==='files_processed').length,1);
   fail=false;document.querySelector('.ts__go').click();await pause();assert.deepEqual(events.filter(e=>e.event==='files_processed').map(e=>e.count),[3,3]);
   assert.notEqual(events[0].eventId,events[1].eventId);
+  // An in-flight run cannot be restarted or have its inputs replaced by a drop.
+  ctx.stage('work');release=true;document.querySelector('.ts__go').click();await pause();
+  const drop=new win.Event('drop',{bubbles:true});Object.defineProperty(drop,'dataTransfer',{value:{files:[new win.File(['4'],'extra.pdf')]}});
+  document.querySelector('.ts').dispatchEvent(drop);document.querySelector('.ts__go').click();
+  assert.equal(ctx.files.length,3);assert.equal(document.querySelector('.ts').dataset.stage,'busy');
+  document.querySelector('.ts__busy__cancel').click();release();release=null;await pause();
+  assert.equal(events.filter(e=>e.event==='files_processed').length,2,'canceled run has no successful inputs');
+  // Opt-out while waiting for another tab's identity lock must prevent the send.
+  let unlock;Object.defineProperty(win.navigator,'locks',{value:{request:async(name,fn)=>{await new Promise(r=>{unlock=r});return fn();}},configurable:true});
+  const pending=track('tool_open');setUsageEnabled(false);const pendingCount=events.length;unlock();await pending;
+  assert.equal(events.length,pendingCount);assert.equal(localStorage.getItem(VISITOR_KEY),null);
   setUsageEnabled(false);assert.equal(localStorage.getItem(VISITOR_KEY),null);const before=events.length;await track('tool_open');assert.equal(events.length,before);
  }finally{
   win.dispatchEvent(new win.Event('hashchange'));win.close();

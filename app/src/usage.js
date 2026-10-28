@@ -30,7 +30,10 @@ export async function track(event,details={}){
  if(!usageEnabled()){try{localStorage.removeItem(VISITOR_KEY)}catch{}if(!pilot())return false;}
  if(!navigator.onLine)return false; // no hidden offline queue
  const body=payload(event,details);if(!body)return false;
- if(usageEnabled()){const identify=()=>dailyVisitor(localStorage);try{const visitor=navigator.locks?.request?await navigator.locks.request('unilab-daily-visitor',identify):identify();if(visitor)body.visitor=visitor;}catch{}}else{try{localStorage.removeItem(VISITOR_KEY)}catch{}}
+ if(usageEnabled()){const identify=()=>usageEnabled()?dailyVisitor(localStorage):null;try{const visitor=navigator.locks?.request?await navigator.locks.request('unilab-daily-visitor',identify):identify();if(visitor)body.visitor=visitor;}catch{}}else{try{localStorage.removeItem(VISITOR_KEY)}catch{}}
+ // Consent can change while a cross-tab visitor lock is pending. Recheck before sending.
+ if(!usageEnabled()){delete body.visitor;try{localStorage.removeItem(VISITOR_KEY)}catch{}if(!pilot())return false;}
+ if(body.pilot && body.pilot!==pilot()?.token)return false;
  try{const response=await fetch('https://unilab.ztvmm.live/api/usage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),credentials:'omit',referrerPolicy:'no-referrer',keepalive:true,signal:AbortSignal.timeout(4000)});return response.ok}catch{return false}
 }
 export function initUsage(){
