@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import { icon } from '../icons.js';
 import { el, dropzone, formatBytes, errorBox, stem, toast } from '../ui.js';
 import {
@@ -282,6 +283,7 @@ export default function render(container) {
 
       if (outputs.length) {
         if (canceled) toast(`Stopped — keeping the ${outputs.length} ${outputs.length === 1 ? 'file' : 'files'} that finished`);
+      processedFiles(outputs.length, 'extract-audio');
         showResults({ outputs, warnings, sourceBytes, canceled, total, formatLabel, elapsedMs: performance.now() - started });
       } else if (canceled) {
         toast('Extraction canceled');

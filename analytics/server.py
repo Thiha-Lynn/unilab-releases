@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-EVENTS={'session_start','tool_open','files_selected','job_started','job_completed','job_failed','download_requested','download_saved','pilot_feedback'}
+EVENTS={'session_start','tool_open','files_selected','files_processed','job_started','job_completed','job_failed','download_requested','download_saved','pilot_feedback'}
 PLATFORMS={'web','android','desktop'}
 ORIGINS={'https://unilab.ztvmm.live','https://localhost','capacitor://localhost','app://unilab'}
 BASE=Path(os.environ.get('UNILAB_USAGE_DIR','./usage-data'))
@@ -15,9 +15,14 @@ def connect():
     db=sqlite3.connect(BASE/'usage.sqlite',timeout=10)
     db.executescript('''CREATE TABLE IF NOT EXISTS counts(day TEXT,tool TEXT,event TEXT,platform TEXT,version TEXT,total INTEGER,files INTEGER,PRIMARY KEY(day,tool,event,platform,version));
     CREATE TABLE IF NOT EXISTS sessions(day TEXT,session TEXT,platform TEXT,PRIMARY KEY(day,session,platform));
+    CREATE TABLE IF NOT EXISTS visitors(day TEXT,visitor TEXT,platform TEXT,PRIMARY KEY(day,visitor,platform));
+    CREATE TABLE IF NOT EXISTS receipts(day TEXT,eventid TEXT PRIMARY KEY);
+    CREATE TABLE IF NOT EXISTS metadata(key TEXT PRIMARY KEY,value TEXT);
     CREATE TABLE IF NOT EXISTS pilots(token TEXT PRIMARY KEY,code TEXT UNIQUE,created INTEGER);
     CREATE TABLE IF NOT EXISTS pilot_activity(code TEXT,day TEXT,tool TEXT,event TEXT,total INTEGER,PRIMARY KEY(code,day,tool,event));
     CREATE TABLE IF NOT EXISTS feedback(code TEXT,day TEXT,tool TEXT,solved TEXT,rating INTEGER,PRIMARY KEY(code,day,tool));''')
+    db.execute('INSERT OR IGNORE INTO metadata VALUES(?,?)',('metricsStartedAt',datetime.now(timezone.utc).isoformat()))
+    db.commit()
     return db
 
 def secret():
@@ -30,12 +35,16 @@ def secret():
 def digest(value):return hmac.new(secret(),value.encode(),hashlib.sha256).hexdigest()
 
 def validate(p,tools):
-    if not isinstance(p,dict) or set(p)-{'event','tool','platform','version','session','count','pilot','solved','rating'}:raise ValueError('Unexpected fields')
+    if not isinstance(p,dict) or set(p)-{'event','tool','platform','version','session','count','pilot','solved','rating','visitor','eventId'}:raise ValueError('Unexpected fields')
     if p.get('event') not in EVENTS or p.get('platform') not in PLATFORMS:raise ValueError('Unknown event/platform')
     if p.get('tool') not in tools|{'home','privacy','pilot','install'}:raise ValueError('Unknown tool')
     if not re.fullmatch(r'\d+\.\d+\.\d+',str(p.get('version',''))):raise ValueError('Invalid version')
     if not re.fullmatch(r'[a-f0-9]{32}',str(p.get('session',''))):raise ValueError('Invalid session')
     if type(p.get('count',1)) is not int or not 1<=p.get('count',1)<=1000:raise ValueError('Invalid count')
+    if 'visitor' in p and not re.fullmatch(r'[a-f0-9]{32}',str(p['visitor'])):raise ValueError('Invalid visitor')
+    if p['event']=='files_processed':
+        if 'count' not in p or not re.fullmatch(r'[a-f0-9]{32}',str(p.get('eventId',''))):raise ValueError('Processing receipt required')
+    elif 'eventId' in p:raise ValueError('Processing receipts only')
     if p.get('pilot') and not re.fullmatch(r'[a-f0-9]{48}',p['pilot']):raise ValueError('Invalid pilot token')
     if p['event']=='pilot_feedback':
         if not p.get('pilot') or p.get('solved') not in {'yes','partly','no'} or type(p.get('rating')) is not int or not 1<=p['rating']<=5:raise ValueError('Invalid feedback')
@@ -49,8 +58,13 @@ def record(p,db):
         row=db.execute('SELECT code FROM pilots WHERE token=? AND created>?',(digest(p['pilot']),now-30*86400)).fetchone()
         if not row:raise ValueError('Expired or unknown pilot invitation')
         code=row[0]
+    if p['event']=='files_processed':
+        inserted=db.execute('INSERT OR IGNORE INTO receipts VALUES(?,?)',(day,digest('event:'+p['eventId'])))
+        if not inserted.rowcount:return
+    if p.get('visitor'):
+        db.execute('INSERT OR IGNORE INTO visitors VALUES(?,?,?)',(day,digest('visitor:'+day+':'+p['visitor']),p['platform']))
     db.execute('INSERT OR IGNORE INTO sessions VALUES(?,?,?)',(day,digest(day+':'+p['session']),p['platform']))
-    db.execute('INSERT INTO counts VALUES(?,?,?,?,?,1,?) ON CONFLICT(day,tool,event,platform,version) DO UPDATE SET total=total+1,files=files+excluded.files',(day,p['tool'],p['event'],p['platform'],p['version'],p.get('count',1) if p['event']=='files_selected' else 0))
+    db.execute('INSERT INTO counts VALUES(?,?,?,?,?,1,?) ON CONFLICT(day,tool,event,platform,version) DO UPDATE SET total=total+1,files=files+excluded.files',(day,p['tool'],p['event'],p['platform'],p['version'],p.get('count',1) if p['event'] in {'files_selected','files_processed'} else 0))
     if code:
         db.execute('INSERT INTO pilot_activity VALUES(?,?,?,?,1) ON CONFLICT(code,day,tool,event) DO UPDATE SET total=total+1',(code,day,p['tool'],p['event']))
         if p['event']=='pilot_feedback':db.execute('INSERT OR REPLACE INTO feedback VALUES(?,?,?,?,?)',(code,day,p['tool'],p['solved'],p['rating']))
@@ -59,13 +73,13 @@ def record(p,db):
 def cleanup(db,now=None):
     now=int(time.time()) if now is None else now
     cutoff=datetime.fromtimestamp(now-30*86400,timezone.utc).strftime('%Y-%m-%d')
-    for table in ['counts','sessions','pilot_activity','feedback']:db.execute(f'DELETE FROM {table} WHERE day<?',(cutoff,))
+    for table in ['counts','sessions','visitors','receipts','pilot_activity','feedback']:db.execute(f'DELETE FROM {table} WHERE day<?',(cutoff,))
     db.execute('DELETE FROM pilots WHERE created<?',(now-30*86400,));db.commit()
 
 def report():
     db=connect();db.row_factory=sqlite3.Row
     rows=lambda sql:[dict(r) for r in db.execute(sql)]
-    return {'generatedAt':datetime.now(timezone.utc).isoformat(),'retentionDays':30,'definitions':{'sessions':'Daily browser/app sessions, not unique people. Offline or opted-out use is missing.','download_requested':'Save/download initiated, not proof of a saved or useful file.','pilot':'Organizer must verify one distinct person per invitation. No names collected here.'},'dailySessions':rows('SELECT day,platform,count(*) AS sessions FROM sessions GROUP BY day,platform'),'counts':rows('SELECT * FROM counts ORDER BY day,tool,event'),'pilotActivity':rows('SELECT * FROM pilot_activity ORDER BY code,day'),'pilotFeedback':rows('SELECT * FROM feedback ORDER BY code,day'),'pilotSummary':rows("SELECT p.code,COALESCE(SUM(CASE WHEN a.event='job_completed' THEN a.total ELSE 0 END),0) AS completedJobs,COALESCE(SUM(CASE WHEN a.event='download_requested' THEN a.total ELSE 0 END),0) AS downloadRequests FROM pilots p LEFT JOIN pilot_activity a ON p.code=a.code GROUP BY p.code")}
+    return {'generatedAt':datetime.now(timezone.utc).isoformat(),'retentionDays':30,'metricsStartedAt':db.execute("SELECT value FROM metadata WHERE key='metricsStartedAt'").fetchone()[0],'dailyVisitors':rows('SELECT day,count(*) AS visitors FROM visitors GROUP BY day'),'definitions':{'sessions':'Daily browser/app sessions, not unique people. Offline or opted-out use is missing.','download_requested':'Save/download initiated, not proof of a saved or useful file.','pilot':'Organizer must verify one distinct person per invitation. No names collected here.'},'dailySessions':rows('SELECT day,platform,count(*) AS sessions FROM sessions GROUP BY day,platform'),'counts':rows('SELECT * FROM counts ORDER BY day,tool,event'),'pilotActivity':rows('SELECT * FROM pilot_activity ORDER BY code,day'),'pilotFeedback':rows('SELECT * FROM feedback ORDER BY code,day'),'pilotSummary':rows("SELECT p.code,COALESCE(SUM(CASE WHEN a.event='job_completed' THEN a.total ELSE 0 END),0) AS completedJobs,COALESCE(SUM(CASE WHEN a.event='download_requested' THEN a.total ELSE 0 END),0) AS downloadRequests FROM pilots p LEFT JOIN pilot_activity a ON p.code=a.code GROUP BY p.code")}
 
 class Handler(BaseHTTPRequestHandler):
     tools=set()

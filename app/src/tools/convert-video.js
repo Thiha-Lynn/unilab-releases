@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import { icon } from '../icons.js';
 import { el, dropzone, errorBox, formatBytes, stem, toast } from '../ui.js';
 import {
@@ -409,6 +410,7 @@ export default function render(container) {
       return;
     }
     if (stopped) toast('Stopped — the finished files are below');
+      processedFiles(outputs.length, 'convert-video');
     showResult({ outputs, bytesBefore, warnings, spec, stopped });
   });
 

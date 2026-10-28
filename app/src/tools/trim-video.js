@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import { el, dropzone, formatBytes, errorBox, stem, toast } from '../ui.js';
 import {
   VIDEO_ACCEPT, CONTAINERS, convertMedia, formatDuration, isCanceled,
@@ -298,6 +299,7 @@ export default function render(container) {
       });
 
       job.stop();
+      processedFiles(1, 'trim-video');
       showResult(result, length, reencodes, performance.now() - started);
     } catch (err) {
       job.stop();

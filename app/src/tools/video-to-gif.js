@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import { el, dropzone, errorBox, formatBytes, stem, toast } from '../ui.js';
 import {
   VIDEO_ACCEPT, formatDuration, isCanceled, probeMedia, requireWebCodecs,
@@ -317,6 +318,7 @@ export default function render(container) {
       const result = await encode(signal);
       job.stop();
       if (!result) { if (!pageGone) toast('GIF canceled'); return; }
+      processedFiles(1, 'video-to-gif');
       showResult(result, performance.now() - started);
     } catch (err) {
       job.stop();

@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import heic2any from 'heic2any';
 import JSZip from 'jszip';
 import { el, dropzone, fileListView, downloadBlob, progressBar, errorBox, formatBytes, stem } from '../ui.js';
@@ -104,6 +105,7 @@ export default function render(container) {
         acts.appendChild(b);
       }
     }
+      processedFiles(outputs.length, 'heic-to-jpg');
     resultsHost.appendChild(box);
   });
 

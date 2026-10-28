@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import JSZip from 'jszip';
 import { el, dropzone, downloadBlob, progressBar, errorBox, formatBytes, canvasToBlob, stem } from '../ui.js';
 import { openPdf, renderPage, parsePageRanges } from '../pdf-utils.js';
@@ -103,6 +104,7 @@ export default function render(container) {
           acts.appendChild(b);
         }
       }
+      processedFiles(1, 'pdf-to-images');
       resultsHost.appendChild(box);
     } catch (err) {
       progress.hide();
