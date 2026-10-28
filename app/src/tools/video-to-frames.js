@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import JSZip from 'jszip';
 import { el, dropzone, downloadBlob, canvasToBlob, errorBox, formatBytes, stem, toast, MIME_EXT } from '../ui.js';
 import {
@@ -358,6 +359,7 @@ export default function render(container) {
         throw new Error('No frames came back from that video. It may be damaged, or the moments you picked may all sit past the end of it.');
       }
 
+      processedFiles(1, 'video-to-frames');
       await showResult(outputs, plan, ext, repeats);
     } catch (err) {
       if (isCanceled(err)) toast('Stopped');

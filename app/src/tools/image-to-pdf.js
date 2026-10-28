@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import { PDFDocument } from 'pdf-lib';
 import { el, dropzone, fileListView, downloadBlob, progressBar, errorBox, loadImage, canvasToBlob, formatBytes } from '../ui.js';
 
@@ -99,6 +100,7 @@ export default function render(container) {
         </div>
       `);
       box.querySelector('[data-dl]').addEventListener('click', () => downloadBlob(blob, 'unilab-images.pdf'));
+      processedFiles(files.length, 'image-to-pdf');
       resultsHost.appendChild(box);
     } catch (err) {
       progress.hide();

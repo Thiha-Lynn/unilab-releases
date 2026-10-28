@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import { el, dropzone, formatBytes, errorBox, stem, toast } from '../ui.js';
 import {
   VIDEO_ACCEPT, CONTAINERS, bitrateForTargetSize, convertMedia, evenSize,
@@ -254,6 +255,7 @@ export default function render(container) {
       });
 
       job.stop();
+      processedFiles(1, 'compress-video');
       showResult(result, performance.now() - started);
     } catch (err) {
       job.stop();

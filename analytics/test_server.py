@@ -42,3 +42,22 @@ class UsageTests(unittest.TestCase):
    self.assertEqual(request('GET','/report'),404)
   finally:http.shutdown();http.server_close();thread.join()
 if __name__=='__main__':unittest.main()
+
+class NewMetricsTests(unittest.TestCase):
+ setUp=UsageTests.setUp
+ tearDown=UsageTests.tearDown
+ def test_daily_visitors_and_idempotent_success_counts(self):
+  p={**self.p,'visitor':'c'*32,'event':'files_processed','eventId':'d'*32,'count':3}
+  with server.connect() as db:
+   server.record(server.validate(p,{'compress-pdf'}),db)
+   server.record(p,db)
+   server.record({**self.p,'session':'b'*32,'visitor':'c'*32},db)
+   self.assertEqual(db.execute('SELECT count(*) FROM visitors').fetchone()[0],1)
+   self.assertNotEqual(db.execute('SELECT visitor FROM visitors').fetchone()[0],p['visitor'])
+   self.assertEqual(db.execute("SELECT total,files FROM counts WHERE event='files_processed'").fetchone(),(1,3))
+   server.cleanup(db,int(server.time.time())+32*86400)
+   self.assertEqual(db.execute('SELECT count(*) FROM visitors').fetchone()[0],0)
+   self.assertEqual(db.execute('SELECT count(*) FROM receipts').fetchone()[0],0)
+ def test_new_fields_are_bounded(self):
+  for extra in [{'visitor':'fingerprint'},{'event':'files_processed','count':2},{'eventId':'e'*32}]:
+   with self.assertRaises(ValueError):server.validate({**self.p,**extra},{'compress-pdf'})

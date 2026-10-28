@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import imageCompression from 'browser-image-compression';
 import { stripImageMetadata, mayCarryMetadata } from '../intake.js';
 import JSZip from 'jszip';
@@ -102,6 +103,7 @@ export default function render(container) {
         outputs.push({ name: `${stem(f.name)}-compressed.${ext}`, blob, before: f.size, after: blob.size });
       }
       progress.hide();
+      processedFiles(outputs.length, 'compress-image');
       showResults(outputs);
     } catch (err) {
       progress.hide();

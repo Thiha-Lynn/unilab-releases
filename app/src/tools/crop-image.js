@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
 import { el, dropzone, downloadBlob, errorBox, canvasToBlob, stem } from '../ui.js';
@@ -82,6 +83,7 @@ export default function render(container) {
       const canvas = cropper.getCroppedCanvas({ imageSmoothingQuality: 'high' });
       const blob = await canvasToBlob(canvas, type, 0.92);
       const ext = type === 'image/png' ? 'png' : type === 'image/webp' ? 'webp' : 'jpg';
+      processedFiles(1, 'crop-image');
       downloadBlob(blob, `${stem(currentFile.name)}-cropped.${ext}`);
     } catch (err) {
       errorBox(panel, err.message);

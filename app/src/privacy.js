@@ -74,14 +74,14 @@ export function renderPrivacy(app) {
       that watch you. The hosting server receives ordinary requests for app assets, including your IP address
       and browser headers. It does not receive the files you process.</p>
 
-      <h2>Optional pilot and usage counts</h2><p>We collect small first-party usage events: tool names, completed jobs, locally selected file counts and download requests. No files, filenames, entered text or raw error messages are sent. A random session identifier estimates sessions, not people; counter records expire after 30 days. You can disable ordinary counts, and browser Do Not Track/Global Privacy Control are respected. A separate opt-in pilot links activity and task feedback to an invitation code for 30 days. <a href="#/pilot">Manage usage counts and pilot participation</a>.</p><h2>Limits worth knowing</h2>
+      <h2>Optional pilot and usage counts</h2><p>We collect small first-party usage events: tool names, completed jobs, locally selected and successfully processed input-file counts and download requests. No files, filenames, entered text or raw error messages are sent. A random identifier in local storage is renewed each UTC day to count daily browser/app instances, not people. The server keeps only a day-specific keyed hash. A separate random session identifier estimates sessions; counter records expire after 30 days. You can disable ordinary counts, and browser Do Not Track/Global Privacy Control are respected. A separate opt-in pilot links activity and task feedback to an invitation code for 30 days. <a href="#/pilot">Manage usage counts and pilot participation</a>.</p><h2>Limits worth knowing</h2>
       <ul>
         <li>Each tool states its file count and size limit (at most ${describeLimit(MAX_FILE_BYTES)}); files the tool
         cannot open are refused and not read.</li>
         <li>Because the work happens on your device, a large video is bounded by how fast
         that device is. We cannot promise server speed, and we do not.</li>
         <li>Installing UniLab for offline use stores the <i>app</i> on your device. It
-        never stores your document files. GPA course names and grades are saved locally until you press Clear all. Usage preferences and an optional pilot invitation are also saved locally.</li>
+        never stores your document files. GPA course names and grades are saved locally until you press Clear all. Usage preferences, a random identifier for the current UTC day and an optional pilot invitation are also saved locally.</li>
       </ul>
 
       <h2>Open source</h2><p>Copyright © 2026 UniLab contributors. Distributed under <a href="./LICENSE.txt">AGPL-3.0</a>, without warranty. You may modify and redistribute under its terms. <a href="https://github.com/Thiha-Lynn/unilab-releases" target="_blank" rel="noopener">Get the complete UniLab source and build instructions</a>. Third-party licenses are preserved in the distribution.</p>

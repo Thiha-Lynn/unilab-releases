@@ -4,10 +4,10 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from server import report
 
-FIELDS = {'files_selected': 'selectedFiles', 'job_completed': 'completedJobs',
+FIELDS = {'files_selected': 'selectedFiles', 'files_processed': 'processedFiles', 'job_completed': 'completedJobs',
           'job_failed': 'failedJobs', 'download_requested': 'downloadRequests',
           'download_saved': 'confirmedSaves'}
-COLUMNS = ['day', 'sessions', *FIELDS.values()]
+COLUMNS = ['day', 'sessions', 'visitors', *FIELDS.values()]
 
 def aggregate(source, now=None):
     now = now or datetime.now(timezone.utc)
@@ -16,12 +16,19 @@ def aggregate(source, now=None):
     for row in source['dailySessions']:
         if row['day'] in days:
             days[row['day']]['sessions'] += row['sessions']
+    started=source.get('metricsStartedAt')
+    for day in days:
+        if not started or day < started[:10]:
+            days[day]['visitors']=None; days[day]['processedFiles']=None
+    for row in source.get('dailyVisitors',[]):
+        if row['day'] in days and days[row['day']]['visitors'] is not None:
+            days[row['day']]['visitors']+=row['visitors']
     for row in source['counts']:
         key = FIELDS.get(row['event'])
-        if key and row['day'] in days:
-            days[row['day']][key] += row['files'] if key == 'selectedFiles' else row['total']
+        if key and row['day'] in days and days[row['day']][key] is not None:
+            days[row['day']][key] += row['files'] if key in {'selectedFiles','processedFiles'} else row['total']
     return {'generatedAt': now.isoformat(), 'timezone': 'UTC', 'retentionDays': 30,
-            'refreshSeconds': 300,
+            'refreshSeconds': 300, 'metricsStartedAt': started,
             'daily': [dict(day=day, **values) for day, values in days.items()]}
 
 def publish(target, source=None, now=None):

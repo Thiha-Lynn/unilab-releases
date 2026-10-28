@@ -4,7 +4,7 @@ from pathlib import Path
 r=json.loads(Path(sys.argv[1]).read_text());out=Path(sys.argv[2])
 e=lambda x:html.escape(str(x))
 totals=collections.Counter()
-for row in r['counts']:totals[row['event']]+=row['total'];totals['selected_files']+=row['files']
+for row in r['counts']:totals[row['event']]+=row['total'];totals['selected_files']+=row['files'] if row['event']=='files_selected' else 0
 active={x['code'] for x in r['pilotActivity'] if x['event']=='tool_open' and x['tool'] not in {'pilot','home','privacy','install'}}
 solved={x['code'] for x in r['pilotFeedback'] if x['solved']=='yes'}
 def table(rows,keys):return '<table><tr>'+''.join('<th>'+e(k)+'</th>' for k in keys)+'</tr>'+''.join('<tr>'+''.join('<td>'+e(row.get(k,''))+'</td>' for k in keys)+'</tr>' for row in rows)+'</table>'

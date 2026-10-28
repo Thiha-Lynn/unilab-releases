@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import { PDFDocument, degrees } from 'pdf-lib';
 import { el, dropzone, downloadBlob, progressBar, errorBox, formatBytes, stem } from '../ui.js';
 import { openPdf, renderPage } from '../pdf-utils.js';
@@ -106,6 +107,7 @@ export default function render(container) {
         </div>
       `);
       box.querySelector('[data-dl]').addEventListener('click', () => downloadBlob(blob, `${stem(file.name)}-organized.pdf`));
+      processedFiles(1, 'organize-pdf');
       resultsHost.appendChild(box);
     } catch (err) {
       progress.hide();

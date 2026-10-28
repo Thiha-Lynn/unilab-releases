@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import JSZip from 'jszip';
 import { el, dropzone, fileListView, downloadBlob, progressBar, errorBox, loadImage, canvasToBlob, formatBytes, stem, MIME_EXT } from '../ui.js';
 
@@ -114,6 +115,7 @@ export default function render(container) {
         });
         acts.appendChild(zipBtn);
       }
+      processedFiles(outputs.length, 'resize-image');
       resultsHost.appendChild(box);
     } catch (err) {
       progress.hide();

@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import { el, dropzone, errorBox, formatBytes, stem, toast } from '../ui.js';
 import {
   VIDEO_ACCEPT, convertMedia, evenSize, formatDuration, grabFrame, isCanceled,
@@ -410,6 +411,7 @@ export default function render(container) {
       });
 
       job.stop();
+      processedFiles(1, 'resize-video');
       showResult(result, { box, preset, fitMode }, performance.now() - started);
     } catch (err) {
       job.stop();

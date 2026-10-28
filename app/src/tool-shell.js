@@ -1,3 +1,4 @@
+import { processedFiles } from './usage.js';
 // The tool shell — the three-stage, two-pane frame every heavy UniLab tool runs in.
 //
 // Modelled directly on how iLovePDF and iLoveIMG structure all 44 of their tools:
@@ -339,11 +340,13 @@ export function toolShell(container, tool, spec) {
     ctx.setBusy(0, `${actionLabel}…`);
     setStage('busy');
     const started = performance.now();
+    const inputCount = files.length;
     try {
       const result = await run(ctx, { signal: controller.signal });
       if (disposed || controller.signal.aborted) throw new DOMException('Canceled', 'AbortError');
       if (!result?.outputs?.length) throw new Error('Nothing came back from that job. Try different settings.');
       showDone(result, performance.now() - started);
+      processedFiles(result.processedFiles ?? inputCount, tool.id);
     } catch (err) {
       if (disposed) return;
       setStage('work');

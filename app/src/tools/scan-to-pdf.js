@@ -165,6 +165,7 @@ export default function render(container, tool) {
       const count = state.pages.length;
       return {
         outputs: [{ name: outputName(), blob }],
+        processedFiles: count,
         doneTitle: `Your scan is ready — ${count} page${count === 1 ? '' : 's'}, ${formatBytes(blob.size)}.`,
       };
     },

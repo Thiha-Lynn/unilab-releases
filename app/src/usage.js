@@ -1,7 +1,8 @@
 // Small first-party counters. Never pass files, names, text, URLs or errors here.
+import { dailyVisitor, VISITOR_KEY, randomId, processingChunks } from './usage-metrics.js';
 import { TOOLS } from './registry.js';
 const ids=new Set(TOOLS.map(t=>t.id));
-const events=new Set(['session_start','tool_open','files_selected','job_started','job_completed','job_failed','download_requested','download_saved','pilot_feedback']);
+const events=new Set(['session_start','tool_open','files_selected','files_processed','job_started','job_completed','job_failed','download_requested','download_saved','pilot_feedback']);
 const DISABLED='unilab.usage.disabled', SESSION='unilab.usage.session', PILOT='unilab.pilot';
 const get=(storage,key)=>{try{return storage.getItem(key)}catch{return null}};
 const put=(storage,key,value)=>{try{storage.setItem(key,value)}catch{/* storage may be unavailable */}};
@@ -10,13 +11,15 @@ export function pilot(){try{const p=JSON.parse(get(localStorage,PILOT)||'null');
 export function joinPilot(token){if(!/^[a-f0-9]{48}$/.test(token))throw Error('Invalid invitation');put(localStorage,PILOT,JSON.stringify({token,expires:Date.now()+30*86400000}));}
 export function leavePilot(){try{localStorage.removeItem(PILOT)}catch{}}
 export function usageEnabled(){return get(localStorage,DISABLED)!=='1'&&navigator.doNotTrack!=='1'&&!navigator.globalPrivacyControl;}
-export function setUsageEnabled(value){put(localStorage,DISABLED,value?'0':'1');}
+export function setUsageEnabled(value){put(localStorage,DISABLED,value?'0':'1');if(!value){try{localStorage.removeItem(VISITOR_KEY)}catch{}}}
 let volatileSession;
 function session(){let value;try{value=JSON.parse(get(sessionStorage,SESSION)||'null')}catch{}value ||= volatileSession;if(!value||Date.now()-value.at>30*60000){value={id:Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,'0')).join(''),at:Date.now()};}value.at=Date.now();put(sessionStorage,SESSION,JSON.stringify(value));volatileSession=value;return value.id;}
 export function payload(event,details={},env={tool:toolId(),platform:location.protocol==='app:'?'desktop':location.hostname==='localhost'&&location.protocol==='https:'?'android':'web',version:__APP_VERSION__,session:session(),pilot:pilot()?.token}){
  if(!events.has(event))return null;
  const p={event,tool:env.tool,platform:env.platform,version:env.version,session:env.session};
  if(env.pilot)p.pilot=env.pilot;
+ if(/^[a-f0-9]{32}$/.test(env.visitor||''))p.visitor=env.visitor;
+ if(event==='files_processed'){if(!Number.isInteger(details.count)||details.count<1||details.count>1000||!/^[a-f0-9]{32}$/.test(details.eventId||''))return null;p.count=details.count;p.eventId=details.eventId;if(ids.has(details.tool))p.tool=details.tool;}
  if(event==='files_selected')p.count=Math.min(1000,Math.max(1,Math.floor(details.count)||1));
  if(event==='pilot_feedback'){if(ids.has(details.tool))p.tool=details.tool;if(!env.pilot||!['yes','partly','no'].includes(details.solved)||!Number.isInteger(details.rating)||details.rating<1||details.rating>5)return null;p.solved=details.solved;p.rating=details.rating;}
  return p;
@@ -24,9 +27,10 @@ export function payload(event,details={},env={tool:toolId(),platform:location.pr
 export async function track(event,details={}){
  // Development and QA never pollute public counts. Production native origins allowed.
  if(location.hostname==='127.0.0.1'||location.protocol==='http:'||location.search.includes('qa='))return false;
- if(!usageEnabled()&&!pilot())return false;
+ if(!usageEnabled()){try{localStorage.removeItem(VISITOR_KEY)}catch{}if(!pilot())return false;}
  if(!navigator.onLine)return false; // no hidden offline queue
  const body=payload(event,details);if(!body)return false;
+ if(usageEnabled()){const identify=()=>dailyVisitor(localStorage);try{const visitor=navigator.locks?.request?await navigator.locks.request('unilab-daily-visitor',identify):identify();if(visitor)body.visitor=visitor;}catch{}}else{try{localStorage.removeItem(VISITOR_KEY)}catch{}}
  try{const response=await fetch('https://unilab.ztvmm.live/api/usage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),credentials:'omit',referrerPolicy:'no-referrer',keepalive:true,signal:AbortSignal.timeout(4000)});return response.ok}catch{return false}
 }
 export function initUsage(){
@@ -39,3 +43,6 @@ export function initUsage(){
   if(started){const error=app.querySelector('.error-box');if(error&&!seen.has(error)){seen.add(error);track('job_failed');started=false;}}
  });observer.observe(document.querySelector('#app'),{subtree:true,childList:true,attributes:true,attributeFilter:['data-stage']});
 }
+
+// Called once when usable outputs are ready, never by a download/re-download button.
+export function processedFiles(count,tool=toolId()){for(const n of processingChunks(count))void track('files_processed',{count:n,eventId:randomId(),tool});}

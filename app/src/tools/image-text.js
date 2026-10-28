@@ -1,3 +1,4 @@
+import { processedFiles } from '../usage.js';
 import { el, dropzone, downloadBlob, errorBox, canvasToBlob, formatBytes, loadImage, stem, toast, MIME_EXT } from '../ui.js';
 import { resultCard } from '../media-ui.js';
 
@@ -426,6 +427,7 @@ export default function render(container) {
       const type = formatSel.value;
       const blob = await canvasToBlob(canvas, type, type === 'image/jpeg' ? Number(qualitySlider.value) / 100 : undefined);
       const name = `${stem(file.name)}-labelled.${MIME_EXT[type]}`;
+      processedFiles(1, 'image-text');
       downloadBlob(blob, name);
       toast('Saved to your downloads');
       resultsHost.appendChild(resultCard({
