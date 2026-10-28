@@ -343,6 +343,9 @@ export default function render(container) {
           outputs.push({ name, blob });
           grid.hidden = false;
           grid.appendChild(frameCard(canvas, timestamp, decimals, name, blob));
+          // A stopped run keeps these usable frames. Count its input once when
+          // the first downloadable result appears, even if later frames fail.
+          if (outputs.length === 1) processedFiles(1, 'video-to-frames');
         }
         job.update((index + 1) / plan.times.length,
           `Photo ${outputs.length} of ${plan.times.length} · ${formatDuration(timestamp)}`);
@@ -359,7 +362,6 @@ export default function render(container) {
         throw new Error('No frames came back from that video. It may be damaged, or the moments you picked may all sit past the end of it.');
       }
 
-      processedFiles(1, 'video-to-frames');
       await showResult(outputs, plan, ext, repeats);
     } catch (err) {
       if (isCanceled(err)) toast('Stopped');

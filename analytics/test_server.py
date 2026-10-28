@@ -40,6 +40,20 @@ class UsageTests(unittest.TestCase):
    self.assertEqual(request('POST','/api/usage',json.dumps({**self.p,'filename':'private.pdf'})),400)
    self.assertEqual(request('POST','/api/usage','x'*2049),413)
    self.assertEqual(request('GET','/report'),404)
+   # Exercise real HTTP ingestion -> SQLite deduplication -> public projection.
+   from publish_dashboard import aggregate
+   receipt={**self.p,'visitor':'c'*32,'event':'files_processed','eventId':'d'*32,'count':3}
+   self.assertEqual(request('POST','/api/usage',json.dumps(receipt)),202)
+   self.assertEqual(request('POST','/api/usage',json.dumps(receipt)),202)
+   self.assertEqual(request('POST','/api/usage',json.dumps({**self.p,'session':'b'*32,'visitor':'c'*32,'event':'download_requested'})),202)
+   public=aggregate(server.report());today=public['daily'][-1]
+   self.assertEqual(today['visitors'],1)
+   self.assertEqual(today['sessions'],2)
+   self.assertEqual(today['processedFiles'],3)
+   self.assertEqual(today['downloadRequests'],1)
+   self.assertEqual(today['confirmedSaves'],0)
+   for private in ['visitor"','eventId','session"','private.pdf','pilotFeedback']:
+    self.assertNotIn(private,json.dumps(public))
   finally:http.shutdown();http.server_close();thread.join()
 if __name__=='__main__':unittest.main()
 
