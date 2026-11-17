@@ -1,0 +1,18 @@
+✖ failed batch export permits retry without duplicate ZIP or false saved claim (122.016625ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3376.321084
+
+✖ failing tests:
+
+test at test/download-feedback.test.mjs:7:1
+✖ failed batch export permits retry without duplicate ZIP or false saved claim (122.016625ms)
+  TypeError [Error]: Cannot read properties of null (reading 'textContent')
+      at TestContext.<anonymous> (file://<product-checkout>/app/test/download-feedback.test.mjs:24:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

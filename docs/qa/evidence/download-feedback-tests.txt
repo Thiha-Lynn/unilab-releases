@@ -1,0 +1,55 @@
+
+> unilab@0.4.1 test
+> node --test "test/**/*.test.mjs"
+
+✔ book escapes hostile content and never fetches image references (632.02075ms)
+✔ EPUB has stored first mimetype, valid XML, navigation and embedded font (110.531375ms)
+✔ empty and oversized books receive clear limits (0.651333ms)
+✔ offline budget excludes optional AI runtime and release hashes include service worker (247.317333ms)
+✔ citation fields remain literal text in generated and saved references (621.364292ms)
+✔ citation formatting keeps only intentional italic markup (32.8425ms)
+✔ failed batch export permits retry without duplicate ZIP or false saved claim (804.667791ms)
+✔ the fixture is adversarial — a code-point count is wrong for every string (1.017666ms)
+✔ graphemes() counts combining marks as part of their base character (0.480166ms)
+✔ String.length would fail this fixture — the requirement is not vacuous (0.109ms)
+✔ lecture conversion retains every slide, text, styling and SVG diagram (129.63225ms)
+✔ lecture scripts, forms and external resources are removed (199.860667ms)
+✔ CSS network references are removed while local SVG paint references remain (1.243084ms)
+✔ pagination covers all content without gaps and prefers a block boundary (8.254333ms)
+✔ CSS theme variables and their fallback values survive sanitization (0.83725ms)
+✔ accept matching handles the three shapes the tools actually use (1.273709ms)
+✔ an extension is matched whatever case the phone wrote it in (0.096ms)
+✔ a file the tool cannot open is refused and not passed on (0.15375ms)
+✔ a file above the stated size is refused (0.097125ms)
+✔ a mixed drop keeps what it can and refuses the rest (1.938625ms)
+✔ the refusal names the file and the reason, so nothing fails silently (0.128375ms)
+✔ screening returns only plain arrays, holding no reference to a refused file (0.095208ms)
+✔ the stated limit reads the way it is written in the UI (0.05375ms)
+✔ password policy rejects mismatch, empty and unsupported input (1.223542ms)
+Warning: UnknownErrorException: Ensure that the `standardFontDataUrl` API parameter is provided.
+✔ AES-256 output requires correct password and preserves text (581.518166ms)
+✔ processing counts successful input occurrences once, excludes failures and respects opt-out (839.549916ms)
+✔ redaction removes marked-page text and annotations, preserves untouched text, and paints the output (397.240625ms)
+✔ online dashboard and explicit no-store requests bypass the offline cache (25.626458ms)
+✔ social crawlers receive a public image and matching dimensions without JavaScript (83.410834ms)
+✔ Android save transfers exact binary bytes in bounded chunks (30.835667ms)
+✔ failed native write aborts the incomplete export and never reports success (0.968584ms)
+✔ cancelling the system picker does not create an export (1.050958ms)
+✔ daily visitor is shared across tabs, rotates at UTC midnight and fails closed without storage (12.798916ms)
+✔ successful file payload contains only bounded numeric counts and a receipt (5.694875ms)
+✔ usage payload cannot include filenames, raw errors, document content or URLs (2.947416ms)
+✔ pilot feedback requires explicit pilot enrollment and bounded choices (0.364875ms)
+✔ a stored result is reachable while it is in the vault (4.639625ms)
+✔ purge makes the bytes unreachable, not merely unlisted (0.48325ms)
+✔ pressing "delete now" is the same purge the countdown performs (0.235167ms)
+✔ the countdown expiring purges without anyone pressing anything (1201.484416ms)
+✔ starting a new job releases the previous job's files (0.521333ms)
+✔ the retention window the UI states is the one the vault enforces (0.111916ms)
+ℹ tests 42
+ℹ suites 0
+ℹ pass 42
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6397.516292

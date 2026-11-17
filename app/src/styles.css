@@ -846,3 +846,7 @@ body { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area
   .btn:not(.secondary) { color: #102033; }
   .logo .mark { background: #285b9b; }
 }
+
+/* Keep saving instructions visible beside the result action, including on phones. */
+.ts__download-help { max-width: 620px; margin: 20px auto 0; padding: 0 16px; color: var(--ink); font-size: 16px; line-height: 1.6; }
+.ts__download:disabled { opacity: .65; cursor: wait; }

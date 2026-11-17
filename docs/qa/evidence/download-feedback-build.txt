@@ -1,0 +1,111 @@
+
+> unilab@0.4.1 prebuild
+> node scripts/prepare-qpdf.js
+
+
+> unilab@0.4.1 build
+> vite build
+
+vite v8.2.1 building client environment for production...
+[2K
+transforming...<script src="./offline-config.js"> in "/index.html" can't be bundled without type="module" attribute
+[plugin rolldown:vite-resolve] Module "fs" has been externalized for browser compatibility, imported by "<product-checkout>/app/node_modules/@neslinesli93/qpdf-wasm/dist/qpdf.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+[plugin rolldown:vite-resolve] Module "path" has been externalized for browser compatibility, imported by "<product-checkout>/app/node_modules/@neslinesli93/qpdf-wasm/dist/qpdf.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+[plugin rolldown:vite-resolve] Module "crypto" has been externalized for browser compatibility, imported by "<product-checkout>/app/node_modules/@neslinesli93/qpdf-wasm/dist/qpdf.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+✓ 866 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                             2.61 kB │ gzip:     0.85 kB
+dist/assets/pdf-protection-worker-BZgpquIw.js              43.67 kB
+dist/assets/rnnoise-dzAz8W4U.wasm                         112.14 kB │ gzip:    99.97 kB
+dist/assets/ort.bundle.min-OfoG_cy9.mjs                   399.90 kB
+dist/assets/ort.webgpu.bundle.min-CEayb2S6.mjs            399.92 kB
+dist/assets/pdf.worker.min-CHFwMXne.mjs                 1,262.39 kB
+dist/assets/ort-wasm-simd-threaded.jsep-D5Jk56-t.wasm  23,914.39 kB │ gzip: 5,743.61 kB
+dist/assets/crop-image-BnbkFVYb.css                         3.69 kB │ gzip:     1.23 kB
+dist/assets/index-BK4cp5g9.css                             37.73 kB │ gzip:     7.92 kB
+dist/assets/rnnoise-BUEOtHS7.js                             0.08 kB │ gzip:     0.10 kB
+dist/assets/rolldown-runtime-C0FnF6B9.js                    1.29 kB │ gzip:     0.71 kB
+dist/assets/text-draw-V6A_Rkol.js                           1.54 kB │ gzip:     0.81 kB
+dist/assets/image-to-pdf-Bx65_TdN.js                        2.91 kB │ gzip:     1.42 kB
+dist/assets/convert-image-CvrFCvG-.js                       3.00 kB │ gzip:     1.47 kB
+dist/assets/unit-converter-DkkvW6rN.js                      3.01 kB │ gzip:     1.52 kB
+dist/assets/pdf-to-images-CvyZbRKu.js                       3.10 kB │ gzip:     1.43 kB
+dist/assets/pomodoro-DKkAPtjl.js                            3.12 kB │ gzip:     1.30 kB
+dist/assets/qr-generator-BL9Q4bML.js                        3.42 kB │ gzip:     1.46 kB
+dist/assets/organize-pdf-BmWTFhPh.js                        3.52 kB │ gzip:     1.55 kB
+dist/assets/page-numbers-pdf-C9LVu8Oy.js                    3.55 kB │ gzip:     1.52 kB
+dist/assets/resize-image-C8w4Sb9f.js                        3.66 kB │ gzip:     1.61 kB
+dist/assets/word-counter-CM9Ar4eK.js                        4.03 kB │ gzip:     1.78 kB
+dist/assets/gpa-calculator-Ds7L45um.js                      4.21 kB │ gzip:     1.64 kB
+dist/assets/compress-image-pga1tCUz.js                      4.28 kB │ gzip:     1.85 kB
+dist/assets/rnnoise-W1H76agk.js                             5.17 kB │ gzip:     2.18 kB
+dist/assets/citation-generator-tCLIYPPK.js                  5.50 kB │ gzip:     2.08 kB
+dist/assets/normalize-audio-DnZ169X7.js                     6.55 kB │ gzip:     3.01 kB
+dist/assets/silence-cut-XjzoFqMq.js                         6.57 kB │ gzip:     3.20 kB
+dist/assets/office-text-BWYQwK2R.js                         6.67 kB │ gzip:     2.88 kB
+dist/assets/compress-video-CP9-xSv2.js                      6.71 kB │ gzip:     2.84 kB
+dist/assets/extract-audio-zeE4wsRh.js                       7.03 kB │ gzip:     3.21 kB
+dist/assets/media-ui-COkpVwSR.js                            7.27 kB │ gzip:     2.72 kB
+dist/assets/split-pdf-OIhAj3Dw.js                           7.29 kB │ gzip:     3.09 kB
+dist/assets/html-to-pdf-DWXPbMET.js                         7.43 kB │ gzip:     3.45 kB
+dist/assets/audio-merge-C78ppbPp.js                         7.44 kB │ gzip:     3.45 kB
+dist/assets/trim-video-BCylDR0J.js                          7.50 kB │ gzip:     3.30 kB
+dist/assets/convert-audio-DpOV0Cgq.js                       7.52 kB │ gzip:     3.37 kB
+dist/assets/rotate-image-CKMqu6AL.js                        7.60 kB │ gzip:     3.58 kB
+dist/assets/audio-speed-iNWF1q1L.js                         7.62 kB │ gzip:     3.39 kB
+dist/assets/rotate-pdf-Jap0W0IB.js                          7.75 kB │ gzip:     3.55 kB
+dist/assets/equalizer-VUlf7qmH.js                           7.90 kB │ gzip:     3.55 kB
+dist/assets/resize-video-DXqEDkoE.js                        8.67 kB │ gzip:     3.62 kB
+dist/assets/compress-pdf-BWs_K9PD.js                        8.78 kB │ gzip:     3.98 kB
+dist/assets/audio-fx-F5iyWD99.js                            8.85 kB │ gzip:     3.64 kB
+dist/assets/convert-video-BAn0Luau.js                       8.95 kB │ gzip:     3.99 kB
+dist/assets/trim-audio-DKQF4Esw.js                          9.33 kB │ gzip:     3.89 kB
+dist/assets/screen-recorder-CyWSF7mx.js                     9.35 kB │ gzip:     4.08 kB
+dist/assets/merge-pdf-fXVDTdAV.js                           9.67 kB │ gzip:     4.28 kB
+dist/assets/video-to-frames-jvDF3ZLr.js                     9.92 kB │ gzip:     3.96 kB
+dist/assets/unlock-pdf-COYazWEL.js                         10.18 kB │ gzip:     4.17 kB
+dist/assets/image-text-DZgxncAL.js                         10.29 kB │ gzip:     3.95 kB
+dist/assets/crop-pdf-DqZV0U8N.js                           10.50 kB │ gzip:     4.47 kB
+dist/assets/enhance-voice-CPmF_Zuq.js                      11.11 kB │ gzip:     4.67 kB
+dist/assets/watermark-image-DFmcblVk.js                    12.34 kB │ gzip:     5.33 kB
+dist/assets/redact-pdf-B823Gh4O.js                         13.26 kB │ gzip:     5.48 kB
+dist/assets/voice-recorder-B378KV0S.js                     13.30 kB │ gzip:     5.37 kB
+dist/assets/watermark-pdf-DoAfmDcw.js                      13.55 kB │ gzip:     5.62 kB
+dist/assets/word-to-pdf-by9t5_f1.js                        13.61 kB │ gzip:     5.86 kB
+dist/assets/remove-background-K01OIg2J.js                  13.74 kB │ gzip:     5.88 kB
+dist/assets/blur-face-BTuPVkfT.js                          13.81 kB │ gzip:     5.65 kB
+dist/assets/noise-removal-BsOWh9R9.js                      14.40 kB │ gzip:     5.85 kB
+dist/assets/upscale-image-DyX9lqYs.js                      14.40 kB │ gzip:     6.14 kB
+dist/assets/scan-to-pdf-DCutpnEh.js                        14.61 kB │ gzip:     6.13 kB
+dist/assets/excel-to-pdf-DZNyfQyO.js                       14.98 kB │ gzip:     6.43 kB
+dist/assets/pdf-forms-Ds52-FtL.js                          15.72 kB │ gzip:     6.39 kB
+dist/assets/pdf-to-markdown-Cq88nG2c.js                    16.27 kB │ gzip:     6.97 kB
+dist/assets/video-to-gif-SHCmzEYf.js                       16.59 kB │ gzip:     7.11 kB
+dist/assets/compare-pdf-C_mKSwEt.js                        18.69 kB │ gzip:     7.49 kB
+dist/assets/sign-pdf-Bz6EqK7S.js                           19.95 kB │ gzip:     7.90 kB
+dist/assets/workflows-CDZYvy25.js                          23.26 kB │ gzip:     8.34 kB
+dist/assets/browser-DdDg0_nk.js                            23.49 kB │ gzip:     8.87 kB
+dist/assets/photo-editor-CnIiiJUP.js                       23.85 kB │ gzip:     8.94 kB
+dist/assets/edit-pdf-DHxsX6Iu.js                           25.66 kB │ gzip:    10.24 kB
+dist/assets/option-ui-D71xomXS.js                          26.35 kB │ gzip:     8.17 kB
+dist/assets/ocr-pdf-Blkzz6ds.js                            30.04 kB │ gzip:    12.88 kB
+dist/assets/crop-image-BZvM2SPZ.js                         40.10 kB │ gzip:    13.25 kB
+dist/assets/browser-image-compression-BXtqRVvK.js          51.93 kB │ gzip:    19.91 kB
+dist/assets/index-DSsIJzT7.js                              61.01 kB │ gzip:    21.60 kB
+dist/assets/dist-Clk9DIFH.js                               83.01 kB │ gzip:    22.51 kB
+dist/assets/jszip.min-BXqW2-9v.js                          95.82 kB │ gzip:    28.43 kB
+dist/assets/markdown-book-Bjt1k6XK.js                     150.82 kB │ gzip:    65.36 kB
+dist/assets/html-document-BQYV5eAj.js                     244.63 kB │ gzip:    73.61 kB
+dist/assets/mediabunny-mp3-encoder-BWCsbNn2.js            311.22 kB │ gzip:   133.33 kB
+dist/assets/lib-CtI_b1ty.js                               320.97 kB │ gzip:    75.63 kB
+dist/assets/ort.bundle.min-DfWscr72.js                    389.80 kB │ gzip:   104.82 kB
+dist/assets/ort.webgpu.bundle.min-DsMbpU6T.js             389.81 kB │ gzip:   104.82 kB
+dist/assets/es-BZO94g3F.js                                420.03 kB │ gzip:   175.46 kB
+dist/assets/pdf-utils-BsdUsqMq.js                         427.16 kB │ gzip:   127.52 kB
+dist/assets/media-utils-COet8Yen.js                       585.26 kB │ gzip:   145.74 kB
+dist/assets/fontkit.es-DCfVTi35.js                        710.97 kB │ gzip:   329.70 kB
+dist/assets/heic-to-jpg-CLCWKEkG.js                     1,355.32 kB │ gzip:   346.10 kB
+
+✓ built in 1.27s
+[precache] 98 files, 7.94 MB core (8 MB budget)
