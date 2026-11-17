@@ -168,6 +168,7 @@ export function toolShell(container, tool, spec) {
           <button class="ts__icon-btn" data-purge type="button" title="Clear these files from memory now">${ICON_TRASH}</button>
         </div>
       </div>
+      <p class="ts__download-help" role="status" aria-live="polite">Choose Download to save your result. Processing does not save a copy automatically. Check your browser downloads or your device’s save dialog, then open the saved file to verify it.</p>
       <div class="ts__saved" hidden></div>
       <div class="ts__files"></div>
       <div class="ts__ttl">
@@ -181,6 +182,8 @@ export function toolShell(container, tool, spec) {
   `);
   const doneTitleEl = done.querySelector('.ts__done__title');
   const downloadBtn = done.querySelector('.ts__download');
+  const downloadHelp = done.querySelector('.ts__download-help');
+  const initialDownloadHelp = downloadHelp.textContent;
   const savedBox = done.querySelector('.ts__saved');
   const filesBox = done.querySelector('.ts__files');
   const countEl = done.querySelector('[data-count]');
@@ -367,10 +370,22 @@ export function toolShell(container, tool, spec) {
     doneTitleEl.textContent = result.doneTitle ?? doneTitle;
     downloadBtn.querySelector('span').textContent =
       result.downloadLabel ?? (outputs.length > 1 ? `Download ${outputs.length} files` : downloadLabel);
-    downloadBtn.onclick = () => {
-      // A ZIP for a batch, the file itself for one — the same choice they make.
-      if (outputs.length === 1) downloadBlob(outputs[0].blob, outputs[0].name);
-      else result.zip?.() ?? outputs.forEach((o) => downloadBlob(o.blob, o.name));
+    downloadHelp.textContent = initialDownloadHelp;
+    downloadBtn.disabled = false;
+    downloadBtn.onclick = async () => {
+      if (downloadBtn.disabled) return;
+      downloadBtn.disabled = true;
+      downloadHelp.textContent = initialDownloadHelp;
+      try {
+        // Await ZIP creation so a rejected export has visible, retryable feedback.
+        if (outputs.length === 1) await downloadBlob(outputs[0].blob, outputs[0].name);
+        else if (typeof result.zip === 'function') await result.zip();
+        else for (const output of outputs) await downloadBlob(output.blob, output.name);
+      } catch {
+        downloadHelp.textContent = 'Could not prepare the download. Try Download again, or save individual files below. Your browser may ask where to save them.';
+      } finally {
+        downloadBtn.disabled = false;
+      }
     };
 
     // savings gauge — only when the job actually has a before and an after
